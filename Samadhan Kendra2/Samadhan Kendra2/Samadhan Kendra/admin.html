@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Samadhan Kendra</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- Admin Navigation -->
+    <nav class="admin-navbar">
+        <div class="admin-nav-container">
+            <div class="admin-nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-handshake"></i>
+                    <span>Samadhan Kendra</span>
+                </a>
+                <span class="admin-badge">Admin Panel</span>
+            </div>
+            <div class="admin-nav-user">
+                <div class="admin-user-info">
+                    <i class="fas fa-user-shield"></i>
+                    <span id="adminUserName">Administrator</span>
+                </div>
+                <div class="admin-user-avatar" onclick="toggleAdminProfileMenu()">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="admin-profile-dropdown" id="adminProfileDropdown">
+                    <a href="#" onclick="showAdminProfile()"><i class="fas fa-user"></i> Profile</a>
+                    <a href="#" onclick="showAdminSettings()"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="#" onclick="adminPanel.showLogoutConfirmation()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Sidebar -->
+    <div class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="sidebar-item active" data-tab="dashboard">
+                    <a href="#dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item" data-tab="users">
+                    <a href="#users">
+                        <i class="fas fa-users"></i>
+                        <span>User Management</span>
+                    </a>
+                </li>
+                <li class="sidebar-item" data-tab="issues">
+                    <a href="#issues">
+                        <i class="fas fa-flag"></i>
+                        <span>Issue Management</span>
+                    </a>
+                </li>
+                <li class="sidebar-item" data-tab="categories">
+                    <a href="#categories">
+                        <i class="fas fa-tags"></i>
+                        <span>Categories & Settings</span>
+                    </a>
+                </li>
+                <li class="sidebar-item" data-tab="audit">
+                    <a href="#audit">
+                        <i class="fas fa-history"></i>
+                        <span>Audit Log</span>
+                    </a>
+                </li>
+                <li class="sidebar-item" data-tab="profile">
+                    <a href="#profile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar-item" data-tab="settings">
+                    <a href="#settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Admin Main Content -->
+    <main class="admin-main">
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="admin-tab active">
+            <div class="admin-header">
+                <h1>Dashboard Overview</h1>
+                <p>Monitor system statistics and recent activity</p>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalUsers">0</h3>
+                        <p>Total Users</p>
+                        <span class="stat-change positive">+12% this month</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalIssues">0</h3>
+                        <p>Total Issues</p>
+                        <span class="stat-change positive">+8% this week</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="resolvedIssues">0</h3>
+                        <p>Resolved Issues</p>
+                        <span class="stat-change positive">+15% this month</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="pendingIssues">0</h3>
+                        <p>Pending Issues</p>
+                        <span class="stat-change negative">+5% this week</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Analytics -->
+            <div class="analytics-grid">
+                <div class="chart-card">
+                    <h3>Issue Categories Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>Monthly Issue Trends</h3>
+                    <div class="chart-container">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h3>Recent Activity</h3>
+                <div class="activity-list" id="recentActivityList">
+                    <!-- Activity items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="users" class="admin-tab">
+            <div class="admin-header">
+                <h1>User Management</h1>
+                <p>Manage registered users and their accounts</p>
+            </div>
+
+            <!-- User Search and Filters -->
+            <div class="user-controls">
+                <div class="search-box">
+                    <input type="text" id="userSearch" placeholder="Search users by name, email, or city...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="user-filters">
+                    <select id="userStatusFilter">
+                        <option value="all">All Statuses</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="suspended">Suspended</option>
+                    </select>
+                    <select id="userRoleFilter">
+                        <option value="all">All Roles</option>
+                        <option value="user">Regular User</option>
+                        <option value="moderator">Moderator</option>
+                        <option value="admin">Administrator</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="showAddUserModal()">
+                    <i class="fas fa-user-plus"></i> Add New User
+                </button>
+            </div>
+
+            <!-- Users Table -->
+            <div class="table-container">
+                <table class="admin-table" id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>City</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Points</th>
+                            <th>Issues</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Users will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- User Statistics -->
+            <div class="user-stats">
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <div class="stat-info">
+                        <h3 id="totalUsers">0</h3>
+                        <p>Total Users</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-check"></i>
+                    <div class="stat-info">
+                        <h3 id="activeUsers">0</h3>
+                        <p>Active Users</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-clock"></i>
+                    <div class="stat-info">
+                        <h3 id="newUsersThisMonth">0</h3>
+                        <p>New This Month</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-star"></i>
+                    <div class="stat-info">
+                        <h3 id="topContributors">0</h3>
+                        <p>Top Contributors</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Issues Tab -->
+        <div id="issues" class="admin-tab">
+            <div class="admin-header">
+                <h1>Issue Management</h1>
+                <p>Monitor and manage reported civic issues</p>
+            </div>
+
+            <!-- Issue Controls -->
+            <div class="issue-controls">
+                <div class="search-box">
+                    <input type="text" id="issueSearch" placeholder="Search issues by title, description, or address...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="issue-filters">
+                    <select id="issueStatusFilter">
+                        <option value="all">All Statuses</option>
+                        <option value="reported">Reported</option>
+                        <option value="investigating">Investigating</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                    <select id="issuePriorityFilter">
+                        <option value="all">All Priorities</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                        <option value="urgent">Urgent</option>
+                    </select>
+                    <select id="issueCategoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="garbage">Garbage & Waste</option>
+                        <option value="road">Road & Infrastructure</option>
+                        <option value="water">Water Supply</option>
+                        <option value="electricity">Electricity</option>
+                        <option value="safety">Safety & Security</option>
+                        <option value="transport">Public Transport</option>
+                        <option value="parks">Parks & Recreation</option>
+                        <option value="noise">Noise Pollution</option>
+                        <option value="air">Air Quality</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Issues Table -->
+            <div class="table-container">
+                <table class="admin-table" id="issuesTable">
+                    <thead>
+                        <tr>
+                            <th>Issue ID</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Reporter</th>
+                            <th>Location</th>
+                            <th>Reported</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="issuesTableBody">
+                        <!-- Issues will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Categories Tab -->
+        <div id="categories" class="admin-tab">
+            <div class="admin-header">
+                <h1>Categories & Settings</h1>
+                <p>Manage issue categories and application settings</p>
+            </div>
+
+            <!-- Categories Management -->
+            <div class="categories-section">
+                <h3>Issue Categories</h3>
+                <div class="categories-grid" id="categoriesGrid">
+                    <!-- Categories will be populated by JavaScript -->
+                </div>
+                <button class="btn btn-primary" onclick="showAddCategoryModal()">
+                    <i class="fas fa-plus"></i> Add New Category
+                </button>
+            </div>
+
+            <!-- Application Settings -->
+            <div class="settings-section">
+                <h3>Application Settings</h3>
+                <div class="settings-form">
+                    <div class="setting-group">
+                        <label>Email Notifications</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="emailNotifications" checked>
+                            <span class="slider"></span>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label>SMS Notifications</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="smsNotifications">
+                            <span class="slider"></span>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label>Auto-assign Issues</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="autoAssignIssues" checked>
+                            <span class="slider"></span>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label>Maintenance Mode</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="maintenanceMode">
+                            <span class="slider"></span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="saveSettings()">
+                        <i class="fas fa-save"></i> Save Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audit Tab -->
+        <div id="audit" class="admin-tab">
+            <div class="admin-header">
+                <h1>Audit Log</h1>
+                <p>Track all administrative actions and system changes</p>
+            </div>
+
+            <!-- Audit Filters -->
+            <div class="audit-controls">
+                <div class="search-box">
+                    <input type="text" id="auditSearch" placeholder="Search audit logs...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="audit-filters">
+                    <select id="auditActionFilter">
+                        <option value="all">All Actions</option>
+                        <option value="create">Create</option>
+                        <option value="update">Update</option>
+                        <option value="delete">Delete</option>
+                        <option value="status_change">Status Change</option>
+                    </select>
+                    <select id="auditUserFilter">
+                        <option value="all">All Users</option>
+                        <!-- Admin users will be populated -->
+                    </select>
+                    <input type="date" id="auditDateFilter">
+                </div>
+            </div>
+
+            <!-- Audit Table -->
+            <div class="table-container">
+                <table class="admin-table" id="auditTable">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Admin User</th>
+                            <th>Action</th>
+                            <th>Resource</th>
+                            <th>Details</th>
+                            <th>IP Address</th>
+                        </tr>
+                    </thead>
+                    <tbody id="auditTableBody">
+                        <!-- Audit logs will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div id="profile" class="admin-tab">
+            <div class="admin-header">
+                <h1>Admin Profile</h1>
+                <p>Manage your admin account and personal information</p>
+            </div>
+
+            <div class="profile-grid">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="adminProfileName">Administrator</h3>
+                            <p id="adminProfileEmail">admin@samadhankendra.com</p>
+                            <span class="role-badge role-admin">Super Admin</span>
+                        </div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">1,247</span>
+                            <span class="stat-label">Issues Managed</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">89</span>
+                            <span class="stat-label">Users Managed</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">156</span>
+                            <span class="stat-label">Days Active</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-form-card">
+                    <h3>Personal Information</h3>
+                    <form id="adminProfileForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="adminFullName">Full Name</label>
+                                <input type="text" id="adminFullName" value="Administrator" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="adminEmail">Email</label>
+                                <input type="email" id="adminEmail" value="admin@samadhankendra.com" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="adminPhone">Phone</label>
+                                <input type="tel" id="adminPhone" value="+91 98765 43210" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="adminDepartment">Department</label>
+                                <input type="text" id="adminDepartment" value="IT Administration" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="adminBio">Bio</label>
+                            <textarea id="adminBio" rows="3" placeholder="Tell us about yourself...">Experienced administrator with expertise in civic issue management and system administration.</textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="adminPanel.updateProfile()">
+                            <i class="fas fa-save"></i> Update Profile
+                        </button>
+                    </form>
+                </div>
+
+                <div class="profile-form-card">
+                    <h3>Change Password</h3>
+                    <form id="adminPasswordForm">
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" id="currentPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" id="newPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" required>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="adminPanel.changePassword()">
+                            <i class="fas fa-key"></i> Change Password
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settings" class="admin-tab">
+            <div class="admin-header">
+                <h1>Admin Settings</h1>
+                <p>Configure system settings and preferences</p>
+            </div>
+
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <h3>Notification Settings</h3>
+                    <div class="settings-form">
+                        <div class="setting-group">
+                            <label>Email Notifications</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="adminEmailNotifications" checked>
+                                <span class="slider"></span>
+                            </div>
+                        </div>
+                        <div class="setting-group">
+                            <label>SMS Notifications</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="adminSmsNotifications">
+                                <span class="slider"></span>
+                            </div>
+                        </div>
+                        <div class="setting-group">
+                            <label>Issue Alerts</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="adminIssueAlerts" checked>
+                                <span class="slider"></span>
+                            </div>
+                        </div>
+                        <div class="setting-group">
+                            <label>User Activity Reports</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="adminUserReports">
+                                <span class="slider"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h3>System Preferences</h3>
+                    <div class="settings-form">
+                        <div class="setting-group">
+                            <label>Auto-refresh Dashboard</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="adminAutoRefresh" checked>
+                                <span class="slider"></span>
+                            </div>
+                        </div>
+                        <div class="setting-group">
+                            <label>Dark Mode</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="adminDarkMode">
+                                <span class="slider"></span>
+                            </div>
+                        </div>
+                        <div class="setting-group">
+                            <label>Compact View</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="adminCompactView">
+                                <span class="slider"></span>
+                            </div>
+                        </div>
+                        <div class="setting-group">
+                            <label>Session Timeout Warning</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="adminSessionWarning" checked>
+                                <span class="slider"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Data Management</h3>
+                    <div class="settings-actions">
+                        <button class="btn btn-export" onclick="adminPanel.exportData()">
+                            <i class="fas fa-download"></i> Export Data
+                        </button>
+                        <button class="btn btn-backup" onclick="adminPanel.backupSystem()">
+                            <i class="fas fa-database"></i> Backup System
+                        </button>
+                        <button class="btn btn-danger" onclick="adminPanel.clearCache()">
+                            <i class="fas fa-broom"></i> Clear Cache
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="admin-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New User</h3>
+                <span class="close" onclick="closeModal('addUserModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newUserName">Full Name</label>
+                            <input type="text" id="newUserName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserEmail">Email</label>
+                            <input type="email" id="newUserEmail" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newUserPhone">Phone</label>
+                            <input type="tel" id="newUserPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserCity">City</label>
+                            <select id="newUserCity" required>
+                                <option value="">Select city</option>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="delhi">Delhi</option>
+                                <option value="bangalore">Bangalore</option>
+                                <option value="hyderabad">Hyderabad</option>
+                                <option value="chennai">Chennai</option>
+                                <option value="kolkata">Kolkata</option>
+                                <option value="pune">Pune</option>
+                                <option value="ahmedabad">Ahmedabad</option>
+                                <option value="jaipur">Jaipur</option>
+                                <option value="lucknow">Lucknow</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newUserRole">Role</label>
+                            <select id="newUserRole" required>
+                                <option value="user">Regular User</option>
+                                <option value="moderator">Moderator</option>
+                                <option value="admin">Administrator</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserPassword">Password</label>
+                            <input type="password" id="newUserPassword" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addUserModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="addNewUser()">Add User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div id="editUserModal" class="admin-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit User</h3>
+                <span class="close" onclick="closeModal('editUserModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="editUserForm">
+                    <input type="hidden" id="editUserId">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editUserName">Full Name</label>
+                            <input type="text" id="editUserName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editUserEmail">Email</label>
+                            <input type="email" id="editUserEmail" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editUserPhone">Phone</label>
+                            <input type="tel" id="editUserPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editUserCity">City</label>
+                            <select id="editUserCity" required>
+                                <option value="">Select city</option>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="delhi">Delhi</option>
+                                <option value="bangalore">Bangalore</option>
+                                <option value="hyderabad">Hyderabad</option>
+                                <option value="chennai">Chennai</option>
+                                <option value="kolkata">Kolkata</option>
+                                <option value="pune">Pune</option>
+                                <option value="ahmedabad">Ahmedabad</option>
+                                <option value="jaipur">Jaipur</option>
+                                <option value="lucknow">Lucknow</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editUserRole">Role</label>
+                            <select id="editUserRole" required>
+                                <option value="user">Regular User</option>
+                                <option value="moderator">Moderator</option>
+                                <option value="admin">Administrator</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editUserStatus">Status</label>
+                            <select id="editUserStatus" required>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="suspended">Suspended</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editUserPoints">Points</label>
+                            <input type="number" id="editUserPoints" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editUserPassword">New Password (leave blank to keep current)</label>
+                            <input type="password" id="editUserPassword" placeholder="Enter new password if changing">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('editUserModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveUserChanges()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Details Modal -->
+    <div id="userDetailsModal" class="admin-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>User Details</h3>
+                <span class="close" onclick="closeModal('userDetailsModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="userDetailsContent">
+                    <!-- User details will be populated here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('userDetailsModal')">Close</button>
+                <button class="btn btn-primary" onclick="editUserFromDetails()">Edit User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div id="addCategoryModal" class="admin-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Category</h3>
+                <span class="close" onclick="closeModal('addCategoryModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addCategoryForm">
+                    <div class="form-group">
+                        <label for="newCategoryName">Category Name</label>
+                        <input type="text" id="newCategoryName" placeholder="e.g., Street Lighting" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newCategoryIcon">Icon (Emoji)</label>
+                        <input type="text" id="newCategoryIcon" placeholder="💡" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newCategoryDescription">Description</label>
+                        <textarea id="newCategoryDescription" rows="3" placeholder="Brief description of this category"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="newCategoryPriority">Default Priority</label>
+                        <select id="newCategoryPriority" required>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addCategoryModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="addNewCategory()">Add Category</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Issue Modal -->
+    <div id="editIssueModal" class="admin-modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Edit Issue</h3>
+                <span class="close" onclick="closeModal('editIssueModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="editIssueForm">
+                    <div class="issue-status-section">
+                        <h4>Issue Status Management</h4>
+                        <div class="status-timeline">
+                            <div class="status-step" data-status="reported">
+                                <div class="status-icon">
+                                    <i class="fas fa-flag"></i>
+                                </div>
+                                <div class="status-info">
+                                    <span class="status-label">Reported</span>
+                                    <span class="status-date">Issue submitted by user</span>
+                                </div>
+                            </div>
+                            <div class="status-step" data-status="investigating">
+                                <div class="status-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <div class="status-info">
+                                    <span class="status-label">Investigating</span>
+                                    <span class="status-date">Under review by authorities</span>
+                                </div>
+                            </div>
+                            <div class="status-step" data-status="in-progress">
+                                <div class="status-icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <div class="status-info">
+                                    <span class="status-label">In Progress</span>
+                                    <span class="status-date">Work has begun</span>
+                                </div>
+                            </div>
+                            <div class="status-step" data-status="resolved">
+                                <div class="status-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="status-info">
+                                    <span class="status-label">Resolved</span>
+                                    <span class="status-date">Issue has been fixed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editIssueTitle">Issue Title</label>
+                            <input type="text" id="editIssueTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editIssueStatus">Current Status</label>
+                            <select id="editIssueStatus" required onchange="adminPanel.updateStatusTimeline(this.value)">
+                                <option value="reported">Reported</option>
+                                <option value="investigating">Investigating</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="resolved">Resolved</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editIssueCategory">Category</label>
+                            <select id="editIssueCategory" required>
+                                <!-- Categories will be populated -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editIssuePriority">Priority Level</label>
+                            <select id="editIssuePriority" required>
+                                <option value="low">Low Priority</option>
+                                <option value="medium">Medium Priority</option>
+                                <option value="high">High Priority</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editIssueDescription">Issue Description</label>
+                        <textarea id="editIssueDescription" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editIssueNotes">Admin Notes & Updates</label>
+                        <textarea id="editIssueNotes" rows="3" placeholder="Add internal notes, progress updates, or instructions for the team..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editIssueAssignee">Assign To</label>
+                        <select id="editIssueAssignee">
+                            <option value="">Select Assignee</option>
+                            <option value="team-a">Team A - Road Maintenance</option>
+                            <option value="team-b">Team B - Water Supply</option>
+                            <option value="team-c">Team C - Electrical</option>
+                            <option value="team-d">Team D - Sanitation</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" onclick="closeModal('editIssueModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveIssueChanges()">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Toast -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <i class="toast-icon"></i>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="admin-script.js"></script>
+    
+    <!-- Chatbot Integration -->
+    <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard Test - Samadhan Kendra</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .leaderboard-section {
+            padding: 4rem 0;
+            background: #f8fafc;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .leaderboard-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+        
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: white;
+            color: #64748b;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .top-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .leaderboard-item {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .leaderboard-item.first {
+            border: 2px solid #fbbf24;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+        }
+        
+        .leaderboard-item.second {
+            border: 2px solid #9ca3af;
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+        }
+        
+        .leaderboard-item.third {
+            border: 2px solid #f87171;
+            background: linear-gradient(135deg, #fef2f2, #fecaca);
+        }
+        
+        .rank {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+        
+        .avatar {
+            font-size: 3rem;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+        
+        .info h4 {
+            margin: 0 0 0.5rem 0;
+            color: #1e293b;
+            font-size: 1.2rem;
+        }
+        
+        .info p {
+            margin: 0 0 1rem 0;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .stats {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .points {
+            font-weight: 700;
+            color: #059669;
+            font-size: 1.1rem;
+        }
+        
+        .issues {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .leaderboard-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .leaderboard-list .leaderboard-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            text-align: left;
+        }
+        
+        .leaderboard-list .rank {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+        }
+        
+        .leaderboard-list .avatar {
+            font-size: 2rem;
+            margin-bottom: 0;
+        }
+        
+        .leaderboard-list .stats {
+            text-align: right;
+        }
+        
+        .test-info {
+            background: #dbeafe;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .test-info h3 {
+            margin: 0 0 0.5rem 0;
+            color: #1e40af;
+        }
+        
+        .test-info p {
+            margin: 0;
+            color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <div class="leaderboard-section">
+        <div class="container">
+            <div class="test-info">
+                <h3>🧪 Leaderboard Test Page</h3>
+                <p>Click on the tabs below to see the top 3 positions change dynamically. The top 3 should update based on the selected time period.</p>
+            </div>
+            
+            <h2>Citizen Leaderboard</h2>
+            <p class="section-subtitle">Top contributors making a difference in their communities</p>
+            
+            <div class="leaderboard-tabs">
+                <button class="tab-btn active" data-tab="monthly">This Month</button>
+                <button class="tab-btn" data-tab="yearly">This Year</button>
+                <button class="tab-btn" data-tab="alltime">All Time</button>
+            </div>
+            
+            <div class="leaderboard-content">
+                <div class="top-3">
+                    <div class="leaderboard-item second">
+                        <div class="rank">2</div>
+                        <div class="avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="info">
+                            <h4>Priya Sharma</h4>
+                            <p>Mumbai, Maharashtra</p>
+                        </div>
+                        <div class="stats">
+                            <div class="points">2,450 pts</div>
+                            <div class="issues">45 issues</div>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item first">
+                        <div class="rank">1</div>
+                        <div class="avatar">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="info">
+                            <h4>Rajesh Kumar</h4>
+                            <p>Delhi, NCR</p>
+                        </div>
+                        <div class="stats">
+                            <div class="points">3,120 pts</div>
+                            <div class="issues">52 issues</div>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item third">
+                        <div class="rank">3</div>
+                        <div class="avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="info">
+                            <h4>Anita Patel</h4>
+                            <p>Bangalore, Karnataka</p>
+                        </div>
+                        <div class="stats">
+                            <div class="points">2,180 pts</div>
+                            <div class="issues">38 issues</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="leaderboard-list" id="leaderboardList">
+                    <!-- More leaderboard items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Leaderboard data
+        const leaderboardData = {
+            monthly: [
+                { name: 'Rajesh Kumar', city: 'Mumbai', points: 3120, issues: 52, rank: 1 },
+                { name: 'Priya Sharma', city: 'Mumbai', points: 2450, issues: 45, rank: 2 },
+                { name: 'Anita Patel', city: 'Bangalore', points: 2180, issues: 38, rank: 3 },
+                { name: 'Amit Singh', city: 'Delhi', points: 1950, issues: 35, rank: 4 },
+                { name: 'Neha Gupta', city: 'Pune', points: 1820, issues: 32, rank: 5 },
+                { name: 'Rahul Verma', city: 'Chennai', points: 1680, issues: 28, rank: 6 },
+                { name: 'Kavita Reddy', city: 'Hyderabad', points: 1540, issues: 25, rank: 7 },
+                { name: 'Vikram Malhotra', city: 'Kolkata', points: 1420, issues: 22, rank: 8 }
+            ],
+            yearly: [
+                { name: 'Rajesh Kumar', city: 'Mumbai', points: 28450, issues: 156, rank: 1 },
+                { name: 'Priya Sharma', city: 'Mumbai', points: 22180, issues: 142, rank: 2 },
+                { name: 'Anita Patel', city: 'Bangalore', points: 19870, issues: 128, rank: 3 },
+                { name: 'Amit Singh', city: 'Delhi', points: 18760, issues: 115, rank: 4 },
+                { name: 'Neha Gupta', city: 'Pune', points: 17240, issues: 98, rank: 5 }
+            ],
+            alltime: [
+                { name: 'Rajesh Kumar', city: 'Mumbai', points: 125680, issues: 456, rank: 1 },
+                { name: 'Priya Sharma', city: 'Mumbai', points: 98750, issues: 389, rank: 2 },
+                { name: 'Anita Patel', city: 'Bangalore', points: 89420, issues: 342, rank: 3 },
+                { name: 'Amit Singh', city: 'Delhi', points: 76540, issues: 298, rank: 4 },
+                { name: 'Neha Gupta', city: 'Pune', points: 69870, issues: 267, rank: 5 }
+            ]
+        };
+
+        // Leaderboard functionality
+        function displayLeaderboard(period = 'monthly') {
+            const leaderboardList = document.getElementById('leaderboardList');
+            const data = leaderboardData[period];
+            
+            // Update top 3 positions dynamically
+            updateTop3Positions(data);
+            
+            // Display remaining positions (4th onwards)
+            leaderboardList.innerHTML = data.slice(3).map((user, index) => `
+                <div class="leaderboard-item">
+                    <div class="rank">${user.rank}</div>
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="info">
+                        <h4>${user.name}</h4>
+                        <p>${user.city}</p>
+                    </div>
+                    <div class="stats">
+                        <div class="points">${user.points.toLocaleString()} pts</div>
+                        <div class="issues">${user.issues} issues</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Function to update top 3 positions dynamically
+        function updateTop3Positions(data) {
+            const top3 = data.slice(0, 3);
+            
+            // Update first position
+            const firstPosition = document.querySelector('.leaderboard-item.first');
+            if (firstPosition && top3[0]) {
+                firstPosition.querySelector('.info h4').textContent = top3[0].name;
+                firstPosition.querySelector('.info p').textContent = top3[0].city;
+                firstPosition.querySelector('.stats .points').textContent = `${top3[0].points.toLocaleString()} pts`;
+                firstPosition.querySelector('.stats .issues').textContent = `${top3[0].issues} issues`;
+            }
+            
+            // Update second position
+            const secondPosition = document.querySelector('.leaderboard-item.second');
+            if (secondPosition && top3[1]) {
+                secondPosition.querySelector('.info h4').textContent = top3[1].name;
+                secondPosition.querySelector('.info p').textContent = top3[1].city;
+                secondPosition.querySelector('.stats .points').textContent = `${top3[1].points.toLocaleString()} pts`;
+                secondPosition.querySelector('.stats .issues').textContent = `${top3[1].issues} issues`;
+            }
+            
+            // Update third position
+            const thirdPosition = document.querySelector('.leaderboard-item.third');
+            if (thirdPosition && top3[2]) {
+                thirdPosition.querySelector('.info h4').textContent = top3[2].name;
+                thirdPosition.querySelector('.info p').textContent = top3[2].city;
+                thirdPosition.querySelector('.stats .points').textContent = `${top3[2].points.toLocaleString()} pts`;
+                thirdPosition.querySelector('.stats .issues').textContent = `${top3[2].issues} issues`;
+            }
+        }
+
+        // Leaderboard tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                // Add active class to clicked tab
+                btn.classList.add('active');
+                // Display corresponding leaderboard
+                displayLeaderboard(btn.dataset.tab);
+            });
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Display initial leaderboard
+            displayLeaderboard('monthly');
+        });
+    </script>
+</body>
+</html>

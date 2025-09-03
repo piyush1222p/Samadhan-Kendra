@@ -1,0 +1,3065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Samadhan Kendra</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="profile-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Immediate authentication check to prevent flash of content -->
+    <script>
+        // Use the new authentication system
+        document.addEventListener('DOMContentLoaded', function() {
+    if (!isUserLoggedIn || !isUserLoggedIn()) {
+        console.log('User not logged in, showing login prompt instead of redirecting');
+        showLoginPrompt(); // <-- show message inside page
+        return;
+    }
+
+    console.log('User is authenticated, loading profile');
+});
+
+        
+        // Function to show login interface - define it first
+        function showLoginInterface() {
+            console.log('Showing login interface - user not authenticated');
+            // Clear any existing content
+            document.body.innerHTML = '';
+            // Redirect to login page
+            window.location.replace('login.html');
+        }
+    </script>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="./index.html">
+                    <i class="fas fa-handshake"></i>
+                    <span>Samadhan Kendra</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#report" class="nav-link">Report Issue</a></li>
+                <li><a href="index.html#issues" class="nav-link">View Issues</a></li>
+                <li><a href="index.html#leaderboard" class="nav-link">Leaderboard</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+            </ul>
+            <div class="nav-user">
+                <div class="user-points">
+                    <i class="fas fa-star"></i>
+                                            <span id="navUserPoints">0</span>
+                </div>
+                <div class="user-avatar" onclick="toggleProfileMenu()">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                    <a href="rewards-program.html"><i class="fas fa-gift"></i> Rewards</a>
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+                    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-circle"></i>
+                    <button class="edit-avatar" onclick="editAvatar()">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                </div>
+                <div class="profile-info">
+                    <h1 id="userFullName">Rajesh Kumar</h1>
+                    <p id="userCity">Mumbai, Maharashtra</p>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <span class="stat-number" id="userPoints">1,250</span>
+                            <span class="stat-label">Points</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="userIssues">15</span>
+                            <span class="stat-label">Issues Reported</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="userRank">#3</span>
+                            <span class="stat-label">City Rank</span>
+                        </div>
+                    </div>
+                </div>
+                                <div class="profile-actions">
+                    <button class="btn btn-secondary" onclick="editProfile()">
+                        <i class="fas fa-edit"></i>
+                        Edit Profile
+                    </button>
+                    <button class="btn btn-primary" onclick="window.location.href='index.html#report'">
+                        <i class="fas fa-plus"></i>
+                        Report Issue
+                    </button>
+                </div>
+            </div>
+
+            <div class="profile-content">
+                <div class="profile-tabs">
+                    <button class="tab-btn active" data-tab="overview">Overview</button>
+                    <button class="tab-btn" data-tab="issues">My Issues</button>
+                    <button class="tab-btn rewards-tab" data-tab="rewards">
+                        <i class="fas fa-gift"></i>
+                        Rewards
+                    </button>
+                    <button class="tab-btn" data-tab="settings">Settings</button>
+                </div>
+
+                <!-- Overview Tab -->
+                <div class="tab-content active" id="overview">
+                    <div class="overview-grid">
+                        <div class="overview-card">
+                            <h3>Recent Activity</h3>
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <i class="fas fa-flag text-success"></i>
+                                    <div class="activity-content">
+                                        <p>Reported new issue: Water pipeline burst</p>
+                                        <small>2 hours ago</small>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <i class="fas fa-thumbs-up text-primary"></i>
+                                    <div class="activity-content">
+                                        <p>Upvoted issue: Street light not working</p>
+                                        <small>1 day ago</small>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <i class="fas fa-trophy text-warning"></i>
+                                    <div class="activity-content">
+                                        <p>Earned 25 points for new report</p>
+                                        <small>2 days ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overview-card">
+                            <h3>Achievements</h3>
+                            <div class="achievements-grid">
+                                <div class="achievement" onclick="showAchievementModal('first-report')">
+                                    <i class="fas fa-medal text-warning"></i>
+                                    <h4>First Report</h4>
+                                    <p>Reported your first civic issue</p>
+                                </div>
+                                <div class="achievement" onclick="showAchievementModal('community-helper')">
+                                    <i class="fas fa-star text-primary"></i>
+                                    <h4>Community Helper</h4>
+                                    <p>Reported 10+ issues</p>
+                                </div>
+                                <div class="achievement" onclick="showAchievementModal('top-contributor')">
+                                    <i class="fas fa-crown text-success"></i>
+                                    <h4>Top Contributor</h4>
+                                    <p>Reached top 10 in city rankings</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overview-card">
+                            <h3>Quick Actions</h3>
+                            <div class="quick-actions">
+                                <button class="btn btn-outline" onclick="reportNewIssue()">
+                                    <i class="fas fa-flag"></i>
+                                    Report Issue
+                                </button>
+                                <button class="btn btn-outline" onclick="viewLeaderboard()">
+                                    <i class="fas fa-trophy"></i>
+                                    View Rankings
+                                </button>
+                                <button class="btn btn-outline" onclick="redeemRewards()">
+                                    <i class="fas fa-gift"></i>
+                                    Redeem Points
+                                </button>
+                                <button class="btn btn-outline" onclick="inviteFriends()">
+                                    <i class="fas fa-user-plus"></i>
+                                    Invite Friends
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Issues Tab -->
+                <div class="tab-content" id="issues">
+                    <div class="issues-header">
+                        <h3>My Reported Issues</h3>
+                        <div class="issues-filter">
+                            <select id="issueStatusFilter">
+                                <option value="all">All Statuses</option>
+                                <option value="reported">Reported</option>
+                                <option value="investigating">Investigating</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="resolved">Resolved</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="my-issues-list" id="myIssuesList">
+                        <div style="text-align: center; padding: 3rem; color: #64748b;">
+                            <i class="fas fa-flag" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                            <h3>Loading Issues...</h3>
+                            <p>Click on "My Issues" tab to view your reported issues</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rewards Tab -->
+                <div class="tab-content" id="rewards">
+                    <!-- Hero Section -->
+                    <div class="rewards-hero-section">
+                        <div class="hero-content">
+                            <h1>🎁 Rewards & Points</h1>
+                            <p class="hero-subtitle">Earn points for your civic contributions and redeem them for exciting rewards that make a difference in your community.</p>
+                            <div class="hero-features">
+                                <span><i class="fas fa-star"></i> Earn Points</span>
+                                <span><i class="fas fa-gift"></i> Redeem Rewards</span>
+                                <span><i class="fas fa-trophy"></i> Build Community</span>
+                            </div>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="current-balance-card">
+                                <div class="balance-header">
+                                    <h3>Your Current Balance</h3>
+                                    <p>Points available for redemption</p>
+                                </div>
+                                <div class="balance-amount">
+                                    <span class="points-display" id="availablePoints">1,250</span>
+                                    <span class="points-label">points</span>
+                                </div>
+                                <div class="balance-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 75%"></div>
+                                    </div>
+                                    <span class="progress-text">75% to next level</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- How to Earn Points Section -->
+                    <div class="earn-points-section">
+                        <div class="section-header">
+                            <h2>How to Earn Points</h2>
+                            <p>Every action you take on Samadhan Kendra contributes to building better communities and earns you valuable points.</p>
+                        </div>
+                        
+                        <div class="earning-methods">
+                            <div class="method-card">
+                                <div class="method-icon">
+                                    <i class="fas fa-flag"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h3>Report New Issues <span class="points-badge">+25 points</span></h3>
+                                    <p>Earn points for every legitimate civic issue you report. Include photos, videos, and detailed descriptions for maximum points.</p>
+                                    <div class="points-breakdown">
+                                        <div class="breakdown-item">
+                                            <i class="fas fa-circle"></i>
+                                            <span>Basic report: <strong>25 points</strong></span>
+                                        </div>
+                                        <div class="breakdown-item">
+                                            <i class="fas fa-circle"></i>
+                                            <span>With photos: <strong>+5 bonus points</strong></span>
+                                        </div>
+                                        <div class="breakdown-item">
+                                            <i class="fas fa-circle"></i>
+                                            <span>With videos: <strong>+10 bonus points</strong></span>
+                                        </div>
+                                        <div class="breakdown-item">
+                                            <i class="fas fa-circle"></i>
+                                            <span>Detailed description: <strong>+5 bonus points</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="method-card">
+                                <div class="method-icon">
+                                    <i class="fas fa-thumbs-up"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h3>Upvote Existing Issues <span class="points-badge">+5 points</span></h3>
+                                    <p>Support issues reported by other citizens and help prioritize community concerns.</p>
+                                    <div class="points-breakdown">
+                                        <div class="breakdown-item">
+                                            <i class="fas fa-circle"></i>
+                                            <span>Each upvote: <strong>5 points</strong></span>
+                                        </div>
+                                        <div class="breakdown-item">
+                                            <i class="fas fa-circle"></i>
+                                            <span>Maximum 10 upvotes per day</span>
+                                        </div>
+                                        <div class="breakdown-item">
+                                            <i class="fas fa-circle"></i>
+                                            <span>Helps identify urgent issues</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="method-card">
+                                <div class="method-icon">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h3>Share & Engage <span class="points-badge">+10 points</span></h3>
+                                    <p>Share issues on social media and engage with the community to spread awareness.</p>
+                                    <div class="points-breakdown">
+                                        <div class="breakdown-item">
+                                            <i class="fas fa-circle"></i>
+                                            <span>Social media share: <strong>10 points</strong></span>
+                                        </div>
+                                        <div class="breakdown-item">
+                                            <i class="fas fa-circle"></i>
+                                            <span>Community comment: <strong>+2 points</strong></span>
+                                        </div>
+                                        <div class="breakdown-item">
+                                            <i class="fas fa-circle"></i>
+                                            <span>Invite friends: <strong>+15 points</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Available Rewards Section -->
+                    <div class="rewards-section">
+                        <div class="section-header">
+                            <h2>Available Rewards</h2>
+                            <p>Redeem your hard-earned points for exclusive benefits and services</p>
+                        </div>
+                        
+                        <div class="rewards-grid">
+                            <div class="reward-item premium">
+                                <div class="reward-badge">Most Popular</div>
+                                <div class="reward-header">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-subway"></i>
+                                    </div>
+                                    <h3>Metro Card</h3>
+                                    <p>Get a free metro card with 500 points. Valid for 30 days across all metro lines.</p>
+                                </div>
+                                <div class="reward-features">
+                                    <span><i class="fas fa-check"></i> All metro lines</span>
+                                    <span><i class="fas fa-check"></i> 30 days validity</span>
+                                    <span><i class="fas fa-check"></i> No restrictions</span>
+                                    <span><i class="fas fa-check"></i> Instant activation</span>
+                                </div>
+                                <div class="reward-action">
+                                    <div class="reward-price">
+                                        <span class="price">500 pts</span>
+                                    </div>
+                                    <button class="btn btn-primary" onclick="redeemMetroCard()">
+                                        <i class="fas fa-gift"></i>
+                                        Redeem Now
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="reward-item">
+                                <div class="reward-header">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-percentage"></i>
+                                    </div>
+                                    <h3>Municipal Discount</h3>
+                                    <p>Get 10% off on all municipal services including water, electricity, and property tax.</p>
+                                </div>
+                                <div class="reward-features">
+                                    <span><i class="fas fa-check"></i> 10% discount</span>
+                                    <span><i class="fas fa-check"></i> All services</span>
+                                    <span><i class="fas fa-check"></i> Instant activation</span>
+                                    <span><i class="fas fa-check"></i> No expiry</span>
+                                </div>
+                                <div class="reward-action">
+                                    <div class="reward-price">
+                                        <span class="price">200 pts</span>
+                                    </div>
+                                    <button class="btn btn-primary" onclick="redeemDiscount()">
+                                        <i class="fas fa-gift"></i>
+                                        Redeem Now
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="reward-item">
+                                <div class="reward-header">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-certificate"></i>
+                                    </div>
+                                    <h3>Community Certificate</h3>
+                                    <p>Official certificate recognizing your contribution to community development.</p>
+                                </div>
+                                <div class="reward-features">
+                                    <span><i class="fas fa-check"></i> Official certificate</span>
+                                    <span><i class="fas fa-check"></i> Digital copy</span>
+                                    <span><i class="fas fa-check"></i> Shareable</span>
+                                    <span><i class="fas fa-check"></i> LinkedIn ready</span>
+                                </div>
+                                <div class="reward-action">
+                                    <div class="reward-price">
+                                        <span class="price">100 pts</span>
+                                    </div>
+                                    <button class="btn btn-primary" onclick="redeemCertificate()">
+                                        <i class="fas fa-gift"></i>
+                                        Redeem Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coming Soon Section -->
+                    <div class="rewards-section">
+                        <div class="section-header">
+                            <h2>Coming Soon</h2>
+                            <p>Exciting new rewards are on the way. Stay tuned for more opportunities to redeem your points!</p>
+                        </div>
+                        
+                        <div class="rewards-grid">
+                            <div class="reward-item coming-soon">
+                                <div class="reward-header">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-car"></i>
+                                    </div>
+                                    <h3>Parking Pass</h3>
+                                    <p>Free parking for 7 days at municipal parking lots across the city.</p>
+                                </div>
+                                <div class="reward-action">
+                                    <div class="reward-price">
+                                        <span class="price">300 pts</span>
+                                    </div>
+                                    <button class="btn btn-secondary" disabled>
+                                        <i class="fas fa-clock"></i>
+                                        Coming Soon
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="reward-item coming-soon">
+                                <div class="reward-header">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <h3>Library Membership</h3>
+                                    <p>Free access to municipal libraries for 3 months with all premium services.</p>
+                                </div>
+                                <div class="reward-action">
+                                    <div class="reward-price">
+                                        <span class="price">400 pts</span>
+                                    </div>
+                                    <button class="btn btn-secondary" disabled>
+                                        <i class="fas fa-clock"></i>
+                                        Coming Soon
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div class="tab-content" id="settings">
+                    <div class="settings-grid">
+                        <div class="settings-card">
+                            <h3>Account Settings</h3>
+                            <form id="profileForm" class="settings-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="editFirstName">First Name</label>
+                                        <input type="text" id="editFirstName" value="Rajesh">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="editLastName">Last Name</label>
+                                        <input type="text" id="editLastName" value="Kumar">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editEmail">Email</label>
+                                    <input type="email" id="editEmail" value="rajesh.kumar@email.com" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editPhone">Phone</label>
+                                    <input type="tel" id="editPhone" value="+91 98765 43210">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editCity">City</label>
+                                    <select id="editCity">
+                                        <option value="mumbai" selected>Mumbai, Maharashtra</option>
+                                        <option value="delhi">Delhi, NCR</option>
+                                        <option value="bangalore">Bangalore, Karnataka</option>
+                                        <option value="hyderabad">Hyderabad, Telangana</option>
+                                        <option value="chennai">Chennai, Tamil Nadu</option>
+                                        <option value="kolkata">Kolkata, West Bengal</option>
+                                        <option value="pune">Pune, Maharashtra</option>
+                                        <option value="ahmedabad">Ahmedabad, Gujarat</option>
+                                        <option value="jaipur">Jaipur, Rajasthan</option>
+                                        <option value="lucknow">Lucknow, Uttar Pradesh</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary" onclick="saveProfileSettings(); return false;">Save Changes</button>
+                            </form>
+                        </div>
+
+                        <div class="settings-card">
+                            <h3>Notification Settings</h3>
+                            <div class="notification-settings">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="emailNotifications" checked>
+                                    <span class="checkmark"></span>
+                                    Email notifications
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="smsNotifications">
+                                    <span class="checkmark"></span>
+                                    SMS notifications
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="issueUpdates" checked>
+                                    <span class="checkmark"></span>
+                                    Issue status updates
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="rewardAlerts" checked>
+                                    <span class="checkmark"></span>
+                                    Reward and point alerts
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="newsletter" checked>
+                                    <span class="checkmark"></span>
+                                    Newsletter and updates
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="settings-card">
+                            <h3>Privacy & Security</h3>
+                            <div class="privacy-settings">
+                                <button class="btn btn-secondary" onclick="showChangePasswordModal()">
+                                    <i class="fas fa-key"></i>
+                                    Change Password
+                                </button>
+                                <button class="btn btn-secondary" onclick="exportUserData()">
+                                    <i class="fas fa-download"></i>
+                                    Export My Data
+                                </button>
+                                <button class="btn btn-danger" onclick="showDeleteAccountModal()">
+                                    <i class="fas fa-trash"></i>
+                                    Delete Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Samadhan Kendra</h3>
+                    <p>Empowering Indian citizens through AI-driven civic engagement and smart city solutions.</p>
+                 
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#report">Report Issue</a></li>
+                        <li><a href="index.html#issues">View Issues</a></li>
+                        <li><a href="index.html#leaderboard">Leaderboard</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="rewards-program.html">Rewards Program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #1e293b;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .modal-content {
+            padding: 1.5rem;
+        }
+
+        /* Enhanced Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            max-width: 400px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-success {
+            border-left-color: #10b981;
+        }
+
+        .notification-error {
+            border-left-color: #ef4444;
+        }
+
+        .notification-info {
+            border-left-color: #3b82f6;
+        }
+
+        .notification-warning {
+            border-left-color: #f59e0b;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #64748b;
+            margin-left: auto;
+        }
+
+        /* Form Styles for Modal */
+        .modal-content .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .modal-content label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .modal-content input:focus,
+        .modal-content textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .modal-content textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Delete Account Warning */
+        .delete-account-warning {
+            text-align: center;
+        }
+
+        .delete-account-warning h3 {
+            color: #dc3545;
+            margin-bottom: 1rem;
+        }
+
+        .delete-account-warning p {
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Issue Details Modal */
+        .issue-details-modal h3 {
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .issue-details-modal p {
+            margin-bottom: 0.75rem;
+            color: #374151;
+        }
+
+        .issue-details-modal strong {
+            color: #1e293b;
+        }
+
+        /* Responsive Modal */
+        @media (max-width: 768px) {
+            .modal {
+                width: 95%;
+                margin: 1rem;
+            }
+            
+            .notification {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+        }
+
+        /* Achievement Styles */
+        .achievement {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .achievement:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            background: #f8fafc;
+        }
+
+        .achievement:active {
+            transform: translateY(0);
+        }
+
+        /* Achievement Details */
+        .achievement-details {
+            text-align: center;
+        }
+
+        .achievement-details h3 {
+            margin-bottom: 1rem;
+        }
+
+        .achievement-details p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Rewards Styles */
+        .rewards-hero-section {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 25%, #ff8e53 50%, #ffa726 75%, #ffcc02 100%);
+            background-size: 400% 400%;
+            border-radius: 25px;
+            padding: 4rem 3rem;
+            margin-bottom: 3rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 20px 50px rgba(255, 107, 107, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .rewards-hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.15"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.15"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.15"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.15"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.15"/><circle cx="30" cy="80" r="0.8" fill="white" opacity="0.1"/><circle cx="70" cy="20" r="0.8" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-content {
+            flex: 1;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-features {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-features span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 500;
+        }
+
+        .hero-features i {
+            color: #ffd700;
+        }
+
+        .hero-stats {
+            z-index: 1;
+            position: relative;
+        }
+
+        .current-balance-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            min-width: 250px;
+        }
+
+        .balance-header h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        .balance-header p {
+            margin: 0 0 1.5rem 0;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .balance-amount {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .points-display {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ffd700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            line-height: 1;
+        }
+
+        .points-label {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .balance-progress {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ffed4e);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .earn-points-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .earning-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .method-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            border: 1px solid #e2e8f0;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+        }
+
+        .method-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e53, #ffa726);
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .method-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .method-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .method-card:hover .method-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .method-icon i {
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .method-content h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .points-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .method-content p {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .points-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .breakdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .breakdown-item i {
+            color: #667eea;
+            font-size: 0.5rem;
+        }
+
+        .breakdown-item strong {
+            color: #1e293b;
+        }
+
+        .rewards-hero-content h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .rewards-hero-content p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .points-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .points-icon {
+            font-size: 2rem;
+            color: #ffd700;
+        }
+
+        .points-info h4 {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .points-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+            margin: 0.25rem 0;
+        }
+
+        .rewards-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card i {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card h4 {
+            margin: 0 0 0.5rem 0;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .stat-card span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .rewards-section {
+            margin-bottom: 3rem;
+        }
+
+        .rewards-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .rewards-section {
+            margin-bottom: 4rem;
+        }
+
+        .reward-item {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(0);
+        }
+
+        .reward-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .reward-item.premium {
+            border: 2px solid #ff6b6b;
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            position: relative;
+        }
+
+        .reward-item.premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e53, #ffa726);
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        .reward-item.coming-soon {
+            opacity: 0.7;
+            background: #f8fafc;
+        }
+
+        .reward-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .reward-icon {
+            font-size: 3.5rem;
+            color: #ff6b6b;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .reward-item:hover .reward-icon {
+            transform: scale(1.1);
+            color: #ff8e53;
+        }
+
+        .reward-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .reward-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .reward-header p {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        .reward-features {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .reward-features span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .reward-features i {
+            color: #10b981;
+            font-size: 0.8rem;
+        }
+
+        .reward-features {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            flex: 1;
+        }
+
+        .reward-features span {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .reward-features i {
+            color: #10b981;
+            font-size: 0.8rem;
+        }
+
+        .reward-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+            margin-top: auto;
+        }
+
+        .price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .reward-action .btn {
+            padding: 1rem 2rem;
+            font-weight: 700;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .reward-action .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            background: linear-gradient(135deg, #ff8e53, #ffa726);
+        }
+
+        .reward-action .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Rewards Tab Button Styling */
+        .rewards-tab {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .rewards-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .rewards-tab:hover::before {
+            left: 100%;
+        }
+
+        .rewards-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .rewards-tab.active {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .rewards-tab i {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Enhanced Tab Styling */
+        .profile-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: #f8fafc;
+            padding: 0.5rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: white;
+            color: #64748b;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-btn:hover {
+            background: #f1f5f9;
+            color: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .rewards-hero-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+
+            .rewards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reward-action {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .profile-tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                min-width: 120px;
+            }
+        }
+    </style>
+    <script>
+        // Immediate test to verify JavaScript is working
+        console.log('JavaScript is loaded!');
+    </script>
+    <script src="script.js"></script>
+    <script>
+        // Test function to verify JavaScript is working
+        function testFunction() {
+            alert('JavaScript is working!');
+            console.log('Test function called successfully');
+        }
+        
+        // Make test function globally available
+        window.testFunction = testFunction;
+        // Initialize the page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Profile page loaded');
+            
+            // Check login status immediately
+            const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+            
+            if (!isLoggedIn) {
+                console.log('User not logged in, showing login prompt');
+                showLoginPrompt();
+                return;
+            }
+            
+            console.log('User is logged in, initializing profile');
+            initializeProfile();
+            
+            // Test if buttons are accessible
+            setTimeout(() => {
+                const testButtons = document.querySelectorAll('button[onclick]');
+                console.log('Found', testButtons.length, 'buttons with onclick handlers');
+                
+                // Test all button functions
+                testButtons.forEach(btn => {
+                    console.log('Button found:', btn.textContent.trim(), 'with onclick:', btn.getAttribute('onclick'));
+                });
+                
+                // Test tab buttons
+                const tabButtons = document.querySelectorAll('.tab-btn');
+                console.log('Found', tabButtons.length, 'tab buttons');
+                
+                // Test quick action buttons
+                const quickActionButtons = document.querySelectorAll('.quick-actions button');
+                console.log('Found', quickActionButtons.length, 'quick action buttons');
+            }, 1000);
+        });
+
+        // Initialize profile functionality
+        function initializeProfile() {
+            // Check if user is logged in
+            const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+            
+            if (!isLoggedIn) {
+                // User is not logged in, show login prompt
+                showLoginPrompt();
+                return;
+            }
+
+            // User is logged in, load user data
+            loadUserData();
+            
+            // Update navigation for logged in user
+            updateNavigationForLoggedInUser();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Add click outside modal functionality
+            document.addEventListener('click', function(event) {
+                const modal = document.querySelector('.modal-overlay');
+                if (modal && event.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    closeModal();
+                }
+            });
+            
+            // Show welcome message
+            setTimeout(() => {
+                showNotification('Welcome to your profile! All features are now active.', 'success');
+            }, 1000);
+            
+            // Add global click handler for debugging
+            document.addEventListener('click', function(event) {
+                if (event.target.tagName === 'BUTTON') {
+                    console.log('Button clicked:', event.target.textContent.trim());
+                    console.log('Button onclick:', event.target.getAttribute('onclick'));
+                }
+            });
+        }
+
+        // Update navigation for logged in user
+        function updateNavigationForLoggedInUser() {
+            const profileDropdown = document.getElementById('profileDropdown');
+            if (profileDropdown) {
+                profileDropdown.innerHTML = `
+                    <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                    <a href="index.html#leaderboard"><i class="fas fa-trophy"></i> Leaderboard</a>
+                    <a href="rewards-program.html"><i class="fas fa-gift"></i> Rewards</a>
+                    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                `;
+            }
+        }
+
+        // Show login prompt when user is not logged in
+        function showLoginPrompt() {
+            const profileSection = document.querySelector('.profile-section');
+            if (profileSection) {
+                profileSection.innerHTML = `
+                    <div class="container">
+                        <div class="login-prompt" style="text-align: center; padding: 4rem 2rem; max-width: 500px; margin: 0 auto;">
+                            <div style="margin-bottom: 2rem;">
+                                <i class="fas fa-user-lock" style="font-size: 4rem; color: #64748b; margin-bottom: 1rem;"></i>
+                                <h1 style="color: #1e293b; margin-bottom: 1rem;">Login Required</h1>
+                                <p style="color: #64748b; font-size: 1.1rem; line-height: 1.6;">
+                                    You need to be logged in to view your profile. Please login to access your personal dashboard, track your reported issues, and manage your rewards.
+                                </p>
+                            </div>
+                            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                                <button class="btn btn-primary" onclick="window.location.href='login.html'">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Login Now
+                                </button>
+                                <button class="btn btn-secondary" onclick="window.location.href='register.html'">
+                                    <i class="fas fa-user-plus"></i>
+                                    Create Account
+                                </button>
+                            </div>
+                            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e2e8f0;">
+                                <p style="color: #64748b; font-size: 0.9rem;">
+                                    Don't have an account? 
+                                    <a href="register.html" style="color: #3b82f6; text-decoration: none; font-weight: 500;">
+                                        Sign up for free
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Load user data
+        function loadUserData() {
+            console.log('Loading user data...');
+            
+            // Get user data from localStorage
+            const userEmail = localStorage.getItem('userEmail') || 'user@example.com';
+            const userPoints = localStorage.getItem('userPoints') || '0';
+            const userFirstName = localStorage.getItem('userFirstName') || 'User';
+            const userLastName = localStorage.getItem('userLastName') || 'Name';
+            const userCity = localStorage.getItem('userCity') || 'mumbai';
+            const userIssues = localStorage.getItem('userIssues') || '0';
+            const userRank = localStorage.getItem('userRank') || '0';
+            const userPhone = localStorage.getItem('userPhone') || '';
+
+            // Update display elements safely
+            const elements = {
+                'userFullName': `${userFirstName} ${userLastName}`,
+                'userCity': getCityLabel(userCity),
+                'userIssues': userIssues,
+                'userRank': userRank > 0 ? `#${userRank}` : 'Not ranked'
+            };
+
+            // Update all elements with error handling
+            Object.keys(elements).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = elements[id];
+                } else {
+                    console.warn(`Element with id '${id}' not found`);
+                }
+            });
+            
+            // Update form fields safely
+            const formFields = {
+                'editFirstName': userFirstName,
+                'editLastName': userLastName,
+                'editEmail': userEmail,
+                'editCity': userCity,
+                'editPhone': userPhone
+            };
+
+            Object.keys(formFields).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.value = formFields[id];
+                } else {
+                    console.warn(`Form field with id '${id}' not found`);
+                }
+            });
+            
+            // Load notification settings
+            loadNotificationSettings();
+            
+            // Initialize points display using centralized system
+            if (typeof initializePointsDisplay === 'function') {
+                initializePointsDisplay();
+            }
+        }
+
+        // Setup all event listeners
+        function setupEventListeners() {
+            console.log('Setting up event listeners...');
+            
+            // Tab switching - use onclick instead of addEventListener for better compatibility
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.onclick = function() {
+                    console.log('Tab clicked:', this.dataset.tab);
+                    
+                    // Remove active class from all tabs and content
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    const activeContent = document.getElementById(this.dataset.tab);
+                    if (activeContent) activeContent.classList.add('active');
+                    
+                    // Load specific content for certain tabs
+                    if (this.dataset.tab === 'issues') {
+                        loadUserIssues();
+                    }
+                };
+                console.log('Tab button setup:', btn.textContent.trim(), 'for tab:', btn.dataset.tab);
+            });
+
+            // Profile form submission
+            const profileForm = document.getElementById('profileForm');
+            if (profileForm) {
+                profileForm.onsubmit = function(e) {
+                    e.preventDefault();
+                    console.log('Profile form submitted');
+                    saveProfileSettings();
+                };
+            }
+
+            // Notification settings
+            document.querySelectorAll('.notification-settings input[type="checkbox"]').forEach(checkbox => {
+                checkbox.onchange = function() {
+                    console.log('Notification setting changed');
+                    saveNotificationSettings();
+                };
+            });
+
+            // Issue status filter
+            const issueStatusFilter = document.getElementById('issueStatusFilter');
+            if (issueStatusFilter) {
+                issueStatusFilter.onchange = function() {
+                    console.log('Issue filter changed');
+                    filterIssues();
+                };
+            }
+
+            // Mobile navigation
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (hamburger && navMenu) {
+                hamburger.onclick = function() {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                };
+            }
+
+            // Close mobile menu when clicking on links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.onclick = function() {
+                    const hamburger = document.querySelector('.hamburger');
+                    const navMenu = document.querySelector('.nav-menu');
+                    if (hamburger && navMenu) {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                    }
+                };
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                const dropdown = document.getElementById('profileDropdown');
+                const avatar = document.querySelector('.user-avatar');
+                
+                if (avatar && dropdown && !avatar.contains(event.target) && !dropdown.contains(event.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            console.log('Switching to tab:', tabName);
+            
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding content
+            const activeTab = document.querySelector(`[data-tab="${tabName}"]`);
+            const activeContent = document.getElementById(tabName);
+            
+            if (activeTab) {
+                activeTab.classList.add('active');
+                console.log('Active tab set:', tabName);
+            }
+            if (activeContent) {
+                activeContent.classList.add('active');
+                console.log('Active content set:', tabName);
+            }
+            
+            // Load specific content for certain tabs
+            if (tabName === 'issues') {
+                console.log('Loading issues...');
+                loadUserIssues();
+            }
+            
+            showNotification(`Switched to ${tabName} tab`, 'success');
+        }
+
+        // Get city label
+        function getCityLabel(city) {
+            const cityLabels = {
+                'mumbai': 'Mumbai, Maharashtra',
+                'delhi': 'Delhi, NCR',
+                'bangalore': 'Bangalore, Karnataka',
+                'hyderabad': 'Hyderabad, Telangana',
+                'chennai': 'Chennai, Tamil Nadu',
+                'kolkata': 'Kolkata, West Bengal',
+                'pune': 'Pune, Maharashtra',
+                'ahmedabad': 'Ahmedabad, Gujarat',
+                'jaipur': 'Jaipur, Rajasthan',
+                'lucknow': 'Lucknow, Uttar Pradesh'
+            };
+            return cityLabels[city] || city;
+        }
+
+        // Load notification settings
+        function loadNotificationSettings() {
+            const settings = JSON.parse(localStorage.getItem('notificationSettings') || '{}');
+            
+            const checkboxes = {
+                'emailNotifications': settings.emailNotifications !== false,
+                'smsNotifications': settings.smsNotifications || false,
+                'issueUpdates': settings.issueUpdates !== false,
+                'rewardAlerts': settings.rewardAlerts !== false,
+                'newsletter': settings.newsletter !== false
+            };
+
+            Object.keys(checkboxes).forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.checked = checkboxes[id];
+                }
+            });
+        }
+
+        // Save notification settings
+        function saveNotificationSettings() {
+            const settings = {
+                emailNotifications: document.getElementById('emailNotifications')?.checked || false,
+                smsNotifications: document.getElementById('smsNotifications')?.checked || false,
+                issueUpdates: document.getElementById('issueUpdates')?.checked || false,
+                rewardAlerts: document.getElementById('rewardAlerts')?.checked || false,
+                newsletter: document.getElementById('newsletter')?.checked || false
+            };
+            
+            localStorage.setItem('notificationSettings', JSON.stringify(settings));
+            showNotification('Notification settings saved!', 'success');
+        }
+
+        // Save profile settings
+        function saveProfileSettings() {
+            const firstName = document.getElementById('editFirstName')?.value.trim() || '';
+            const lastName = document.getElementById('editLastName')?.value.trim() || '';
+            const phone = document.getElementById('editPhone')?.value.trim() || '';
+            const city = document.getElementById('editCity')?.value || 'delhi';
+            
+            // Validation
+            if (!firstName || !lastName) {
+                showNotification('Please fill in all required fields!', 'error');
+                return;
+            }
+            
+            if (phone && !/^[\+]?[0-9\s\-\(\)]{10,}$/.test(phone)) {
+                showNotification('Please enter a valid phone number!', 'error');
+                return;
+            }
+            
+            // Update localStorage
+            localStorage.setItem('userFirstName', firstName);
+            localStorage.setItem('userLastName', lastName);
+            localStorage.setItem('userPhone', phone);
+            localStorage.setItem('userCity', city);
+            
+            // Update display
+            document.getElementById('userFullName').textContent = `${firstName} ${lastName}`;
+            document.getElementById('userCity').textContent = getCityLabel(city);
+            
+            showNotification('Profile updated successfully!', 'success');
+        }
+
+        // Load user issues
+        function loadUserIssues() {
+            console.log('Loading user issues...');
+            
+            // Clear any existing content first
+            const issuesList = document.getElementById('myIssuesList');
+            if (!issuesList) {
+                console.warn('Issues list container not found');
+                return;
+            }
+            
+            // Create sample issues if none exist
+            let issues = [];
+            try {
+                const storedIssues = localStorage.getItem('userIssues');
+                if (storedIssues) {
+                    issues = JSON.parse(storedIssues);
+                }
+            } catch (error) {
+                console.error('Error parsing stored issues:', error);
+                issues = [];
+            }
+            
+            if (issues.length === 0) {
+                issues = [
+                    {
+                        id: '1',
+                        title: 'Water Pipeline Burst',
+                        description: 'Major water pipeline burst causing flooding in the area',
+                        location: 'Connaught Place, Delhi',
+                        date: '2024-01-15',
+                        status: 'investigating',
+                        upvotes: 45
+                    },
+                    {
+                        id: '2',
+                        title: 'Street Light Not Working',
+                        description: 'Street light has been non-functional for 3 days',
+                        location: 'Khan Market, Delhi',
+                        date: '2024-01-10',
+                        status: 'resolved',
+                        upvotes: 23
+                    }
+                ];
+                localStorage.setItem('userIssues', JSON.stringify(issues));
+            }
+            
+            // issuesList is already declared above, no need to redeclare
+            if (!issuesList) return;
+            
+            if (issues.length === 0) {
+                issuesList.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #64748b;">
+                        <i class="fas fa-flag" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <h3>No Issues Reported Yet</h3>
+                        <p>Start by reporting your first civic issue!</p>
+                        <button class="btn btn-primary" onclick="reportNewIssue()">
+                            <i class="fas fa-plus"></i>
+                            Report Your First Issue
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            let issuesHTML = '';
+            issues.forEach(issue => {
+                const statusClass = getStatusClass(issue.status);
+                const statusText = getStatusText(issue.status);
+                
+                issuesHTML += `
+                    <div class="issue-card">
+                        <div class="issue-header">
+                            <div class="issue-title">
+                                <i class="fas fa-flag"></i>
+                                ${issue.title}
+                            </div>
+                            <div class="issue-status ${statusClass}">${statusText}</div>
+                        </div>
+                        <div class="issue-details">
+                            <div class="issue-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${issue.location}</span>
+                            </div>
+                            <div class="issue-detail">
+                                <i class="fas fa-calendar"></i>
+                                <span>${issue.date}</span>
+                            </div>
+                            <div class="issue-detail">
+                                <i class="fas fa-thumbs-up"></i>
+                                <span>${issue.upvotes} upvotes</span>
+                            </div>
+                        </div>
+                        <div class="issue-description">
+                            ${issue.description}
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn btn-secondary btn-sm" onclick="viewIssueDetails('${issue.id}')">
+                                <i class="fas fa-eye"></i>
+                                View Details
+                            </button>
+                            <button class="btn btn-outline btn-sm" onclick="editIssue('${issue.id}')">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            issuesList.innerHTML = issuesHTML;
+        }
+
+        // Get status class
+        function getStatusClass(status) {
+            const statusClasses = {
+                'reported': 'status-reported',
+                'investigating': 'status-investigating',
+                'in-progress': 'status-in-progress',
+                'resolved': 'status-resolved'
+            };
+            return statusClasses[status] || 'status-reported';
+        }
+
+        // Get status text
+        function getStatusText(status) {
+            const statusTexts = {
+                'reported': 'Reported',
+                'investigating': 'Investigating',
+                'in-progress': 'In Progress',
+                'resolved': 'Resolved'
+            };
+            return statusTexts[status] || 'Reported';
+        }
+
+        // Filter issues by status
+        function filterIssues() {
+            console.log('Filtering issues...');
+            
+            const filterValue = document.getElementById('issueStatusFilter')?.value || 'all';
+            const issues = JSON.parse(localStorage.getItem('userIssues') || '[]');
+            const issuesList = document.getElementById('myIssuesList');
+            
+            if (!issuesList) return;
+            
+            let filteredIssues = issues;
+            if (filterValue !== 'all') {
+                filteredIssues = issues.filter(issue => issue.status === filterValue);
+            }
+            
+            if (filteredIssues.length === 0) {
+                issuesList.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #64748b;">
+                        <i class="fas fa-filter" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <h3>No Issues Found</h3>
+                        <p>No issues match the selected filter.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let issuesHTML = '';
+            filteredIssues.forEach(issue => {
+                const statusClass = getStatusClass(issue.status);
+                const statusText = getStatusText(issue.status);
+                
+                issuesHTML += `
+                    <div class="issue-card">
+                        <div class="issue-header">
+                            <div class="issue-title">
+                                <i class="fas fa-flag"></i>
+                                ${issue.title}
+                            </div>
+                            <div class="issue-status ${statusClass}">${statusText}</div>
+                        </div>
+                        <div class="issue-details">
+                            <div class="issue-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${issue.location}</span>
+                            </div>
+                            <div class="issue-detail">
+                                <i class="fas fa-calendar"></i>
+                                <span>${issue.date}</span>
+                            </div>
+                            <div class="issue-detail">
+                                <i class="fas fa-thumbs-up"></i>
+                                <span>${issue.upvotes} upvotes</span>
+                            </div>
+                        </div>
+                        <div class="issue-description">
+                            ${issue.description}
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn btn-secondary btn-sm" onclick="viewIssueDetails('${issue.id}')">
+                                <i class="fas fa-eye"></i>
+                                View Details
+                            </button>
+                            <button class="btn btn-outline btn-sm" onclick="editIssue('${issue.id}')">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            issuesList.innerHTML = issuesHTML;
+        }
+
+        // Profile dropdown toggle
+        function toggleProfileMenu() {
+            console.log('Toggling profile menu');
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('active');
+            }
+        }
+
+        // Logout function
+        function logout() {
+            console.log('Logging out...');
+            
+            // Clear all user-related localStorage (matching script.js)
+            localStorage.removeItem('userToken');
+            localStorage.removeItem('userData');
+            localStorage.removeItem('userPoints');
+            localStorage.removeItem('userLoggedIn');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userFirstName');
+            localStorage.removeItem('userLastName');
+            localStorage.removeItem('userCity');
+            localStorage.removeItem('userPhone');
+            localStorage.removeItem('userIssues');
+            localStorage.removeItem('userRank');
+            
+            showNotification('Successfully logged out!', 'success');
+            
+            // Redirect to home page after a short delay (matching script.js)
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+
+        // Show notification function
+        function showNotification(message, type = 'info') {
+            console.log('Showing notification:', message, type);
+            
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            });
+            
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            
+            const iconMap = {
+                'success': 'check-circle',
+                'error': 'exclamation-circle',
+                'warning': 'exclamation-triangle',
+                'info': 'info-circle'
+            };
+            
+            notification.innerHTML = `
+                <i class="fas fa-${iconMap[type] || 'info-circle'}" style="color: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#3b82f6'}"></i>
+                <span style="flex: 1;">${message}</span>
+                <button onclick="this.parentElement.remove()" class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            document.body.appendChild(notification);
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+
+        // All the button functions - Make them globally available
+        window.editAvatar = function() {
+            console.log('Edit avatar clicked - FUNCTION CALLED');
+            showNotification('Avatar editing feature coming soon!', 'info');
+            
+            // Create a file input for avatar upload
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    showNotification('Avatar uploaded successfully!', 'success');
+                }
+            };
+            input.click();
+        };
+
+        window.editProfile = function() {
+            console.log('Edit profile clicked - FUNCTION CALLED');
+            showNotification('Switching to Settings tab...', 'info');
+            switchTab('settings');
+        };
+
+        window.reportNewIssue = function() {
+            console.log('Report new issue clicked - FUNCTION CALLED');
+            showNotification('Redirecting to report issue page...', 'info');
+            setTimeout(() => {
+                window.location.href = 'index.html#report';
+            }, 1000);
+        };
+
+        window.viewLeaderboard = function() {
+            console.log('View leaderboard clicked - FUNCTION CALLED');
+            showNotification('Redirecting to leaderboard...', 'info');
+            setTimeout(() => {
+                window.location.href = 'index.html#leaderboard';
+            }, 1000);
+        };
+
+        window.redeemRewards = function() {
+            console.log('Redeem rewards clicked - FUNCTION CALLED');
+            showNotification('Switching to Rewards tab...', 'info');
+            switchTab('rewards');
+        };
+
+        window.inviteFriends = function() {
+            console.log('Invite friends clicked - FUNCTION CALLED');
+            showNotification('Invite friends feature coming soon!', 'info');
+            
+            // Simulate invite functionality
+            const inviteLink = window.location.origin + '/register.html?ref=' + Math.random().toString(36).substr(2, 9);
+            navigator.clipboard.writeText(inviteLink).then(() => {
+                showNotification('Invite link copied to clipboard!', 'success');
+            }).catch(() => {
+                showNotification('Invite link: ' + inviteLink, 'info');
+            });
+        };
+
+        // Add missing functions for reward redemption
+        window.redeemMetroCard = function() {
+            redeemReward('metro', 500);
+        };
+
+        window.redeemDiscount = function() {
+            redeemReward('discount', 200);
+        };
+
+        window.redeemCertificate = function() {
+            redeemReward('certificate', 100);
+        };
+
+        window.redeemReward = function(type, points) {
+            console.log('Redeeming reward:', type, points);
+            
+            const currentPoints = parseInt(localStorage.getItem('userPoints') || '0');
+            if (currentPoints >= points) {
+                const newPoints = currentPoints - points;
+                
+                // Use centralized points update function
+                if (typeof updateUserPoints === 'function') {
+                    updateUserPoints(newPoints);
+                } else {
+                    localStorage.setItem('userPoints', newPoints.toString());
+                }
+                
+                // Show success message with reward details
+                const rewardNames = {
+                    'metro': 'Metro Card',
+                    'discount': 'Municipal Discount',
+                    'certificate': 'Community Certificate'
+                };
+                
+                showNotification(`Successfully redeemed ${rewardNames[type]}! ${points} points deducted.`, 'success');
+            } else {
+                showNotification('Insufficient points. Keep reporting issues to earn more!', 'error');
+            }
+        };
+
+        // Add missing functions for settings buttons
+        window.showChangePasswordModal = function() {
+            changePassword();
+        };
+
+        window.exportUserData = function() {
+            exportData();
+        };
+
+        window.showDeleteAccountModal = function() {
+            deleteAccount();
+        };
+
+        // Add missing functions for achievement modals
+        window.showAchievementModal = function(achievementId) {
+            console.log('Show achievement modal:', achievementId);
+            const achievements = {
+                'first-report': {
+                    title: 'First Report',
+                    description: 'You successfully reported your first civic issue! This is the beginning of your journey as an active citizen.',
+                    icon: 'fas fa-medal',
+                    color: '#f59e0b',
+                    date: 'January 15, 2024',
+                    points: '+25 points'
+                },
+                'community-helper': {
+                    title: 'Community Helper',
+                    description: 'You\'ve reported 10+ issues and are making a real difference in your community. Keep up the great work!',
+                    icon: 'fas fa-star',
+                    color: '#3b82f6',
+                    date: 'January 20, 2024',
+                    points: '+100 points'
+                },
+                'top-contributor': {
+                    title: 'Top Contributor',
+                    description: 'Congratulations! You\'ve reached the top 10 in city rankings. Your dedication to community improvement is inspiring!',
+                    icon: 'fas fa-crown',
+                    color: '#10b981',
+                    date: 'January 25, 2024',
+                    points: '+500 points'
+                }
+            };
+            
+            const achievement = achievements[achievementId];
+            if (achievement) {
+                const achievementHTML = `
+                    <div class="achievement-details">
+                        <div style="text-align: center; margin-bottom: 2rem;">
+                            <i class="${achievement.icon}" style="font-size: 4rem; color: ${achievement.color}; margin-bottom: 1rem;"></i>
+                            <h3 style="color: ${achievement.color};">${achievement.title}</h3>
+                        </div>
+                        <p><strong>Date Earned:</strong> ${achievement.date}</p>
+                        <p><strong>Points Awarded:</strong> <span style="color: #10b981; font-weight: bold;">${achievement.points}</span></p>
+                        <p>${achievement.description}</p>
+                    </div>
+                `;
+                
+                showModal('Achievement Unlocked!', achievementHTML);
+            }
+        };
+
+        function changePassword() {
+            console.log('Change password clicked');
+            
+            const passwordHTML = `
+                <form id="changePasswordForm">
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" id="currentPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" id="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Change Password</button>
+                </form>
+            `;
+            
+            showModal('Change Password', passwordHTML);
+            
+            // Handle form submission
+            setTimeout(() => {
+                const form = document.getElementById('changePasswordForm');
+                if (form) {
+                    form.onsubmit = function(e) {
+                        e.preventDefault();
+                        
+                        const newPassword = document.getElementById('newPassword').value;
+                        const confirmPassword = document.getElementById('confirmPassword').value;
+                        
+                        if (newPassword !== confirmPassword) {
+                            showNotification('Passwords do not match!', 'error');
+                            return;
+                        }
+                        
+                        if (newPassword.length < 6) {
+                            showNotification('Password must be at least 6 characters!', 'error');
+                            return;
+                        }
+                        
+                        showNotification('Password changed successfully!', 'success');
+                        closeModal();
+                    };
+                }
+            }, 100);
+        }
+
+        function exportData() {
+            console.log('Export data clicked');
+            
+            // Get user data
+            const userData = {
+                profile: {
+                    firstName: localStorage.getItem('userFirstName'),
+                    lastName: localStorage.getItem('userLastName'),
+                    email: localStorage.getItem('userEmail'),
+                    city: localStorage.getItem('userCity'),
+                    phone: localStorage.getItem('userPhone'),
+                    points: localStorage.getItem('userPoints')
+                },
+                issues: JSON.parse(localStorage.getItem('userIssues') || '[]'),
+                settings: JSON.parse(localStorage.getItem('notificationSettings') || '{}')
+            };
+            
+            // Create and download JSON file
+            const dataStr = JSON.stringify(userData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'samadhan-kendra-data.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            showNotification('Data exported successfully!', 'success');
+        }
+
+        function deleteAccount() {
+            console.log('Delete account clicked');
+            
+            const deleteHTML = `
+                <div class="delete-account-warning">
+                    <i class="fas fa-exclamation-triangle" style="color: #dc3545; font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <h3>Delete Account</h3>
+                    <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                    <p>All your data including issues, points, and settings will be permanently removed.</p>
+                    <div style="margin-top: 2rem;">
+                        <button class="btn btn-danger" onclick="confirmDeleteAccount()">Yes, Delete My Account</button>
+                        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    </div>
+                </div>
+            `;
+            
+            showModal('Delete Account', deleteHTML);
+        }
+
+        function confirmDeleteAccount() {
+            // Clear all user data
+            localStorage.clear();
+            
+            showNotification('Account deleted successfully!', 'success');
+            closeModal();
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+
+        // Modal functions
+        function showModal(title, content) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal">
+                    <div class="modal-header">
+                        <h3>${title}</h3>
+                        <button onclick="closeModal()" class="modal-close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-content">
+                        ${content}
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+
+        function closeModal() {
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) {
+                modal.classList.remove('show');
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+
+        window.viewAchievement = function(achievementId) {
+            console.log('View achievement clicked:', achievementId);
+            const achievements = {
+                'first-report': {
+                    title: 'First Report',
+                    description: 'You successfully reported your first civic issue! This is the beginning of your journey as an active citizen.',
+                    icon: 'fas fa-medal',
+                    color: '#f59e0b',
+                    date: 'January 15, 2024',
+                    points: '+25 points'
+                },
+                'community-helper': {
+                    title: 'Community Helper',
+                    description: 'You\'ve reported 10+ issues, showing your commitment to improving your community. Keep up the great work!',
+                    icon: 'fas fa-star',
+                    color: '#3b82f6',
+                    date: 'January 20, 2024',
+                    points: '+50 points'
+                },
+                'top-contributor': {
+                    title: 'Top Contributor',
+                    description: 'You\'ve reached the top 10 in your city rankings! Your contributions are making a real difference.',
+                    icon: 'fas fa-crown',
+                    color: '#10b981',
+                    date: 'January 25, 2024',
+                    points: '+100 points'
+                }
+            };
+
+            const achievement = achievements[achievementId];
+            if (achievement) {
+                const achievementHTML = `
+                    <div class="achievement-details">
+                        <div style="text-align: center; margin-bottom: 2rem;">
+                            <i class="${achievement.icon}" style="font-size: 4rem; color: ${achievement.color}; margin-bottom: 1rem;"></i>
+                            <h3 style="color: ${achievement.color};">${achievement.title}</h3>
+                        </div>
+                        <p style="margin-bottom: 1rem; line-height: 1.6;">${achievement.description}</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                            <span><strong>Earned:</strong> ${achievement.date}</span>
+                            <span style="color: ${achievement.color}; font-weight: bold;">${achievement.points}</span>
+                        </div>
+                    </div>
+                `;
+                
+                showModal('Achievement Details', achievementHTML);
+            }
+        };
+
+        // Add missing functions
+        window.editIssue = function(issueId) {
+            console.log('Edit issue:', issueId);
+            showNotification('Issue editing feature coming soon!', 'info');
+        };
+
+        window.toggleProfileMenu = function() {
+            console.log('Toggling profile menu');
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('active');
+            }
+        };
+
+        window.logout = function() {
+            console.log('Logging out...');
+            showNotification('Successfully logged out!', 'success');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        };
+
+        // Add all missing functions for full functionality
+        window.showNotification = function(message, type = 'info') {
+            console.log('Showing notification:', message, type);
+            
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            });
+            
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            
+            const iconMap = {
+                'success': 'check-circle',
+                'error': 'exclamation-circle',
+                'warning': 'exclamation-triangle',
+                'info': 'info-circle'
+            };
+            
+            notification.innerHTML = `
+                <i class="fas fa-${iconMap[type] || 'info-circle'}" style="color: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#3b82f6'}"></i>
+                <span style="flex: 1;">${message}</span>
+                <button onclick="this.parentElement.remove()" class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            document.body.appendChild(notification);
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        };
+
+        window.showModal = function(title, content) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal">
+                    <div class="modal-header">
+                        <h3>${title}</h3>
+                        <button onclick="closeModal()" class="modal-close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-content">
+                        ${content}
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            setTimeout(() => modal.classList.add('show'), 10);
+        };
+
+        window.closeModal = function() {
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) {
+                modal.classList.remove('show');
+                setTimeout(() => modal.remove(), 300);
+            }
+        };
+
+        window.getStatusClass = function(status) {
+            const statusClasses = {
+                'reported': 'status-reported',
+                'investigating': 'status-investigating',
+                'in-progress': 'status-in-progress',
+                'resolved': 'status-resolved'
+            };
+            return statusClasses[status] || 'status-reported';
+        };
+
+        window.getStatusText = function(status) {
+            const statusTexts = {
+                'reported': 'Reported',
+                'investigating': 'Investigating',
+                'in-progress': 'In Progress',
+                'resolved': 'Resolved'
+            };
+            return statusTexts[status] || 'Reported';
+        };
+
+        // Smooth tab switching function
+        window.switchTab = function(tabName) {
+            console.log('Switching to tab:', tabName);
+            
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding content
+            const activeTab = document.querySelector(`[data-tab="${tabName}"]`);
+            const activeContent = document.getElementById(tabName);
+            
+            if (activeTab) {
+                activeTab.classList.add('active');
+                console.log('Active tab set:', tabName);
+            }
+            if (activeContent) {
+                activeContent.classList.add('active');
+                console.log('Active content set:', tabName);
+            }
+            
+            // Load specific content for certain tabs
+            if (tabName === 'issues') {
+                loadUserIssues();
+            }
+            
+            // Show success notification for smooth UX
+            showNotification(`Switched to ${tabName} tab`, 'success');
+        };
+
+        // Achievement modal function
+        window.showAchievementModal = function(achievementId) {
+            const achievements = {
+                'first-report': {
+                    title: 'First Report',
+                    description: 'You successfully reported your first civic issue! This is the beginning of your journey as an active citizen.',
+                    icon: 'fas fa-medal',
+                    color: '#f59e0b',
+                    date: 'January 15, 2024',
+                    points: '+25 points'
+                },
+                'community-helper': {
+                    title: 'Community Helper',
+                    description: 'You\'ve reported 10+ issues, showing your commitment to improving your community. Keep up the great work!',
+                    icon: 'fas fa-star',
+                    color: '#3b82f6',
+                    date: 'January 20, 2024',
+                    points: '+50 points'
+                },
+                'top-contributor': {
+                    title: 'Top Contributor',
+                    description: 'You\'ve reached the top 10 in your city rankings! Your contributions are making a real difference.',
+                    icon: 'fas fa-crown',
+                    color: '#10b981',
+                    date: 'January 25, 2024',
+                    points: '+100 points'
+                }
+            };
+
+            const achievement = achievements[achievementId];
+            if (achievement) {
+                const achievementHTML = `
+                    <div class="achievement-details">
+                        <div style="text-align: center; margin-bottom: 2rem;">
+                            <i class="${achievement.icon}" style="font-size: 4rem; color: ${achievement.color}; margin-bottom: 1rem;"></i>
+                            <h3 style="color: ${achievement.color};">${achievement.title}</h3>
+                        </div>
+                        <p style="margin-bottom: 1rem; line-height: 1.6;">${achievement.description}</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                            <span><strong>Earned:</strong> ${achievement.date}</span>
+                            <span style="color: ${achievement.color}; font-weight: bold;">${achievement.points}</span>
+                        </div>
+                    </div>
+                `;
+                
+                showModal('Achievement Details', achievementHTML);
+            }
+        };
+
+        // Invite friends function
+        window.inviteFriends = function() {
+            console.log('Invite friends function called');
+            
+            // Generate unique invite link
+            const inviteCode = Math.random().toString(36).substr(2, 9).toUpperCase();
+            const inviteLink = window.location.origin + '/register.html?ref=' + inviteCode;
+            
+            // Try to copy to clipboard
+            navigator.clipboard.writeText(inviteLink).then(() => {
+                showNotification(`Invite link copied to clipboard! Code: ${inviteCode}`, 'success');
+            }).catch(() => {
+                // Fallback for browsers that don't support clipboard API
+                showNotification(`Invite link: ${inviteLink}`, 'info');
+            });
+        };
+
+        // Save profile settings function
+        window.saveProfileSettings = function() {
+            const firstName = document.getElementById('editFirstName')?.value.trim() || '';
+            const lastName = document.getElementById('editLastName')?.value.trim() || '';
+            const phone = document.getElementById('editPhone')?.value.trim() || '';
+            const city = document.getElementById('editCity')?.value || 'delhi';
+            
+            if (!firstName || !lastName) {
+                showNotification('Please fill in all required fields!', 'error');
+                return;
+            }
+            
+            // Update localStorage
+            localStorage.setItem('userFirstName', firstName);
+            localStorage.setItem('userLastName', lastName);
+            localStorage.setItem('userPhone', phone);
+            localStorage.setItem('userCity', city);
+            
+            // Update display
+            document.getElementById('userFullName').textContent = `${firstName} ${lastName}`;
+            document.getElementById('userCity').textContent = getCityLabel(city);
+            
+            showNotification('Profile updated successfully!', 'success');
+        };
+
+        // Change password modal
+        window.showChangePasswordModal = function() {
+            const passwordHTML = `
+                <form id="changePasswordForm">
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" id="currentPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" id="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Change Password</button>
+                </form>
+            `;
+            
+            showModal('Change Password', passwordHTML);
+            
+            setTimeout(() => {
+                const form = document.getElementById('changePasswordForm');
+                if (form) {
+                    form.onsubmit = function(e) {
+                        e.preventDefault();
+                        const newPassword = document.getElementById('newPassword').value;
+                        const confirmPassword = document.getElementById('confirmPassword').value;
+                        
+                        if (newPassword !== confirmPassword) {
+                            showNotification('Passwords do not match!', 'error');
+                            return;
+                        }
+                        
+                        if (newPassword.length < 6) {
+                            showNotification('Password must be at least 6 characters!', 'error');
+                            return;
+                        }
+                        
+                        showNotification('Password changed successfully!', 'success');
+                        closeModal();
+                    };
+                }
+            }, 100);
+        };
+
+        // Export user data function
+        window.exportUserData = function() {
+            const userData = {
+                profile: {
+                    firstName: localStorage.getItem('userFirstName'),
+                    lastName: localStorage.getItem('userLastName'),
+                    email: localStorage.getItem('userEmail'),
+                    city: localStorage.getItem('userCity'),
+                    phone: localStorage.getItem('userPhone'),
+                    points: localStorage.getItem('userPoints')
+                },
+                issues: JSON.parse(localStorage.getItem('userIssues') || '[]'),
+                settings: JSON.parse(localStorage.getItem('notificationSettings') || '{}')
+            };
+            
+            const dataStr = JSON.stringify(userData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'samadhan-kendra-data.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            showNotification('Data exported successfully!', 'success');
+        };
+
+        // Delete account modal
+        window.showDeleteAccountModal = function() {
+            const deleteHTML = `
+                <div class="delete-account-warning">
+                    <i class="fas fa-exclamation-triangle" style="color: #dc3545; font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <h3>Delete Account</h3>
+                    <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                    <p>All your data including issues, points, and settings will be permanently removed.</p>
+                    <div style="margin-top: 2rem;">
+                        <button class="btn btn-danger" onclick="confirmDeleteAccount()">Yes, Delete My Account</button>
+                        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    </div>
+                </div>
+            `;
+            
+            showModal('Delete Account', deleteHTML);
+        };
+
+        window.confirmDeleteAccount = function() {
+            localStorage.clear();
+            showNotification('Account deleted successfully!', 'success');
+            closeModal();
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        };
+
+        // Simple reward functions
+        window.redeemMetroCard = function() {
+            const currentPoints = parseInt(document.getElementById('availablePoints').textContent.replace(',', ''));
+            if (currentPoints >= 500) {
+                const newPoints = currentPoints - 500;
+                document.getElementById('availablePoints').textContent = newPoints.toLocaleString();
+                document.getElementById('userPoints').textContent = newPoints.toLocaleString();
+                document.getElementById('navUserPoints').textContent = newPoints.toLocaleString();
+                alert('Metro Card redeemed successfully! 500 points deducted.');
+            } else {
+                alert('Insufficient points. You need 500 points to redeem Metro Card.');
+            }
+        };
+
+        window.redeemDiscount = function() {
+            const currentPoints = parseInt(document.getElementById('availablePoints').textContent.replace(',', ''));
+            if (currentPoints >= 200) {
+                const newPoints = currentPoints - 200;
+                document.getElementById('availablePoints').textContent = newPoints.toLocaleString();
+                document.getElementById('userPoints').textContent = newPoints.toLocaleString();
+                document.getElementById('navUserPoints').textContent = newPoints.toLocaleString();
+                alert('Municipal Discount redeemed successfully! 200 points deducted.');
+            } else {
+                alert('Insufficient points. You need 200 points to redeem Municipal Discount.');
+            }
+        };
+
+        window.redeemCertificate = function() {
+            const currentPoints = parseInt(document.getElementById('availablePoints').textContent.replace(',', ''));
+            if (currentPoints >= 100) {
+                const newPoints = currentPoints - 100;
+                document.getElementById('availablePoints').textContent = newPoints.toLocaleString();
+                document.getElementById('userPoints').textContent = newPoints.toLocaleString();
+                document.getElementById('navUserPoints').textContent = newPoints.toLocaleString();
+                alert('Certificate redeemed successfully! 100 points deducted.');
+            } else {
+                alert('Insufficient points. You need 100 points to redeem Certificate.');
+            }
+        };
+
+        // Direct tab switching function
+        window.switchToRewardsTab = function() {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to rewards tab and content
+            const rewardsTab = document.querySelector('[data-tab="rewards"]');
+            const rewardsContent = document.getElementById('rewards');
+            
+            if (rewardsTab) rewardsTab.classList.add('active');
+            if (rewardsContent) rewardsContent.classList.add('active');
+            
+            // Show success message
+            alert('Switched to Rewards tab!');
+        };
+
+        // Direct invite friends function
+        window.inviteFriendsDirect = function() {
+            const inviteLink = 'Join Samadhan Kendra: ' + window.location.origin + '/register.html?ref=INVITE123';
+            
+            // Try to copy to clipboard
+            navigator.clipboard.writeText(inviteLink).then(() => {
+                alert('Invite link copied to clipboard!');
+            }).catch(() => {
+                alert('Invite link: ' + inviteLink);
+            });
+        };
+
+        window.viewIssueDetails = function(issueId) {
+            console.log('View issue details:', issueId);
+            
+            // Get issue data
+            const issues = JSON.parse(localStorage.getItem('userIssues') || '[]');
+            const issue = issues.find(i => i.id === issueId);
+            
+            if (issue) {
+                const detailsHTML = `
+                    <div class="issue-details-modal">
+                        <h3>${issue.title}</h3>
+                        <p><strong>Status:</strong> <span class="${getStatusClass(issue.status)}">${getStatusText(issue.status)}</span></p>
+                        <p><strong>Location:</strong> ${issue.location}</p>
+                        <p><strong>Date:</strong> ${issue.date}</p>
+                        <p><strong>Upvotes:</strong> ${issue.upvotes}</p>
+                        <p><strong>Description:</strong> ${issue.description}</p>
+                    </div>
+                `;
+                
+                showModal('Issue Details', detailsHTML);
+            } else {
+                showNotification('Issue not found!', 'error');
+            }
+        };
+
+        function editIssue(issueId) {
+            console.log('Edit issue:', issueId);
+            
+            // Get issue data
+            const issues = JSON.parse(localStorage.getItem('userIssues') || '[]');
+            const issue = issues.find(i => i.id === issueId);
+            
+            if (issue) {
+                const editHTML = `
+                    <form id="editIssueForm">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" id="editIssueTitle" value="${issue.title}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="editIssueDescription" required>${issue.description}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input type="text" id="editIssueLocation" value="${issue.location}" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Issue</button>
+                    </form>
+                `;
+                
+                showModal('Edit Issue', editHTML);
+                
+                // Handle form submission
+                setTimeout(() => {
+                    const form = document.getElementById('editIssueForm');
+                    if (form) {
+                        form.onsubmit = function(e) {
+                            e.preventDefault();
+                            
+                            // Update issue
+                            issue.title = document.getElementById('editIssueTitle').value;
+                            issue.description = document.getElementById('editIssueDescription').value;
+                            issue.location = document.getElementById('editIssueLocation').value;
+                            
+                            // Save to localStorage
+                            const updatedIssues = issues.map(i => i.id === issueId ? issue : i);
+                            localStorage.setItem('userIssues', JSON.stringify(updatedIssues));
+                            
+                            showNotification('Issue updated successfully!', 'success');
+                            closeModal();
+                            
+                            // Refresh issues list
+                            if (document.querySelector('.tab-btn.active').dataset.tab === 'issues') {
+                                loadUserIssues();
+                            }
+                        };
+                    }
+                }, 100);
+            } else {
+                showNotification('Issue not found!', 'error');
+            }
+        }
+    </script>
+    
+    <!-- Chatbot Integration -->
+    <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer></script>
+</body>
+</html>

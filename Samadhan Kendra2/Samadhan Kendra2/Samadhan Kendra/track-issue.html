@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Issue - Samadhan Kendra</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="./index.html">
+                    <i class="fas fa-handshake"></i>
+                    <span>Samadhan Kendra</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#report" class="nav-link">Report Issue</a></li>
+                <li><a href="index.html#issues" class="nav-link">View Issues</a></li>
+                <li><a href="index.html#leaderboard" class="nav-link">Leaderboard</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+            </ul>
+            <div class="nav-user">
+                <div class="user-points">
+                    <i class="fas fa-star"></i>
+                                            <span id="navUserPoints">0</span>
+                </div>
+                <div class="user-avatar" onclick="toggleProfileMenu()">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" onclick="handleProfileAccess()"><i class="fas fa-user"></i> Profile</a>
+                    <a href="rewards-program.html"><i class="fas fa-gift"></i> Rewards</a>
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+                    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Issue Tracking Section -->
+    <section class="track-issue-section">
+        <div class="container">
+            <div class="track-header">
+                <a href="index.html#issues" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Issues
+                </a>
+                <h1>Issue Tracking</h1>
+                <p>Monitor the progress of your reported civic issue</p>
+            </div>
+
+            <div class="issue-details-card">
+                <div class="issue-header">
+                    <div class="issue-title-section">
+                        <h1 id="issueTitle">Large pothole on Andheri West Road</h1>
+                        <div class="issue-meta">
+                            <span class="issue-category" id="issueCategory">🚧 Road & Infrastructure</span>
+                            <span class="issue-priority" id="issuePriority">High Priority</span>
+                            <span class="issue-status" id="issueStatus">Investigating</span>
+                        </div>
+                    </div>
+                    <div class="issue-actions">
+                        <button class="btn btn-secondary" onclick="shareIssue()">
+                            <i class="fas fa-share"></i>
+                            Share
+                        </button>
+                        <button class="btn btn-primary" onclick="upvoteIssue()">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span id="upvoteCount">12</span> Upvotes
+                        </button>
+                    </div>
+                </div>
+
+                <div class="issue-description">
+                    <h3>Description</h3>
+                    <p id="issueDescription">There is a significant pothole on Andheri West Road near the Metro station. It's causing damage to vehicles and is a safety hazard for motorists.</p>
+                </div>
+
+                <div class="issue-location">
+                    <h3>Location Details</h3>
+                    <div class="location-info">
+                        <div class="location-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="issueAddress">Andheri West Road, Near Metro Station</span>
+                        </div>
+                        <div class="location-item">
+                            <i class="fas fa-city"></i>
+                            <span id="issueCity">Mumbai, Maharashtra</span>
+                        </div>
+                        <div class="location-item">
+                            <i class="fas fa-crosshairs"></i>
+                            <span id="issueGPS">19.1197, 72.8464</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="issue-media">
+                    <h3>Media Evidence</h3>
+                    <div class="media-gallery" id="mediaGallery">
+                        <!-- Media will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Timeline -->
+            <div class="progress-section">
+                <h2>Progress Timeline</h2>
+                <div class="timeline" id="progressTimeline">
+                    <!-- Timeline will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Status Updates -->
+            <div class="status-updates-section">
+                <h2>Status Updates</h2>
+                <div class="status-updates" id="statusUpdates">
+                    <!-- Status updates will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Department Assignment -->
+            <div class="department-section">
+                <h2>Assigned Department</h2>
+                <div class="department-card">
+                    <div class="department-info">
+                        <h3>Mumbai Municipal Corporation</h3>
+                        <p>Roads & Infrastructure Department</p>
+                        <div class="contact-info">
+                            <span><i class="fas fa-phone"></i> +91 22 2262 1234</span>
+                            <span><i class="fas fa-envelope"></i> roads@mcgm.gov.in</span>
+                        </div>
+                    </div>
+                    <div class="department-status">
+                        <span class="status-badge investigating">Investigating</span>
+                        <p>Issue under review by department officials</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estimated Resolution -->
+            <div class="resolution-section">
+                <h2>Estimated Resolution</h2>
+                <div class="resolution-card">
+                    <div class="resolution-info">
+                        <div class="resolution-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <div>
+                                <h4>Estimated Start Date</h4>
+                                <p>December 20, 2024</p>
+                            </div>
+                        </div>
+                        <div class="resolution-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Estimated Duration</h4>
+                                <p>3-5 working days</p>
+                            </div>
+                        </div>
+                        <div class="resolution-item">
+                            <i class="fas fa-tools"></i>
+                            <div>
+                                <h4>Work Type</h4>
+                                <p>Road repair and resurfacing</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Issues -->
+            <div class="related-issues-section">
+                <h2>Related Issues Nearby</h2>
+                <div class="related-issues" id="relatedIssues">
+                    <!-- Related issues will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Samadhan Kendra</h3>
+                    <p>Empowering Indian citizens through AI-driven civic engagement and smart city solutions.</p>
+                    
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#report">Report Issue</a></li>
+                        <li><a href="index.html#issues">View Issues</a></li>
+                        <li><a href="index.html#leaderboard">Leaderboard</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="rewards-program.html">Rewards Program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Sample issue data (in a real app, this would come from URL parameters or an API)
+        const issueData = {
+            id: 'SK-2024-001',
+            title: 'Large pothole on Andheri West Road',
+            category: '🚧 Road & Infrastructure',
+            priority: 'High Priority',
+            status: 'Investigating',
+            description: 'There is a significant pothole on Andheri West Road near the Metro station. It\'s causing damage to vehicles and is a safety hazard for motorists.',
+            address: 'Andheri West Road, Near Metro Station',
+            city: 'Mumbai, Maharashtra',
+            gps: '19.1197, 72.8464',
+            upvotes: 12,
+            media: [
+                { type: 'image', url: 'https://via.placeholder.com/300x200/ff6b6b/ffffff?text=Pothole+Image+1', alt: 'Pothole Image 1' },
+                { type: 'image', url: 'https://via.placeholder.com/300x200/4ecdc4/ffffff?text=Pothole+Image+2', alt: 'Pothole Image 2' },
+                { type: 'video', url: 'https://via.placeholder.com/300x200/45b7d1/ffffff?text=Video+Evidence', alt: 'Video Evidence' }
+            ],
+            progress: [
+                { date: '2024-12-15', status: 'Reported', description: 'Issue reported by citizen', icon: 'fas fa-flag' },
+                { date: '2024-12-16', status: 'Under Review', description: 'Issue reviewed by municipal staff', icon: 'fas fa-eye' },
+                { date: '2024-12-17', status: 'Investigating', description: 'Department officials investigating the issue', icon: 'fas fa-search' }
+            ],
+            updates: [
+                { date: '2024-12-17', update: 'Department officials have visited the site and assessed the damage. Work order is being prepared.', author: 'Mumbai Municipal Corporation' },
+                { date: '2024-12-16', update: 'Issue has been assigned to Roads & Infrastructure Department for investigation.', author: 'Samadhan Kendra' },
+                { date: '2024-12-15', update: 'Your issue has been successfully reported and is under review.', author: 'Samadhan Kendra' }
+            ],
+            related: [
+                { id: 'SK-2024-002', title: 'Street light not working', category: '⚡ Electricity', status: 'In Progress', distance: '0.2 km' },
+                { id: 'SK-2024-003', title: 'Garbage accumulation', category: '🗑️ Garbage & Waste', status: 'Resolved', distance: '0.5 km' }
+            ]
+        };
+
+        // Load issue data
+        function loadIssueData() {
+            document.getElementById('issueTitle').textContent = issueData.title;
+            document.getElementById('issueCategory').textContent = issueData.category;
+            document.getElementById('issuePriority').textContent = issueData.priority;
+            document.getElementById('issueStatus').textContent = issueData.status;
+            document.getElementById('issueDescription').textContent = issueData.description;
+            document.getElementById('issueAddress').textContent = issueData.address;
+            document.getElementById('issueCity').textContent = issueData.city;
+            document.getElementById('issueGPS').textContent = issueData.gps;
+            document.getElementById('upvoteCount').textContent = issueData.upvotes;
+            
+            loadMediaGallery();
+            loadProgressTimeline();
+            loadStatusUpdates();
+            loadRelatedIssues();
+        }
+
+        // Load media gallery
+        function loadMediaGallery() {
+            const gallery = document.getElementById('mediaGallery');
+            gallery.innerHTML = '';
+            
+            issueData.media.forEach(media => {
+                const mediaElement = document.createElement('div');
+                mediaElement.className = 'media-item';
+                
+                if (media.type === 'image') {
+                    mediaElement.innerHTML = `
+                        <img src="${media.url}" alt="${media.alt}" onclick="openMediaViewer('${media.url}')">
+                    `;
+                } else if (media.type === 'video') {
+                    mediaElement.innerHTML = `
+                        <div class="video-placeholder" onclick="openMediaViewer('${media.url}')">
+                            <i class="fas fa-play"></i>
+                            <span>Video Evidence</span>
+                        </div>
+                    `;
+                }
+                
+                gallery.appendChild(mediaElement);
+            });
+        }
+
+        // Load progress timeline
+        function loadProgressTimeline() {
+            const timeline = document.getElementById('progressTimeline');
+            timeline.innerHTML = '';
+            
+            issueData.progress.forEach((step, index) => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = `timeline-item ${index === issueData.progress.length - 1 ? 'current' : ''}`;
+                
+                timelineItem.innerHTML = `
+                    <div class="timeline-icon">
+                        <i class="${step.icon}"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h4>${step.status}</h4>
+                        <p>${step.description}</p>
+                        <span class="timeline-date">${new Date(step.date).toLocaleDateString('en-IN')}</span>
+                    </div>
+                `;
+                
+                timeline.appendChild(timelineItem);
+            });
+        }
+
+        // Load status updates
+        function loadStatusUpdates() {
+            const updates = document.getElementById('statusUpdates');
+            updates.innerHTML = '';
+            
+            issueData.updates.forEach(update => {
+                const updateElement = document.createElement('div');
+                updateElement.className = 'status-update';
+                
+                updateElement.innerHTML = `
+                    <div class="update-header">
+                        <span class="update-date">${new Date(update.date).toLocaleDateString('en-IN')}</span>
+                        <span class="update-author">${update.author}</span>
+                    </div>
+                    <p>${update.update}</p>
+                `;
+                
+                updates.appendChild(updateElement);
+            });
+        }
+
+        // Load related issues
+        function loadRelatedIssues() {
+            const related = document.getElementById('relatedIssues');
+            related.innerHTML = '';
+            
+            issueData.related.forEach(issue => {
+                const issueElement = document.createElement('div');
+                issueElement.className = 'related-issue';
+                
+                issueElement.innerHTML = `
+                    <div class="issue-info">
+                        <h4>${issue.title}</h4>
+                        <span class="issue-category">${issue.category}</span>
+                        <span class="issue-status ${issue.status.toLowerCase().replace(' ', '-')}">${issue.status}</span>
+                    </div>
+                    <div class="issue-distance">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>${issue.distance}</span>
+                    </div>
+                `;
+                
+                related.appendChild(issueElement);
+            });
+        }
+
+        // Share issue
+        function shareIssue() {
+            if (navigator.share) {
+                navigator.share({
+                    title: issueData.title,
+                    text: `Check out this civic issue: ${issueData.title}`,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Link copied to clipboard!');
+                });
+            }
+        }
+
+        // Upvote issue
+        function upvoteIssue() {
+            const upvoteCount = document.getElementById('upvoteCount');
+            const currentCount = parseInt(upvoteCount.textContent);
+            upvoteCount.textContent = currentCount + 1;
+            
+            // Add points to user using centralized system
+            if (typeof addUserPoints === 'function') {
+                addUserPoints(5);
+            } else {
+                const currentPoints = parseInt(localStorage.getItem('userPoints') || '0');
+                localStorage.setItem('userPoints', (currentPoints + 5).toString());
+                document.getElementById('navUserPoints').textContent = (currentPoints + 5).toLocaleString();
+            }
+            
+            alert('Thank you for upvoting! You earned 5 points.');
+        }
+
+        // Open media viewer
+        function openMediaViewer(url) {
+            // In a real app, this would open a modal with the media
+            window.open(url, '_blank');
+        }
+
+        // Mobile Navigation Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Profile dropdown toggle
+        function toggleProfileMenu() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        // Logout function
+        function logout() {
+            // Use centralized logout if available
+            if (typeof window.logout === 'function') {
+                window.logout();
+            } else {
+                // Fallback logout - match the main script.js logout function
+                localStorage.removeItem('userToken');
+                localStorage.removeItem('userData');
+                localStorage.removeItem('userPoints');
+                localStorage.removeItem('userLoggedIn');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userFirstName');
+                localStorage.removeItem('userLastName');
+                localStorage.removeItem('userCity');
+                localStorage.removeItem('userPhone');
+                localStorage.removeItem('userIssues');
+                localStorage.removeItem('userRank');
+                
+                // Show logout message
+                alert('Successfully logged out!');
+                
+                // Redirect to home page
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Load user data if logged in
+        function loadUserData() {
+            // Use centralized points display system
+            if (typeof initializePointsDisplay === 'function') {
+                initializePointsDisplay();
+            } else {
+                // Fallback for pages without the centralized system
+                if (localStorage.getItem('userLoggedIn')) {
+                    const userPoints = localStorage.getItem('userPoints') || '0';
+                    const navUserPoints = document.getElementById('navUserPoints');
+                    if (navUserPoints) {
+                        navUserPoints.textContent = parseInt(userPoints).toLocaleString();
+                    }
+                }
+            }
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadIssueData();
+            loadUserData();
+        });
+    </script>
+    
+    <!-- Chatbot Integration -->
+    <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
+    <script src="https://files.botpress.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer></script>
+</body>
+</html>

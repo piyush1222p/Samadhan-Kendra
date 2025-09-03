@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewards Program - Samadhan Kendra</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="./index.html">
+                    <i class="fas fa-handshake"></i>
+                    <span>Samadhan Kendra</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#report" class="nav-link">Report Issue</a></li>
+                <li><a href="index.html#issues" class="nav-link">View Issues</a></li>
+                <li><a href="index.html#leaderboard" class="nav-link">Leaderboard</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+            </ul>
+            <div class="nav-user">
+                <div class="user-points">
+                    <i class="fas fa-star"></i>
+                                            <span id="navUserPoints">0</span>
+                </div>
+                <div class="user-avatar" onclick="toggleProfileMenu()">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" onclick="handleProfileAccess()"><i class="fas fa-user"></i> Profile</a>
+                    <a href="rewards-program.html"><i class="fas fa-gift"></i> Rewards</a>
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+                    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Rewards Program Section -->
+    <section class="rewards-section">
+        <div class="container">
+            <div class="rewards-header">
+                <h1>Rewards Program</h1>
+                <p>Earn points for your civic contributions and redeem them for exciting rewards that make a difference in your community.</p>
+                
+                <div class="user-rewards-summary">
+                    <div class="rewards-card">
+                        <div class="rewards-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="rewards-info">
+                            <h3>Your Current Balance</h3>
+                            <div class="points-display" id="userCurrentPoints">1,250</div>
+                            <p>Points available for redemption</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rewards-content">
+                <!-- How to Earn Points -->
+                <div class="rewards-section-item" id="earn-points">
+                    <h2>How to Earn Points</h2>
+                    <p>Every action you take on Samadhan Kendra contributes to building better communities and earns you valuable points.</p>
+                    
+                    <div class="earning-methods">
+                        <div class="earning-method">
+                            <div class="method-icon">
+                                <i class="fas fa-flag"></i>
+                            </div>
+                            <div class="method-details">
+                                <h3>Report New Issues</h3>
+                                <div class="points-earned">+25 points</div>
+                                <p>Earn points for every legitimate civic issue you report. Include photos, videos, and detailed descriptions for maximum points.</p>
+                                <ul>
+                                    <li>Basic report: 25 points</li>
+                                    <li>With photos: +5 bonus points</li>
+                                    <li>With videos: +10 bonus points</li>
+                                    <li>Detailed description: +5 bonus points</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="earning-method">
+                            <div class="method-icon">
+                                <i class="fas fa-thumbs-up"></i>
+                            </div>
+                            <div class="method-details">
+                                <h3>Upvote Existing Issues</h3>
+                                <div class="points-earned">+5 points</div>
+                                <p>Support issues reported by other citizens and help prioritize community concerns.</p>
+                                <ul>
+                                    <li>Each upvote: 5 points</li>
+                                    <li>Maximum 10 upvotes per day</li>
+                                    <li>Helps identify urgent issues</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="earning-method">
+                            <div class="method-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="method-details">
+                                <h3>AI Duplicate Detection</h3>
+                                <div class="points-earned">+10 points</div>
+                                <p>Help improve our AI system by confirming or reporting duplicate issues.</p>
+                                <ul>
+                                    <li>Confirm duplicate: 10 points</li>
+                                    <li>Report as new: 15 points</li>
+                                    <li>Contributes to system accuracy</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="earning-method">
+                            <div class="method-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="method-details">
+                                <h3>Daily Engagement</h3>
+                                <div class="points-earned">+5 points</div>
+                                <p>Stay active and engaged with your community every day.</p>
+                                <ul>
+                                    <li>Daily login: 5 points</li>
+                                    <li>Weekly streak bonus: +25 points</li>
+                                    <li>Monthly milestone: +100 points</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="earning-method">
+                            <div class="method-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="method-details">
+                                <h3>Community Participation</h3>
+                                <div class="points-earned">+15 points</div>
+                                <p>Engage with the community and share your experiences.</p>
+                                <ul>
+                                    <li>Comment on issues: 5 points</li>
+                                    <li>Share on social media: 10 points</li>
+                                    <li>Invite friends: 15 points per signup</li>
+                                    <li>Provide feedback: 10 points</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="earning-method">
+                            <div class="method-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="method-details">
+                                <h3>Special Achievements</h3>
+                                <div class="points-earned">+50 to +500 points</div>
+                                <p>Unlock special achievements and earn bonus points.</p>
+                                <ul>
+                                    <li>First issue report: 50 points</li>
+                                    <li>10 issues milestone: 100 points</li>
+                                    <li>City champion: 250 points</li>
+                                    <li>Community leader: 500 points</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Available Rewards -->
+                <div class="rewards-section-item" id="available-rewards">
+                    <h2>Available Rewards</h2>
+                    <p>Redeem your hard-earned points for practical rewards that benefit you and your community.</p>
+                    
+                    <div class="rewards-categories">
+                        <div class="rewards-category">
+                            <h3>🚇 Public Transport</h3>
+                            <div class="rewards-grid">
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-subway"></i>
+                                    </div>
+                                    <h4>Metro Card</h4>
+                                    <div class="points-required">500 points</div>
+                                    <p>Pre-loaded metro card with ₹100 balance</p>
+                                    <button class="btn btn-primary" onclick="redeemReward('metro-card', 500)">
+                                        Redeem Now
+                                    </button>
+                                </div>
+                                
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-bus"></i>
+                                    </div>
+                                    <h4>Bus Pass</h4>
+                                    <div class="points-required">300 points</div>
+                                    <p>Monthly bus pass for local transportation</p>
+                                    <button class="btn btn-primary" onclick="redeemReward('bus-pass', 300)">
+                                        Redeem Now
+                                    </button>
+                                </div>
+                                
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-train"></i>
+                                    </div>
+                                    <h4>Railway Discount</h4>
+                                    <div class="points-required">750 points</div>
+                                    <p>20% discount on local train tickets</p>
+                                    <button class="btn btn-primary" onclick="redeemReward('railway-discount', 750)">
+                                        Redeem Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rewards-category">
+                            <h3>💰 Municipal Services</h3>
+                            <div class="rewards-grid">
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-file-alt"></i>
+                                    </div>
+                                    <h4>Document Processing</h4>
+                                    <div class="points-required">200 points</div>
+                                    <p>Priority processing for municipal documents</p>
+                                    <button class="btn btn-primary" onclick="redeemReward('document-processing', 200)">
+                                        Redeem Now
+                                    </button>
+                                </div>
+                                
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-percentage"></i>
+                                    </div>
+                                    <h4>Property Tax Discount</h4>
+                                    <div class="points-required">1000 points</div>
+                                    <p>5% discount on annual property tax</p>
+                                    <button class="btn btn-primary" onclick="redeemReward('tax-discount', 1000)">
+                                        Redeem Now
+                                    </button>
+                                </div>
+                                
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-parking"></i>
+                                    </div>
+                                    <h4>Parking Permit</h4>
+                                    <div class="points-required">400 points</div>
+                                    <p>Annual parking permit for residential areas</p>
+                                    <button class="btn btn-primary" onclick="redeemReward('parking-permit', 400)">
+                                        Redeem Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rewards-category">
+                            <h3>🏆 Recognition & Events</h3>
+                            <div class="rewards-grid">
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-certificate"></i>
+                                    </div>
+                                    <h4>Community Certificate</h4>
+                                    <div class="points-required">150 points</div>
+                                    <p>Official certificate recognizing civic contributions</p>
+                                    <button class="btn btn-primary" onclick="redeemReward('community-certificate', 150)">
+                                        Redeem Now
+                                    </button>
+                                </div>
+                                
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                    <h4>Community Event Access</h4>
+                                    <div class="points-required">250 points</div>
+                                    <p>VIP access to local community events</p>
+                                    <button class="btn btn-primary" onclick="redeemReward('event-access', 250)">
+                                        Redeem Now
+                                    </button>
+                                </div>
+                                
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-medal"></i>
+                                    </div>
+                                    <h4>Exclusive Badge</h4>
+                                    <div class="points-required">100 points</div>
+                                    <p>Special profile badge for active contributors</p>
+                                    <button class="btn btn-primary" onclick="redeemReward('exclusive-badge', 100)">
+                                        Redeem Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rewards-category">
+                            <h3>🎁 Partner Offers</h3>
+                            <div class="rewards-grid">
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-shopping-bag"></i>
+                                    </div>
+                                    <h4>Shopping Discounts</h4>
+                                    <div class="points-required">300 points</div>
+                                    <p>15% off at partner retail stores</p>
+                                    <button class="btn btn-primary" onclick="redeemReward('shopping-discount', 300)">
+                                        Redeem Now
+                                    </button>
+                                </div>
+                                
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-utensils"></i>
+                                    </div>
+                                    <h4>Restaurant Vouchers</h4>
+                                    <div class="points-required">200 points</div>
+                                    <p>₹200 voucher at partner restaurants</p>
+                                    <button class="btn btn-primary" onclick="redeemReward('restaurant-voucher', 200)">
+                                        Redeem Now
+                                    </button>
+                                </div>
+                                
+                                <div class="reward-item">
+                                    <div class="reward-icon">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <h4>Mobile Recharge</h4>
+                                    <div class="points-required">250 points</div>
+                                    <p>₹100 mobile recharge voucher</p>
+                                    <button class="btn btn-primary" onclick="redeemReward('mobile-recharge', 250)">
+                                        Redeem Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Redemption Process -->
+                <div class="rewards-section-item" id="redemption-process">
+                    <h2>How to Redeem Rewards</h2>
+                    <p>Redeeming your points is simple and straightforward. Follow these easy steps:</p>
+                    
+                    <div class="redemption-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Choose Your Reward</h3>
+                                <p>Browse through available rewards and select the one you want to redeem. Make sure you have enough points.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Confirm Redemption</h3>
+                                <p>Click "Redeem Now" and confirm your selection. Your points will be deducted immediately.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Receive Your Reward</h3>
+                                <p>Digital rewards are delivered instantly. Physical rewards are shipped within 3-5 business days.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Enjoy & Share</h3>
+                                <p>Use your reward and share your experience with the community. Your feedback helps improve our program.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Points System Details -->
+                <div class="rewards-section-item" id="points-system">
+                    <h2>Points System Details</h2>
+                    
+                    <div class="points-info-grid">
+                        <div class="points-info-card">
+                            <h3>Points Validity</h3>
+                            <div class="info-content">
+                                <p><strong>Annual Validity:</strong> Points earned in the current year are valid until December 31st.</p>
+                                <p><strong>Carry Forward:</strong> Unused points carry over to the next year.</p>
+                                <p><strong>Special Events:</strong> Points from special events may have different validity periods.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="points-info-card">
+                            <h3>Points Limits</h3>
+                            <div class="info-content">
+                                <p><strong>Daily Cap:</strong> Maximum 100 points per day from regular activities.</p>
+                                <p><strong>Monthly Cap:</strong> Maximum 2,000 points per month from all sources.</p>
+                                <p><strong>Special Bonuses:</strong> Achievement bonuses don't count toward daily/monthly caps.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="points-info-card">
+                            <h3>Points Transfer</h3>
+                            <div class="info-content">
+                                <p><strong>Non-Transferable:</strong> Points cannot be transferred between accounts.</p>
+                                <p><strong>Family Accounts:</strong> Family members can pool points for larger rewards.</p>
+                                <p><strong>Gift Cards:</strong> Some rewards can be gifted to other users.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="points-info-card">
+                            <h3>Points Forfeiture</h3>
+                            <div class="info-content">
+                                <p><strong>Account Suspension:</strong> Points may be forfeited for policy violations.</p>
+                                <p><strong>Fraudulent Activity:</strong> Points earned through fraud will be deducted.</p>
+                                <p><strong>Account Deletion:</strong> Unused points are lost when account is deleted.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leaderboard & Competition -->
+                <div class="rewards-section-item" id="leaderboard-competition">
+                    <h2>Leaderboard & Competition</h2>
+                    <p>Compete with fellow citizens and climb the leaderboard to earn exclusive rewards and recognition.</p>
+                    
+                    <div class="competition-details">
+                        <div class="competition-card">
+                            <h3>🏆 Monthly Champions</h3>
+                            <p>Top performers each month receive special rewards:</p>
+                            <ul>
+                                <li><strong>1st Place:</strong> 500 bonus points + exclusive badge</li>
+                                <li><strong>2nd Place:</strong> 300 bonus points + special recognition</li>
+                                <li><strong>3rd Place:</strong> 200 bonus points + achievement certificate</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="competition-card">
+                            <h3>🌟 City Champions</h3>
+                            <p>Top contributors in each city get city-specific rewards:</p>
+                            <ul>
+                                <li><strong>City Leader:</strong> 1000 bonus points + city champion badge</li>
+                                <li><strong>Regional Recognition:</strong> Featured in local media</li>
+                                <li><strong>Community Events:</strong> Invitation to civic award ceremonies</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="competition-card">
+                            <h3>🎯 Special Challenges</h3>
+                            <p>Participate in themed challenges for bonus points:</p>
+                            <ul>
+                                <li><strong>Clean City Challenge:</strong> Report 10 waste management issues</li>
+                                <li><strong>Road Safety Week:</strong> Focus on traffic and road issues</li>
+                                <li><strong>Green Community:</strong> Report environmental concerns</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div class="rewards-section-item" id="rewards-faq">
+                    <h2>Frequently Asked Questions</h2>
+                    
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <h3>How long do points take to appear in my account?</h3>
+                            <p>Points are typically credited immediately after completing an action. In some cases, it may take up to 24 hours for points to appear.</p>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <h3>Can I earn points retroactively for past activities?</h3>
+                            <p>No, points are only awarded for activities performed after joining the rewards program. Past activities cannot be retroactively rewarded.</p>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <h3>What happens if I don't have enough points for a reward?</h3>
+                            <p>You'll need to earn more points before redeeming that reward. You can continue participating in activities to accumulate the required points.</p>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <h3>Can I cancel a reward redemption?</h3>
+                            <p>Digital rewards cannot be cancelled once redeemed. Physical rewards can be cancelled within 1 hour of redemption if not yet processed.</p>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <h3>Do points expire if I don't use them?</h3>
+                            <p>Points earned in the current year expire on December 31st. However, unused points carry forward to the next year.</p>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <h3>How can I check my points history?</h3>
+                            <p>You can view your complete points history in your profile under the "Rewards" tab, including all earned and redeemed points.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Support -->
+                <div class="rewards-section-item">
+                    <h2>Need Help with Rewards?</h2>
+                    <div class="support-options">
+                        <p>If you have questions about the rewards program or need assistance with redemption, our support team is here to help!</p>
+                        <div class="support-buttons">
+                            <a href="contact.html" class="btn btn-primary">
+                                <i class="fas fa-envelope"></i>
+                                Contact Support
+                            </a>
+                            <a href="help-center.html" class="btn btn-secondary">
+                                <i class="fas fa-question-circle"></i>
+                                Visit Help Center
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Samadhan Kendra</h3>
+                    <p>Empowering Indian citizens through AI-driven civic engagement and smart city solutions.</p>
+                    
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#report">Report Issue</a></li>
+                        <li><a href="index.html#issues">View Issues</a></li>
+                        <li><a href="index.html#leaderboard">Leaderboard</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="rewards-program.html">Rewards Program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Profile dropdown toggle
+        function toggleProfileMenu() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        // Logout function
+        function logout() {
+            // Use centralized logout if available
+            if (typeof window.logout === 'function') {
+                window.logout();
+            } else {
+                // Fallback logout - match the main script.js logout function
+                localStorage.removeItem('userToken');
+                localStorage.removeItem('userData');
+                localStorage.removeItem('userPoints');
+                localStorage.removeItem('userLoggedIn');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userFirstName');
+                localStorage.removeItem('userLastName');
+                localStorage.removeItem('userCity');
+                localStorage.removeItem('userPhone');
+                localStorage.removeItem('userIssues');
+                localStorage.removeItem('userRank');
+                
+                // Show logout message
+                alert('Successfully logged out!');
+                
+                // Redirect to home page
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Reward redemption function
+        function redeemReward(rewardType, pointsRequired) {
+            const currentPoints = parseInt(localStorage.getItem('userPoints') || '0');
+            
+            if (currentPoints >= pointsRequired) {
+                // Deduct points
+                const newPoints = currentPoints - pointsRequired;
+                
+                // Use centralized points update function
+                if (typeof updateUserPoints === 'function') {
+                    updateUserPoints(newPoints);
+                } else {
+                    localStorage.setItem('userPoints', newPoints.toString());
+                    document.getElementById('userCurrentPoints').textContent = newPoints.toLocaleString();
+                    document.getElementById('navUserPoints').textContent = newPoints.toLocaleString();
+                }
+                
+                // Show success message
+                alert(`Congratulations! You've successfully redeemed the ${rewardType} reward. Your new balance is ${newPoints.toLocaleString()} points.`);
+                
+                // In a real app, this would trigger the reward delivery process
+            } else {
+                alert(`Sorry, you don't have enough points. You need ${pointsRequired} points but only have ${currentPoints.toLocaleString()} points.`);
+            }
+        }
+
+        // Load user data if logged in
+        function loadUserData() {
+            // Use centralized points display system
+            if (typeof initializePointsDisplay === 'function') {
+                initializePointsDisplay();
+            } else {
+                // Fallback for pages without the centralized system
+                if (localStorage.getItem('userLoggedIn')) {
+                    const userPoints = localStorage.getItem('userPoints') || '0';
+                    const navUserPoints = document.getElementById('navUserPoints');
+                    const userCurrentPoints = document.getElementById('userCurrentPoints');
+                    
+                    if (navUserPoints) {
+                        navUserPoints.textContent = parseInt(userPoints).toLocaleString();
+                    }
+                    if (userCurrentPoints) {
+                        userCurrentPoints.textContent = parseInt(userPoints).toLocaleString();
+                    }
+                }
+            }
+        }
+
+        // Load user data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+        });
+    </script>
+    
+    <!-- Chatbot Integration -->
+    <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
+    <script src="https://files.botpress.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer></script>
+</body>
+</html>
