@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Samadhan Kendra</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="./index.html">
+                    <i class="fas fa-handshake"></i>
+                    <span>Samadhan Kendra</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#report" class="nav-link">Report Issue</a></li>
+                <li><a href="index.html#issues" class="nav-link">View Issues</a></li>
+                <li><a href="index.html#leaderboard" class="nav-link">Leaderboard</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+            </ul>
+            <div class="nav-user">
+                <div class="user-points">
+                    <i class="fas fa-star"></i>
+                                            <span id="navUserPoints">0</span>
+                </div>
+                <div class="user-avatar" onclick="toggleProfileMenu()">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" onclick="handleProfileAccess()"><i class="fas fa-user"></i> Profile</a>
+                    <a href="rewards-program.html"><i class="fas fa-gift"></i> Rewards</a>
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+                    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Privacy Policy Section -->
+    <section class="privacy-policy-section">
+        <div class="container">
+            <div class="policy-header">
+                <h1>Privacy Policy</h1>
+                <p>Last updated: December 15, 2024</p>
+                <p>Your privacy is important to us. This policy explains how Samadhan Kendra collects, uses, and protects your information.</p>
+            </div>
+
+            <div class="policy-content">
+                <!-- Quick Navigation -->
+                <div class="policy-nav">
+                    <h3>Quick Navigation</h3>
+                    <ul>
+                        <li><a href="#information-collection">Information We Collect</a></li>
+                        <li><a href="#how-we-use">How We Use Information</a></li>
+                        <li><a href="#information-sharing">Information Sharing</a></li>
+                        <li><a href="#data-security">Data Security</a></li>
+                        <li><a href="#your-rights">Your Rights</a></li>
+                        <li><a href="#cookies">Cookies & Tracking</a></li>
+                        <li><a href="#children-privacy">Children's Privacy</a></li>
+                        <li><a href="#changes">Changes to Policy</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Information Collection -->
+                <div class="policy-section" id="information-collection">
+                    <h2>Information We Collect</h2>
+                    
+                    <div class="policy-subsection">
+                        <h3>Personal Information</h3>
+                        <p>When you use Samadhan Kendra, we may collect the following personal information:</p>
+                        <ul>
+                            <li><strong>Account Information:</strong> Name, email address, phone number, city, and profile picture</li>
+                            <li><strong>Issue Reports:</strong> Photos, videos, descriptions, and location data (GPS coordinates)</li>
+                            <li><strong>Usage Data:</strong> How you interact with our platform, features used, and preferences</li>
+                            <li><strong>Communication:</strong> Messages sent to support, feedback, and survey responses</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Location Information</h3>
+                        <p>We collect location data to:</p>
+                        <ul>
+                            <li>Pinpoint the exact location of reported civic issues</li>
+                            <li>Route issues to the correct municipal departments</li>
+                            <li>Provide location-based services and notifications</li>
+                            <li>Analyze issue patterns in specific areas</li>
+                        </ul>
+                        <p><strong>Note:</strong> You can control location permissions through your device settings.</p>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Media Content</h3>
+                        <p>Photos and videos you upload help us:</p>
+                        <ul>
+                            <li>Document and verify reported issues</li>
+                            <li>Provide evidence to municipal authorities</li>
+                            <li>Track issue resolution progress</li>
+                            <li>Improve our AI detection systems</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- How We Use Information -->
+                <div class="policy-section" id="how-we-use">
+                    <h2>How We Use Your Information</h2>
+                    
+                    <div class="policy-subsection">
+                        <h3>Primary Purposes</h3>
+                        <ul>
+                            <li><strong>Issue Resolution:</strong> Process and route civic issues to appropriate authorities</li>
+                            <li><strong>Service Improvement:</strong> Enhance platform functionality and user experience</li>
+                            <li><strong>Communication:</strong> Send updates about issue status and platform news</li>
+                            <li><strong>Rewards System:</strong> Track points and manage reward redemptions</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>AI and Analytics</h3>
+                        <p>We use your data to:</p>
+                        <ul>
+                            <li>Train AI models for duplicate detection and smart routing</li>
+                            <li>Analyze trends in civic issues across different areas</li>
+                            <li>Improve our categorization and prioritization algorithms</li>
+                            <li>Generate insights for municipal planning and resource allocation</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Legal Compliance</h3>
+                        <p>We may use your information to:</p>
+                        <ul>
+                            <li>Comply with applicable laws and regulations</li>
+                            <li>Respond to legal requests and court orders</li>
+                            <li>Protect our rights and prevent fraud</li>
+                            <li>Ensure platform security and integrity</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Information Sharing -->
+                <div class="policy-section" id="information-sharing">
+                    <h2>Information Sharing and Disclosure</h2>
+                    
+                    <div class="policy-subsection">
+                        <h3>Municipal Authorities</h3>
+                        <p>We share issue reports with relevant municipal departments to:</p>
+                        <ul>
+                            <li>Enable issue investigation and resolution</li>
+                            <li>Provide necessary context and evidence</li>
+                            <li>Facilitate communication between citizens and authorities</li>
+                            <li>Support emergency response when needed</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Service Providers</h3>
+                        <p>We work with trusted third-party services for:</p>
+                        <ul>
+                            <li>Cloud storage and hosting</li>
+                            <li>Analytics and monitoring</li>
+                            <li>Customer support and communication</li>
+                            <li>Payment processing (for premium features)</li>
+                        </ul>
+                        <p>These providers are bound by strict confidentiality agreements.</p>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Public Information</h3>
+                        <p>Some information may be publicly visible:</p>
+                        <ul>
+                            <li>Issue descriptions and photos (without personal identifiers)</li>
+                            <li>General location information (neighborhood level)</li>
+                            <li>Issue status and resolution progress</li>
+                            <li>Community leaderboard rankings (username only)</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>We Do Not Sell Your Data</h3>
+                        <p>Samadhan Kendra does not sell, rent, or trade your personal information to third parties for marketing purposes.</p>
+                    </div>
+                </div>
+
+                <!-- Data Security -->
+                <div class="policy-section" id="data-security">
+                    <h2>Data Security and Protection</h2>
+                    
+                    <div class="policy-subsection">
+                        <h3>Security Measures</h3>
+                        <p>We implement industry-standard security measures:</p>
+                        <ul>
+                            <li><strong>Encryption:</strong> All data is encrypted in transit and at rest</li>
+                            <li><strong>Access Control:</strong> Strict access controls and authentication</li>
+                            <li><strong>Regular Audits:</strong> Security assessments and vulnerability testing</li>
+                            <li><strong>Data Backup:</strong> Secure backup and disaster recovery systems</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Data Retention</h3>
+                        <p>We retain your information for:</p>
+                        <ul>
+                            <li><strong>Account Data:</strong> As long as your account is active</li>
+                            <li><strong>Issue Reports:</strong> 5 years for historical analysis</li>
+                            <li><strong>Media Content:</strong> 3 years after issue resolution</li>
+                            <li><strong>Analytics Data:</strong> 2 years in anonymized form</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Data Breach Response</h3>
+                        <p>In case of a data breach, we will:</p>
+                        <ul>
+                            <li>Notify affected users within 72 hours</li>
+                            <li>Report to relevant authorities as required by law</li>
+                            <li>Take immediate steps to contain and remediate the breach</li>
+                            <li>Provide guidance on protective measures</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Your Rights -->
+                <div class="policy-section" id="your-rights">
+                    <h2>Your Rights and Choices</h2>
+                    
+                    <div class="policy-subsection">
+                        <h3>Access and Control</h3>
+                        <p>You have the right to:</p>
+                        <ul>
+                            <li><strong>Access:</strong> View all personal information we hold about you</li>
+                            <li><strong>Correction:</strong> Update or correct inaccurate information</li>
+                            <li><strong>Deletion:</strong> Request deletion of your account and data</li>
+                            <li><strong>Portability:</strong> Download your data in a portable format</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Communication Preferences</h3>
+                        <p>You can control:</p>
+                        <ul>
+                            <li>Email notifications and newsletters</li>
+                            <li>SMS alerts and reminders</li>
+                            <li>Push notifications (mobile app)</li>
+                            <li>Marketing communications</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Location and Media Controls</h3>
+                        <p>You can:</p>
+                        <ul>
+                            <li>Disable location services at any time</li>
+                            <li>Delete uploaded photos and videos</li>
+                            <li>Choose what information to share publicly</li>
+                            <li>Opt out of AI analysis features</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Cookies and Tracking -->
+                <div class="policy-section" id="cookies">
+                    <h2>Cookies and Tracking Technologies</h2>
+                    
+                    <div class="policy-subsection">
+                        <h3>Types of Cookies</h3>
+                        <p>We use cookies for:</p>
+                        <ul>
+                            <li><strong>Essential:</strong> Login sessions and security</li>
+                            <li><strong>Functional:</strong> User preferences and settings</li>
+                            <li><strong>Analytics:</strong> Platform usage and performance</li>
+                            <li><strong>Marketing:</strong> Relevant content and offers</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Third-Party Services</h3>
+                        <p>We may use services that set cookies:</p>
+                        <ul>
+                            <li>Google Analytics for website analytics</li>
+                            <li>Social media platforms for sharing features</li>
+                            <li>Payment processors for transactions</li>
+                            <li>Customer support tools</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Cookie Management</h3>
+                        <p>You can:</p>
+                        <ul>
+                            <li>Control cookies through browser settings</li>
+                            <li>Use our cookie preference center</li>
+                            <li>Opt out of non-essential cookies</li>
+                            <li>Delete existing cookies</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Children's Privacy -->
+                <div class="policy-section" id="children-privacy">
+                    <h2>Children's Privacy</h2>
+                    
+                    <div class="policy-subsection">
+                        <h3>Age Requirements</h3>
+                        <p>Samadhan Kendra is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.</p>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Parental Consent</h3>
+                        <p>If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately. We will take steps to remove such information.</p>
+                    </div>
+                </div>
+
+                <!-- Changes to Policy -->
+                <div class="policy-section" id="changes">
+                    <h2>Changes to This Privacy Policy</h2>
+                    
+                    <div class="policy-subsection">
+                        <h3>Policy Updates</h3>
+                        <p>We may update this privacy policy from time to time to:</p>
+                        <ul>
+                            <li>Reflect changes in our practices</li>
+                            <li>Comply with new laws and regulations</li>
+                            <li>Improve transparency and clarity</li>
+                            <li>Address new features or services</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Notification Process</h3>
+                        <p>When we make significant changes:</p>
+                        <ul>
+                            <li>We will notify you via email</li>
+                            <li>Post a notice on our website</li>
+                            <li>Update the "Last updated" date</li>
+                            <li>Provide a summary of key changes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="policy-section" id="contact">
+                    <h2>Contact Us</h2>
+                    
+                    <div class="policy-subsection">
+                        <h3>Privacy Questions</h3>
+                        <p>If you have questions about this privacy policy or our data practices, please contact us:</p>
+                        
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <strong>Email:</strong> privacy@samadhankendra.in
+                                </div>
+                            </div>
+                            
+                            <div class="contact-method">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <strong>Phone:</strong> +91 1800-123-4567
+                                </div>
+                            </div>
+                            
+                            <div class="contact-method">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <strong>Address:</strong><br>
+                                    Samadhan Kendra<br>
+                                    Tech Park, Whitefield<br>
+                                    Bangalore - 560066, India
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="policy-subsection">
+                        <h3>Data Protection Officer</h3>
+                        <p>For specific privacy concerns or data requests, you can also contact our Data Protection Officer directly at dpo@samadhankendra.in</p>
+                    </div>
+                </div>
+
+                <!-- Policy Summary -->
+                <div class="policy-summary">
+                    <h2>Policy Summary</h2>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>We Protect Your Data</h3>
+                            <p>Strong encryption and security measures to keep your information safe</p>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <i class="fas fa-eye"></i>
+                            <h3>Transparent Practices</h3>
+                            <p>Clear explanation of how we collect, use, and share your information</p>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <i class="fas fa-user-check"></i>
+                            <h3>Your Control</h3>
+                            <p>You decide what information to share and how it's used</p>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <i class="fas fa-handshake"></i>
+                            <h3>No Data Selling</h3>
+                            <p>We never sell your personal information to third parties</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Samadhan Kendra</h3>
+                    <p>Empowering Indian citizens through AI-driven civic engagement and smart city solutions.</p>
+                    
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#report">Report Issue</a></li>
+                        <li><a href="index.html#issues">View Issues</a></li>
+                        <li><a href="index.html#leaderboard">Leaderboard</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="rewards-program.html">Rewards Program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+
+        // Profile dropdown toggle
+        function toggleProfileMenu() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        // Logout function
+        function logout() {
+            // Use centralized logout if available
+            if (typeof window.logout === 'function') {
+                window.logout();
+            } else {
+                // Fallback logout - match the main script.js logout function
+                localStorage.removeItem('userToken');
+                localStorage.removeItem('userData');
+                localStorage.removeItem('userPoints');
+                localStorage.removeItem('userLoggedIn');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userFirstName');
+                localStorage.removeItem('userLastName');
+                localStorage.removeItem('userCity');
+                localStorage.removeItem('userPhone');
+                localStorage.removeItem('userIssues');
+                localStorage.removeItem('userRank');
+                
+                // Show logout message
+                alert('Successfully logged out!');
+                
+                // Redirect to home page
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Smooth scroll for policy navigation
+        document.querySelectorAll('.policy-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Load user data if logged in
+        function loadUserData() {
+            if (localStorage.getItem('userLoggedIn')) {
+                const userPoints = localStorage.getItem('userPoints') || '1250';
+                document.getElementById('navUserPoints').textContent = parseInt(userPoints).toLocaleString();
+            }
+        }
+
+        // Load user data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+        });
+    </script>
+</body>
+</html>
