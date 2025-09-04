@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Samadhan Kendra</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="admin-styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
 </head>
 <body class="admin-body">
     <!-- Admin Navigation -->
@@ -65,7 +63,7 @@
                 <li class="sidebar-item" data-tab="categories">
                     <a href="#categories">
                         <i class="fas fa-tags"></i>
-                        <span>Categories & Settings</span>
+                        <span>Categories &amp; Settings</span>
                     </a>
                 </li>
                 <li class="sidebar-item" data-tab="audit">
@@ -316,7 +314,7 @@
         <!-- Categories Tab -->
         <div id="categories" class="admin-tab">
             <div class="admin-header">
-                <h1>Categories & Settings</h1>
+                <h1>Categories &amp; Settings</h1>
                 <p>Manage issue categories and application settings</p>
             </div>
 
@@ -338,7 +336,7 @@
                     <div class="setting-group">
                         <label>Email Notifications</label>
                         <div class="toggle-switch">
-                            <input type="checkbox" id="emailNotifications" checked>
+                            <input type="checkbox" id="emailNotifications" checked="">
                             <span class="slider"></span>
                         </div>
                     </div>
@@ -352,7 +350,7 @@
                     <div class="setting-group">
                         <label>Auto-assign Issues</label>
                         <div class="toggle-switch">
-                            <input type="checkbox" id="autoAssignIssues" checked>
+                            <input type="checkbox" id="autoAssignIssues" checked="">
                             <span class="slider"></span>
                         </div>
                     </div>
@@ -460,21 +458,21 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="adminFullName">Full Name</label>
-                                <input type="text" id="adminFullName" value="Administrator" required>
+                                <input type="text" id="adminFullName" value="Administrator" required="">
                             </div>
                             <div class="form-group">
                                 <label for="adminEmail">Email</label>
-                                <input type="email" id="adminEmail" value="admin@samadhankendra.com" required>
+                                <input type="email" id="adminEmail" value="admin@samadhankendra.com" required="">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="adminPhone">Phone</label>
-                                <input type="tel" id="adminPhone" value="+91 98765 43210" required>
+                                <input type="tel" id="adminPhone" value="+91 98765 43210" required="">
                             </div>
                             <div class="form-group">
                                 <label for="adminDepartment">Department</label>
-                                <input type="text" id="adminDepartment" value="IT Administration" required>
+                                <input type="text" id="adminDepartment" value="IT Administration" required="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -492,15 +490,15 @@
                     <form id="adminPasswordForm">
                         <div class="form-group">
                             <label for="currentPassword">Current Password</label>
-                            <input type="password" id="currentPassword" required>
+                            <input type="password" id="currentPassword" required="">
                         </div>
                         <div class="form-group">
                             <label for="newPassword">New Password</label>
-                            <input type="password" id="newPassword" required>
+                            <input type="password" id="newPassword" required="">
                         </div>
                         <div class="form-group">
                             <label for="confirmPassword">Confirm New Password</label>
-                            <input type="password" id="confirmPassword" required>
+                            <input type="password" id="confirmPassword" required="">
                         </div>
                         <button type="button" class="btn btn-primary" onclick="adminPanel.changePassword()">
                             <i class="fas fa-key"></i> Change Password
@@ -524,7 +522,7 @@
                         <div class="setting-group">
                             <label>Email Notifications</label>
                             <div class="toggle-switch">
-                                <input type="checkbox" id="adminEmailNotifications" checked>
+                                <input type="checkbox" id="adminEmailNotifications" checked="">
                                 <span class="slider"></span>
                             </div>
                         </div>
@@ -538,7 +536,7 @@
                         <div class="setting-group">
                             <label>Issue Alerts</label>
                             <div class="toggle-switch">
-                                <input type="checkbox" id="adminIssueAlerts" checked>
+                                <input type="checkbox" id="adminIssueAlerts" checked="">
                                 <span class="slider"></span>
                             </div>
                         </div>
@@ -558,7 +556,7 @@
                         <div class="setting-group">
                             <label>Auto-refresh Dashboard</label>
                             <div class="toggle-switch">
-                                <input type="checkbox" id="adminAutoRefresh" checked>
+                                <input type="checkbox" id="adminAutoRefresh" checked="">
                                 <span class="slider"></span>
                             </div>
                         </div>
@@ -579,7 +577,7 @@
                         <div class="setting-group">
                             <label>Session Timeout Warning</label>
                             <div class="toggle-switch">
-                                <input type="checkbox" id="adminSessionWarning" checked>
+                                <input type="checkbox" id="adminSessionWarning" checked="">
                                 <span class="slider"></span>
                             </div>
                         </div>
@@ -609,28 +607,28 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Add New User</h3>
-                <span class="close" onclick="closeModal('addUserModal')">&times;</span>
+                <span class="close" onclick="closeModal('addUserModal')">×</span>
             </div>
             <div class="modal-body">
                 <form id="addUserForm">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="newUserName">Full Name</label>
-                            <input type="text" id="newUserName" required>
+                            <input type="text" id="newUserName" required="">
                         </div>
                         <div class="form-group">
                             <label for="newUserEmail">Email</label>
-                            <input type="email" id="newUserEmail" required>
+                            <input type="email" id="newUserEmail" required="">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="newUserPhone">Phone</label>
-                            <input type="tel" id="newUserPhone" required>
+                            <input type="tel" id="newUserPhone" required="">
                         </div>
                         <div class="form-group">
                             <label for="newUserCity">City</label>
-                            <select id="newUserCity" required>
+                            <select id="newUserCity" required="">
                                 <option value="">Select city</option>
                                 <option value="mumbai">Mumbai</option>
                                 <option value="delhi">Delhi</option>
@@ -648,7 +646,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="newUserRole">Role</label>
-                            <select id="newUserRole" required>
+                            <select id="newUserRole" required="">
                                 <option value="user">Regular User</option>
                                 <option value="moderator">Moderator</option>
                                 <option value="admin">Administrator</option>
@@ -656,7 +654,7 @@
                         </div>
                         <div class="form-group">
                             <label for="newUserPassword">Password</label>
-                            <input type="password" id="newUserPassword" required>
+                            <input type="password" id="newUserPassword" required="">
                         </div>
                     </div>
                 </form>
@@ -673,7 +671,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Edit User</h3>
-                <span class="close" onclick="closeModal('editUserModal')">&times;</span>
+                <span class="close" onclick="closeModal('editUserModal')">×</span>
             </div>
             <div class="modal-body">
                 <form id="editUserForm">
@@ -681,21 +679,21 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="editUserName">Full Name</label>
-                            <input type="text" id="editUserName" required>
+                            <input type="text" id="editUserName" required="">
                         </div>
                         <div class="form-group">
                             <label for="editUserEmail">Email</label>
-                            <input type="email" id="editUserEmail" required>
+                            <input type="email" id="editUserEmail" required="">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="editUserPhone">Phone</label>
-                            <input type="tel" id="editUserPhone" required>
+                            <input type="tel" id="editUserPhone" required="">
                         </div>
                         <div class="form-group">
                             <label for="editUserCity">City</label>
-                            <select id="editUserCity" required>
+                            <select id="editUserCity" required="">
                                 <option value="">Select city</option>
                                 <option value="mumbai">Mumbai</option>
                                 <option value="delhi">Delhi</option>
@@ -713,7 +711,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="editUserRole">Role</label>
-                            <select id="editUserRole" required>
+                            <select id="editUserRole" required="">
                                 <option value="user">Regular User</option>
                                 <option value="moderator">Moderator</option>
                                 <option value="admin">Administrator</option>
@@ -721,7 +719,7 @@
                         </div>
                         <div class="form-group">
                             <label for="editUserStatus">Status</label>
-                            <select id="editUserStatus" required>
+                            <select id="editUserStatus" required="">
                                 <option value="active">Active</option>
                                 <option value="inactive">Inactive</option>
                                 <option value="suspended">Suspended</option>
@@ -731,7 +729,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="editUserPoints">Points</label>
-                            <input type="number" id="editUserPoints" min="0" required>
+                            <input type="number" id="editUserPoints" min="0" required="">
                         </div>
                         <div class="form-group">
                             <label for="editUserPassword">New Password (leave blank to keep current)</label>
@@ -752,7 +750,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>User Details</h3>
-                <span class="close" onclick="closeModal('userDetailsModal')">&times;</span>
+                <span class="close" onclick="closeModal('userDetailsModal')">×</span>
             </div>
             <div class="modal-body">
                 <div id="userDetailsContent">
@@ -771,17 +769,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Add New Category</h3>
-                <span class="close" onclick="closeModal('addCategoryModal')">&times;</span>
+                <span class="close" onclick="closeModal('addCategoryModal')">×</span>
             </div>
             <div class="modal-body">
                 <form id="addCategoryForm">
                     <div class="form-group">
                         <label for="newCategoryName">Category Name</label>
-                        <input type="text" id="newCategoryName" placeholder="e.g., Street Lighting" required>
+                        <input type="text" id="newCategoryName" placeholder="e.g., Street Lighting" required="">
                     </div>
                     <div class="form-group">
                         <label for="newCategoryIcon">Icon (Emoji)</label>
-                        <input type="text" id="newCategoryIcon" placeholder="💡" required>
+                        <input type="text" id="newCategoryIcon" placeholder="💡" required="">
                     </div>
                     <div class="form-group">
                         <label for="newCategoryDescription">Description</label>
@@ -789,7 +787,7 @@
                     </div>
                     <div class="form-group">
                         <label for="newCategoryPriority">Default Priority</label>
-                        <select id="newCategoryPriority" required>
+                        <select id="newCategoryPriority" required="">
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
                             <option value="high">High</option>
@@ -810,7 +808,7 @@
         <div class="modal-content" style="max-width: 700px;">
             <div class="modal-header">
                 <h3><i class="fas fa-edit"></i> Edit Issue</h3>
-                <span class="close" onclick="closeModal('editIssueModal')">&times;</span>
+                <span class="close" onclick="closeModal('editIssueModal')">×</span>
             </div>
             <div class="modal-body">
                 <form id="editIssueForm">
@@ -860,11 +858,11 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="editIssueTitle">Issue Title</label>
-                            <input type="text" id="editIssueTitle" required>
+                            <input type="text" id="editIssueTitle" required="">
                         </div>
                         <div class="form-group">
                             <label for="editIssueStatus">Current Status</label>
-                            <select id="editIssueStatus" required onchange="adminPanel.updateStatusTimeline(this.value)">
+                            <select id="editIssueStatus" required="" onchange="adminPanel.updateStatusTimeline(this.value)">
                                 <option value="reported">Reported</option>
                                 <option value="investigating">Investigating</option>
                                 <option value="in-progress">In Progress</option>
@@ -875,13 +873,13 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="editIssueDepartment">Department</label>
-                            <select id="editIssueDepartment" required>
+                            <select id="editIssueDepartment" required="">
                                 <!-- Departments will be populated -->
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="editIssuePriority">Priority Level</label>
-                            <select id="editIssuePriority" required>
+                            <select id="editIssuePriority" required="">
                                 <option value="low">Low Priority</option>
                                 <option value="medium">Medium Priority</option>
                                 <option value="high">High Priority</option>
@@ -891,10 +889,10 @@
                     </div>
                     <div class="form-group">
                         <label for="editIssueDescription">Issue Description</label>
-                        <textarea id="editIssueDescription" rows="4" required></textarea>
+                        <textarea id="editIssueDescription" rows="4" required=""></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="editIssueNotes">Admin Notes & Updates</label>
+                        <label for="editIssueNotes">Admin Notes &amp; Updates</label>
                         <textarea id="editIssueNotes" rows="3" placeholder="Add internal notes, progress updates, or instructions for the team..."></textarea>
                     </div>
                     <div class="form-group">
@@ -1250,6 +1248,10 @@
     
     <!-- Chatbot Integration -->
     <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer></script>
-</body>
-</html>
+    <script src="https://files.bpcontent.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer=""></script>
+
+
+<script type="module" src="./js/api.js"></script>
+
+<script type="module" src="./js/auth-bootstrap.js"></script>
+</body></html>

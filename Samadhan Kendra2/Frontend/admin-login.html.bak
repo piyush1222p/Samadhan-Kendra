@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Samadhan Kendra</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .admin-login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1e293b, #334155);
+            padding: 2rem;
+        }
+
+        .admin-login-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .admin-login-header {
+            margin-bottom: 2rem;
+        }
+
+        .admin-login-header i {
+            font-size: 3rem;
+            color: #dc2626;
+            margin-bottom: 1rem;
+        }
+
+        .admin-login-header h1 {
+            color: #1f2937;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .admin-login-header p {
+            color: #6b7280;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .admin-login-form {
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #dc2626;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .admin-login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 0.5rem;
+            position: relative;
+        }
+
+        .admin-login-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.25);
+        }
+
+        .admin-login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .admin-login-footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .admin-login-footer p {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin: 0.35rem 0;
+        }
+
+        .admin-login-footer a {
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .admin-login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message, .success-message {
+            padding: 0.75rem 0.9rem;
+            border-radius: 8px;
+            margin-bottom: 0.9rem;
+            font-size: 0.9rem;
+            display: none;
+            text-align: left;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        @keyframes spin {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        .helper-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: -0.4rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .helper-row a {
+            color: #6b7280;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+        .helper-row a:hover { text-decoration: underline; }
+
+        @media (max-width: 480px) {
+            .admin-login-card { padding: 2rem; margin: 1rem; }
+            .admin-login-header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-login-container">
+        <div class="admin-login-card">
+            <div class="admin-login-header">
+                <i class="fas fa-handshake"></i>
+                <h1>Admin Access</h1>
+                <p>Enter your credentials to access the admin panel</p>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+
+            <form class="admin-login-form" id="adminLoginForm" autocomplete="on">
+                <div class="form-group">
+                    <label for="adminUsername">Username or Email</label>
+                    <input type="text" id="adminUsername" placeholder="admin or admin@samadhankendra.com" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <div class="helper-row">
+                        <label for="adminPassword" style="margin:0;">Password</label>
+                        <a href="login.html" title="Use user login page if you are not an admin">User login?</a>
+                    </div>
+                    <input type="password" id="adminPassword" placeholder="Enter your password" required autocomplete="current-password">
+                </div>
+
+                <button type="submit" class="admin-login-btn" id="loginBtn">
+                    <span id="loginText">Access Admin Panel</span>
+                    <div class="loading-spinner" id="loadingSpinner"></div>
+                </button>
+            </form>
+
+            <div class="admin-login-footer">
+                <p>Need help? <a href="help-center.html">Help Center</a> or <a href="contact.html">Contact Support</a></p>
+                <p><a href="index.html">← Back to Main Site</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- App config: points API_BASE to your Django backend -->
+    <script src="./config.js"></script>
+
+    <!-- Admin login wired to backend (JWT) -->
+    <script type="module">
+        import { login as apiLogin } from "./js/api.js";
+
+        const form = document.getElementById("adminLoginForm");
+        const usernameEl = document.getElementById("adminUsername");
+        const passwordEl = document.getElementById("adminPassword");
+        const loginBtn = document.getElementById("loginBtn");
+        const loginText = document.getElementById("loginText");
+        const spinner = document.getElementById("loadingSpinner");
+        const errorBox = document.getElementById("errorMessage");
+        const successBox = document.getElementById("successMessage");
+
+        // If already authenticated, go to admin panel
+        (function checkExistingSession() {
+            const access = localStorage.getItem("accessToken");
+            if (access) {
+                window.location.replace("admin.html");
+            }
+        })();
+
+        function setLoading(isLoading) {
+            loginBtn.disabled = isLoading;
+            spinner.style.display = isLoading ? "block" : "none";
+            loginText.style.visibility = isLoading ? "hidden" : "visible";
+        }
+
+        function showError(msg) {
+            if (!errorBox) return;
+            errorBox.textContent = msg || "Login failed.";
+            errorBox.style.display = "block";
+            if (successBox) successBox.style.display = "none";
+        }
+
+        function showSuccess(msg) {
+            if (!successBox) return;
+            successBox.textContent = msg || "Login successful.";
+            successBox.style.display = "block";
+            if (errorBox) errorBox.style.display = "none";
+        }
+
+        form?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const username = usernameEl.value.trim();
+            const password = passwordEl.value;
+
+            if (!username || !password) {
+                showError("Please enter both username and password.");
+                return;
+            }
+
+            setLoading(true);
+            try {
+                // Use the same JWT token endpoint as user login.
+                // Backend should allow staff/admin users and later admin.html will attempt admin-only actions.
+                await apiLogin({ username, password });
+
+                // Mark legacy flags for your existing UI code if needed
+                localStorage.setItem("userLoggedIn", "true");
+                localStorage.setItem("userEmail", username);
+
+                showSuccess("Login successful! Redirecting...");
+                setTimeout(() => window.location.href = "admin.html", 600);
+            } catch (err) {
+                const detail = err?.detail || "Invalid credentials or not authorized.";
+                showError(detail);
+            } finally {
+                setLoading(false);
+            }
+        });
+    </script>
+
+    <!-- Chatbot Integration -->
+    <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
+    <script src="https://files.botpress.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer></script>
+</body>
+</html>

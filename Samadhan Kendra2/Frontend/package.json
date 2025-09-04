@@ -1,0 +1,17 @@
+{
+  "name": "frontend-validator",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "validate:html": "node tools/validate-html.mjs --dir . --jsPath js",
+    "patch:html": "node tools/patch-html.mjs --dir . --base http://localhost:4000 --jsPath js",
+    "undo:html": "node tools/undo-html-patch.mjs --dir ."
+  },
+  "devDependencies": {
+    "cheerio": "^1.0.0",
+    "fs-extra": "^11.2.0",
+    "glob": "^11.0.0",
+    "minimist": "^1.2.8"
+  }
+}

@@ -1,33 +1,34 @@
-// API base: prefers window.APP_CONFIG, falls back to window.CONFIG, then default
+// Node backend API client
+// Base URL comes from window.APP_CONFIG.API_BASE (or window.CONFIG for fallback)
 let API_BASE =
   (window.APP_CONFIG && window.APP_CONFIG.API_BASE) ||
   (window.CONFIG && window.CONFIG.API_BASE) ||
-  "http://localhost:8000/api";
+  "http://localhost:4000";
 
-// Tokens in memory + localStorage
+// Token storage
 let accessToken = localStorage.getItem("accessToken") || null;
-let refreshToken = localStorage.getItem("refreshToken") || null;
 
-// Optional: allow changing base at runtime
+// Utilities
 export function setApiBase(url) {
   API_BASE = String(url || "").replace(/\/+$/, ""); // trim trailing slash
 }
 
-// Token helpers
-export function setTokens(access, refresh) {
-  accessToken = access || null;
-  refreshToken = refresh || null;
-  if (access) localStorage.setItem("accessToken", access);
+export function setToken(token) {
+  accessToken = token || null;
+  if (token) localStorage.setItem("accessToken", token);
   else localStorage.removeItem("accessToken");
-  if (refresh) localStorage.setItem("refreshToken", refresh);
-  else localStorage.removeItem("refreshToken");
 }
 
-export function getTokens() {
-  return { accessToken, refreshToken };
+export function getToken() {
+  return accessToken;
 }
 
-// Safe JSON parser (handles empty body, non-JSON)
+function apiUrl(path) {
+  const base = API_BASE.replace(/\/+$/, "");
+  const p = String(path || "").replace(/^\/+/, "");
+  return `${base}/${p}`;
+}
+
 async function safeJson(res) {
   const text = await res.text();
   if (!text) return null;
@@ -38,86 +39,27 @@ async function safeJson(res) {
   }
 }
 
-// Build full URL with a guaranteed single slash
-function apiUrl(path) {
-  const base = API_BASE.replace(/\/+$/, "");
-  const p = String(path || "").replace(/^\/+/, "");
-  return `${base}/${p}`;
-}
-
-// Refresh lock to avoid multiple concurrent refresh calls
-let refreshInFlight = null;
-
-async function doRefresh() {
-  if (!refreshToken) return false;
-  const res = await fetch(apiUrl("/auth/token/refresh/"), {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({ refresh: refreshToken })
-  });
-  if (!res.ok) {
-    // Clear tokens if refresh fails
-    setTokens(null, null);
-    return false;
-  }
-  const data = (await safeJson(res)) || {};
-  // SimpleJWT usually returns { access }; if rotation is enabled, it can also return refresh
-  setTokens(data.access, data.refresh || refreshToken);
-  return true;
-}
-
-async function refreshAccessToken() {
-  if (!refreshToken) return false;
-  if (refreshInFlight) {
-    // Wait for the ongoing refresh
-    try {
-      return await refreshInFlight;
-    } finally {
-      // no-op
-    }
-  }
-  refreshInFlight = doRefresh()
-    .catch(() => false)
-    .finally(() => {
-      refreshInFlight = null;
-    });
-  return refreshInFlight;
-}
-
-// Core fetch with auth + auto-refresh on 401
 export async function authFetch(pathOrUrl, options = {}) {
-  const url =
-    /^https?:\/\//i.test(pathOrUrl) ? pathOrUrl : apiUrl(pathOrUrl);
-
-  // Avoid forcing JSON headers for FormData
+  const url = /^https?:\/\//i.test(pathOrUrl) ? pathOrUrl : apiUrl(pathOrUrl);
   const isFormData = options.body instanceof FormData;
+
   const headers = {
     Accept: "application/json",
     ...(isFormData ? {} : { "Content-Type": "application/json" }),
-    ...(options.headers || {})
+    ...(options.headers || {}),
   };
 
   if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
 
-  let res = await fetch(url, { ...options, headers });
-
-  // If unauthorized, try refresh once
-  if (res.status === 401 && refreshToken) {
-    const ok = await refreshAccessToken();
-    if (ok) {
-      if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
-      res = await fetch(url, { ...options, headers });
-    }
-  }
+  const res = await fetch(url, { ...options, headers });
   return res;
 }
 
-// Throw on non-2xx with parsed error
 async function assertOk(res) {
   if (res.ok) return res;
   const data = await safeJson(res);
   const err = new Error(
-    (data && (data.detail || data.error || data.message)) ||
+    (data && (data.error || data.detail || data.message)) ||
       `Request failed with status ${res.status}`
   );
   err.status = res.status;
@@ -125,104 +67,65 @@ async function assertOk(res) {
   throw err;
 }
 
-// -------------------- Auth --------------------
-export async function register({ username, email, password }) {
-  const res = await fetch(apiUrl("/auth/register/"), {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({ username, email, password })
-  });
+// Health
+export async function health() {
+  const res = await fetch(apiUrl("/health"));
   await assertOk(res);
   return safeJson(res);
 }
 
-export async function login({ username, password }) {
-  const res = await fetch(apiUrl("/auth/token/"), {
+// Auth (Node backend expects email for login/register)
+export async function register({ firstName, lastName, email, password, city, phone }) {
+  const res = await fetch(apiUrl("/auth/register"), {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({ username, password })
+    body: JSON.stringify({ firstName, lastName, email, password, city, phone }),
   });
   await assertOk(res);
   const data = (await safeJson(res)) || {};
-  // Expected: { access, refresh }
-  setTokens(data.access, data.refresh);
+  // Node backend returns { user, accessToken, refreshToken }
+  if (data.accessToken) setToken(data.accessToken);
   return data;
 }
 
-// Optional blacklist if DRF SimpleJWT blacklist is enabled
-export async function logout() {
-  try {
-    if (refreshToken) {
-      await fetch(apiUrl("/auth/token/blacklist/"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ refresh: refreshToken })
-      }).catch(() => {});
-    }
-  } finally {
-    setTokens(null, null);
-  }
+// Keeps DRF-style signature (username) but maps to email for Node
+export async function login({ username, email, password }) {
+  const payload = { email: email || username, password };
+  const res = await fetch(apiUrl("/auth/login"), {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify(payload),
+  });
+  await assertOk(res);
+  const data = (await safeJson(res)) || {};
+  if (data.accessToken) setToken(data.accessToken);
+  return data;
 }
 
-// Current user (if your backend exposes it; adjust path if different)
 export async function me() {
-  const res = await authFetch("/auth/me/");
+  const res = await authFetch("/auth/me");
   await assertOk(res);
   return safeJson(res);
 }
 
-// -------------------- API calls --------------------
-export async function getDepartments() {
-  const res = await authFetch("/departments/");
-  await assertOk(res);
-  return safeJson(res);
+export function logout() {
+  setToken(null);
 }
 
-export async function getGrievances() {
-  const res = await authFetch("/grievances/");
-  await assertOk(res);
-  return safeJson(res);
-}
-
-export async function createGrievance({ title, description, priority, department }) {
-  const res = await authFetch("/grievances/", {
+// Rewards and issues
+export async function redeemReward({ rewardType, points }) {
+  const res = await authFetch("/rewards/redeem", {
     method: "POST",
-    body: JSON.stringify({ title, description, priority, department })
+    body: JSON.stringify({ rewardType, points }),
   });
   await assertOk(res);
   return safeJson(res);
 }
 
-export async function addComment(grievanceId, text) {
-  const res = await authFetch(`/grievances/${encodeURIComponent(grievanceId)}/comment/`, {
+export async function upvoteIssue(issueId) {
+  const res = await authFetch(`/issues/${encodeURIComponent(issueId)}/upvote`, {
     method: "POST",
-    body: JSON.stringify({ text })
   });
   await assertOk(res);
-  return safeJson(res);
-}
-
-export async function setStatus(grievanceId, status) {
-  const res = await authFetch(`/grievances/${encodeURIComponent(grievanceId)}/set_status/`, {
-    method: "POST",
-    body: JSON.stringify({ status })
-  });
-  await assertOk(res);
-  return safeJson(res);
-}
-
-export async function assign(grievanceId, userId) {
-  const res = await authFetch(`/grievances/${encodeURIComponent(grievanceId)}/assign/`, {
-    method: "POST",
-    body: JSON.stringify({ user_id: userId })
-  });
-  await assertOk(res);
-  return safeJson(res);
-}
-
-// --------------- Optional utilities ---------------
-export async function health() {
-  const res = await fetch(apiUrl("/health/"));
-  if (!res.ok) return { ok: false, status: res.status };
   return safeJson(res);
 }

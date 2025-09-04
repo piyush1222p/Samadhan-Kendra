@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Samadhan Kendra - Smart Civic Issue Resolution</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <style>
         /* Custom styling for login buttons */
         .btn-primary[href*="login.html"] {
@@ -208,9 +206,9 @@
                         <div class="upload-placeholder">
                             <i class="fas fa-cloud-upload-alt"></i>
                             <p>Click to upload photo/video</p>
-                            <small>Or drag & drop files here</small>
+                            <small>Or drag &amp; drop files here</small>
                         </div>
-                        <input type="file" id="mediaUpload" accept="image/*,video/*" multiple>
+                        <input type="file" id="mediaUpload" accept="image/*,video/*" multiple="">
                     </div>
                     <div class="uploaded-media" id="uploadedMedia"></div>
                     <div class="muted" style="margin-top:8px;">
@@ -225,7 +223,7 @@
                         <div class="form-group">
                             <label for="gpsLocation">GPS Location</label>
                             <div class="gps-input">
-                                <input type="text" id="gpsLocation" placeholder="Latitude, Longitude" readonly>
+                                <input type="text" id="gpsLocation" placeholder="Latitude, Longitude" readonly="">
                                 <button type="button" class="btn btn-secondary" id="getLocationBtn">
                                     <i class="fas fa-crosshairs"></i>
                                     Get Current Location
@@ -240,11 +238,11 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="address">Full Address</label>
-                            <input type="text" id="address" placeholder="Street address, area, locality" required>
+                            <input type="text" id="address" placeholder="Street address, area, locality" required="">
                         </div>
                         <div class="form-group">
                             <label for="city">City</label>
-                            <select id="city" required>
+                            <select id="city" required="">
                                 <option value="">Select your city</option>
                                 <option value="mumbai">Mumbai</option>
                                 <option value="delhi">Delhi</option>
@@ -268,15 +266,15 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="issueType">Issue Category</label>
-                            <select id="issueType" required>
+                            <select id="issueType" required="">
                                 <option value="">Select category</option>
-                                <option value="garbage">🗑️ Garbage & Waste</option>
-                                <option value="road">🚧 Road & Infrastructure</option>
+                                <option value="garbage">🗑️ Garbage &amp; Waste</option>
+                                <option value="road">🚧 Road &amp; Infrastructure</option>
                                 <option value="water">💧 Water Supply</option>
                                 <option value="electricity">⚡ Electricity</option>
-                                <option value="safety">🛡️ Safety & Security</option>
+                                <option value="safety">🛡️ Safety &amp; Security</option>
                                 <option value="transport">🚌 Public Transport</option>
-                                <option value="parks">🌳 Parks & Recreation</option>
+                                <option value="parks">🌳 Parks &amp; Recreation</option>
                                 <option value="noise">🔊 Noise Pollution</option>
                                 <option value="air">🌬️ Air Quality</option>
                                 <option value="other">❓ Other</option>
@@ -284,7 +282,7 @@
                         </div>
                         <div class="form-group">
                             <label for="priority">Priority Level</label>
-                            <select id="priority" required>
+                            <select id="priority" required="">
                                 <option value="">Select priority</option>
                                 <option value="low">🟢 Low - Minor inconvenience</option>
                                 <option value="medium">🟡 Medium - Needs attention</option>
@@ -298,7 +296,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="department">Department</label>
-                            <select id="department" required>
+                            <select id="department" required="">
                                 <option value="">Loading departments...</option>
                             </select>
                         </div>
@@ -306,12 +304,12 @@
                     
                     <div class="form-group">
                         <label for="title">Issue Title</label>
-                        <input type="text" id="title" placeholder="Brief description of the issue" required>
+                        <input type="text" id="title" placeholder="Brief description of the issue" required="">
                     </div>
                     
                     <div class="form-group">
                         <label for="description">Detailed Description</label>
-                        <textarea id="description" rows="4" placeholder="Provide detailed information about the issue, when you noticed it, and any other relevant details" required></textarea>
+                        <textarea id="description" rows="4" placeholder="Provide detailed information about the issue, when you noticed it, and any other relevant details" required=""></textarea>
                     </div>
                 </div>
 
@@ -321,11 +319,11 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">Full Name</label>
-                            <input type="text" id="name" placeholder="Your full name" required>
+                            <input type="text" id="name" placeholder="Your full name" required="">
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" placeholder="+91 98765 43210" required>
+                            <input type="tel" id="phone" placeholder="+91 98765 43210" required="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -363,13 +361,13 @@
                     <label for="typeFilter">Category:</label>
                     <select id="typeFilter">
                         <option value="all">All Categories</option>
-                        <option value="garbage">🗑️ Garbage & Waste</option>
-                        <option value="road">🚧 Road & Infrastructure</option>
+                        <option value="garbage">🗑️ Garbage &amp; Waste</option>
+                        <option value="road">🚧 Road &amp; Infrastructure</option>
                         <option value="water">💧 Water Supply</option>
                         <option value="electricity">⚡ Electricity</option>
-                        <option value="safety">🛡️ Safety & Security</option>
+                        <option value="safety">🛡️ Safety &amp; Security</option>
                         <option value="transport">🚌 Public Transport</option>
-                        <option value="parks">🌳 Parks & Recreation</option>
+                        <option value="parks">🌳 Parks &amp; Recreation</option>
                         <option value="noise">🔊 Noise Pollution</option>
                         <option value="air">🌬️ Air Quality</option>
                         <option value="other">❓ Other</option>
@@ -495,7 +493,7 @@
                         </div>
                         <div class="workflow-step">
                             <div class="step-number">4</div>
-                            <h4>Rewards & Recognition</h4>
+                            <h4>Rewards &amp; Recognition</h4>
                             <p>Earn points, climb leaderboards, and redeem rewards for civic services</p>
                         </div>
                     </div>
@@ -555,7 +553,7 @@
                         </div>
                         <div class="platform-feature">
                             <i class="fas fa-question-circle"></i>
-                            <h4>Support & Help</h4>
+                            <h4>Support &amp; Help</h4>
                             <p>Access comprehensive help center and contact support team</p>
                             <a href="help-center.html" class="feature-link">Get Help →</a>
                         </div>
@@ -610,7 +608,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
+                <p>© 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
             </div>
         </div>
     </footer>
@@ -620,7 +618,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Issue Reported Successfully! 🎉</h3>
-                <span class="close">&times;</span>
+                <span class="close">×</span>
             </div>
             <div class="modal-body">
                 <i class="fas fa-check-circle success-icon"></i>
@@ -642,7 +640,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>AI Detection Alert 🤖</h3>
-                <span class="close">&times;</span>
+                <span class="close">×</span>
             </div>
             <div class="modal-body">
                 <i class="fas fa-robot ai-icon"></i>
@@ -976,6 +974,10 @@
 
     <!-- Chatbot Integration -->
     <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer></script>
-</body>
-</html>
+    <script src="https://files.bpcontent.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer=""></script>
+
+
+<script type="module" src="./js/api.js"></script>
+
+<script type="module" src="./js/auth-bootstrap.js"></script>
+</body></html>

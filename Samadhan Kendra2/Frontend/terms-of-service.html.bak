@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - Samadhan Kendra</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Subtle highlight for anchor-target sections */
+        .highlight {
+            outline: 3px solid rgba(220,38,38,.25);
+            border-radius: 12px;
+            transition: outline-color .8s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="./index.html">
+                    <i class="fas fa-handshake"></i>
+                    <span>Samadhan Kendra</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#report" class="nav-link">Report Issue</a></li>
+                <li><a href="index.html#issues" class="nav-link">View Issues</a></li>
+                <li><a href="index.html#leaderboard" class="nav-link">Leaderboard</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+            </ul>
+            <div class="nav-user">
+                <div class="user-points">
+                    <i class="fas fa-star"></i>
+                    <span id="navUserPoints">0</span>
+                </div>
+                <div class="user-avatar" onclick="toggleProfileMenu()">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" onclick="handleProfileAccess()"><i class="fas fa-user"></i> Profile</a>
+                    <a href="rewards-program.html"><i class="fas fa-gift"></i> Rewards</a>
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+                    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Terms of Service Section -->
+    <section class="terms-section">
+        <div class="container">
+            <div class="terms-header">
+                <h1>Terms of Service</h1>
+                <p>Last updated: December 15, 2024</p>
+                <p>By using Samadhan Kendra, you agree to these terms and conditions. Please read them carefully.</p>
+            </div>
+
+            <div class="terms-content">
+                <!-- Quick Navigation -->
+                <div class="terms-nav">
+                    <h3>Quick Navigation</h3>
+                    <ul>
+                        <li><a href="#acceptance">Acceptance of Terms</a></li>
+                        <li><a href="#service-description">Service Description</a></li>
+                        <li><a href="#user-accounts">User Accounts</a></li>
+                        <li><a href="#acceptable-use">Acceptable Use</a></li>
+                        <li><a href="#content-guidelines">Content Guidelines</a></li>
+                        <li><a href="#intellectual-property">Intellectual Property</a></li>
+                        <li><a href="#privacy">Privacy & Data</a></li>
+                        <li><a href="#disclaimers">Disclaimers</a></li>
+                        <li><a href="#limitation-liability">Limitation of Liability</a></li>
+                        <li><a href="#termination">Termination</a></li>
+                        <li><a href="#governing-law">Governing Law</a></li>
+                        <li><a href="#changes">Changes to Terms</a></li>
+                        <li><a href="#contact">Contact Information</a></li>
+                    </ul>
+                </div>
+
+                <!-- Acceptance of Terms -->
+                <div class="terms-section-item" id="acceptance">
+                    <h2>1. Acceptance of Terms</h2>
+                    
+                    <div class="terms-subsection">
+                        <h3>1.1 Agreement to Terms</h3>
+                        <p>By accessing or using Samadhan Kendra ("the Service"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of these terms, you may not access the Service.</p>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>1.2 Age Requirements</h3>
+                        <p>You must be at least 13 years old to use the Service. If you are under 18, you must have parental or guardian consent to use the Service.</p>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>1.3 Legal Capacity</h3>
+                        <p>You represent that you have the legal capacity to enter into these Terms and to use the Service in accordance with all applicable laws and regulations.</p>
+                    </div>
+                </div>
+
+                <!-- Service Description -->
+                <div class="terms-section-item" id="service-description">
+                    <h2>2. Service Description</h2>
+                    
+                    <div class="terms-subsection">
+                        <h3>2.1 What We Provide</h3>
+                        <p>Samadhan Kendra is an AI-powered civic issue reporting and resolution platform that enables citizens to:</p>
+                        <ul>
+                            <li>Report civic issues with photos, videos, and location data</li>
+                            <li>Track the progress of reported issues</li>
+                            <li>Earn rewards for active participation</li>
+                            <li>Connect with municipal authorities</li>
+                            <li>Participate in community engagement</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>2.2 Service Availability</h3>
+                        <p>We strive to provide continuous service availability, but we do not guarantee that the Service will be available 24/7. We may temporarily suspend the Service for maintenance, updates, or other operational reasons.</p>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>2.3 Geographic Coverage</h3>
+                        <p>The Service is currently available in select Indian cities. We are continuously expanding our coverage area. Check our website for current city availability.</p>
+                    </div>
+                </div>
+
+                <!-- User Accounts -->
+                <div class="terms-section-item" id="user-accounts">
+                    <h2>3. User Accounts</h2>
+                    
+                    <div class="terms-subsection">
+                        <h3>3.1 Account Creation</h3>
+                        <p>To use certain features of the Service, you must create an account. You agree to:</p>
+                        <ul>
+                            <li>Provide accurate, current, and complete information</li>
+                            <li>Maintain and update your account information</li>
+                            <li>Keep your account credentials secure</li>
+                            <li>Notify us immediately of any unauthorized use</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>3.2 Account Security</h3>
+                        <p>You are responsible for:</p>
+                        <ul>
+                            <li>Maintaining the confidentiality of your password</li>
+                            <li>All activities that occur under your account</li>
+                            <li>Ensuring your account is not used by unauthorized persons</li>
+                            <li>Logging out when using shared devices</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>3.3 Account Termination</h3>
+                        <p>You may terminate your account at any time by contacting our support team. We may terminate or suspend your account if you violate these Terms or for other legitimate reasons.</p>
+                    </div>
+                </div>
+
+                <!-- Acceptable Use -->
+                <div class="terms-section-item" id="acceptable-use">
+                    <h2>4. Acceptable Use</h2>
+                    
+                    <div class="terms-subsection">
+                        <h3>4.1 Permitted Uses</h3>
+                        <p>You may use the Service for:</p>
+                        <ul>
+                            <li>Reporting legitimate civic issues in your community</li>
+                            <li>Tracking the progress of reported issues</li>
+                            <li>Participating in community discussions</li>
+                            <li>Earning and redeeming rewards</li>
+                            <li>Providing feedback and suggestions</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>4.2 Prohibited Uses</h3>
+                        <p>You may not use the Service to:</p>
+                        <ul>
+                            <li>Report false or misleading information</li>
+                            <li>Harass, abuse, or threaten other users</li>
+                            <li>Upload inappropriate, offensive, or illegal content</li>
+                            <li>Attempt to gain unauthorized access to our systems</li>
+                            <li>Use automated tools to spam or manipulate the Service</li>
+                            <li>Violate any applicable laws or regulations</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>4.3 Emergency Situations</h3>
+                        <p>The Service is not intended for emergency situations. For life-threatening emergencies, please contact emergency services immediately (112 in India).</p>
+                    </div>
+                </div>
+
+                <!-- Content Guidelines -->
+                <div class="terms-section-item" id="content-guidelines">
+                    <h2>5. Content Guidelines</h2>
+                    
+                    <div class="terms-subsection">
+                        <h3>5.1 User-Generated Content</h3>
+                        <p>When using the Service, you may upload photos, videos, and text content. You retain ownership of your content but grant us a license to use it for service provision.</p>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>5.2 Content Standards</h3>
+                        <p>All content must:</p>
+                        <ul>
+                            <li>Be accurate and truthful</li>
+                            <li>Respect the privacy of others</li>
+                            <li>Not contain personal information of third parties</li>
+                            <li>Be appropriate for all audiences</li>
+                            <li>Comply with applicable laws</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>5.3 Content Moderation</h3>
+                        <p>We reserve the right to:</p>
+                        <ul>
+                            <li>Review and moderate all user content</li>
+                            <li>Remove content that violates these Terms</li>
+                            <li>Suspend accounts for repeated violations</li>
+                            <li>Report illegal content to appropriate authorities</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Intellectual Property -->
+                <div class="terms-section-item" id="intellectual-property">
+                    <h2>6. Intellectual Property</h2>
+                    
+                    <div class="terms-subsection">
+                        <h3>6.1 Our Rights</h3>
+                        <p>Samadhan Kendra and its content, features, and functionality are owned by us and are protected by copyright, trademark, and other intellectual property laws.</p>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>6.2 Your Rights</h3>
+                        <p>You retain ownership of content you create and upload. By using the Service, you grant us a non-exclusive, worldwide, royalty-free license to use your content for service provision.</p>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>6.3 License Restrictions</h3>
+                        <p>You may not:</p>
+                        <ul>
+                            <li>Copy, modify, or distribute our content without permission</li>
+                            <li>Reverse engineer or attempt to extract source code</li>
+                            <li>Use our trademarks or branding without authorization</li>
+                            <li>Create derivative works based on our Service</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Privacy & Data -->
+                <div class="terms-section-item" id="privacy">
+                    <h2>7. Privacy & Data</h2>
+                    
+                    <div class="terms-subsection">
+                        <h3>7.1 Data Collection</h3>
+                        <p>We collect and process your data as described in our Privacy Policy. By using the Service, you consent to such collection and processing.</p>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>7.2 Data Sharing</h3>
+                        <p>We may share your data with:</p>
+                        <ul>
+                            <li>Municipal authorities for issue resolution</li>
+                            <li>Service providers who assist in our operations</li>
+                            <li>Law enforcement when required by law</li>
+                            <li>Other users as part of public issue reports</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>7.3 Data Retention</h3>
+                        <p>We retain your data for as long as necessary to provide the Service and comply with legal obligations. You may request deletion of your data subject to certain limitations.</p>
+                    </div>
+                </div>
+
+                <!-- Disclaimers -->
+                <div class="terms-section-item" id="disclaimers">
+                    <h2>8. Disclaimers</h2>
+                    
+                    <div class="terms-subsection">
+                        <h3>8.1 Service Availability</h3>
+                        <p>We provide the Service "as is" and "as available" without warranties of any kind. We do not guarantee that the Service will be uninterrupted, secure, or error-free.</p>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>8.2 Issue Resolution</h3>
+                        <p>While we facilitate communication between citizens and authorities, we do not guarantee:</p>
+                        <ul>
+                            <li>That reported issues will be resolved</li>
+                            <li>Specific resolution timeframes</li>
+                            <li>Particular outcomes or solutions</li>
+                            <li>Accuracy of municipal responses</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>8.3 Third-Party Services</h3>
+                        <p>We may integrate with third-party services. We are not responsible for the content, privacy practices, or availability of such services.</p>
+                    </div>
+                </div>
+
+                <!-- Limitation of Liability -->
+                <div class="terms-section-item" id="limitation-liability">
+                    <h2>9. Limitation of Liability</h2>
+                    
+                    <div class="terms-subsection">
+                        <h3>9.1 Liability Cap</h3>
+                        <p>To the maximum extent permitted by law, our total liability to you for any claims arising from your use of the Service shall not exceed the amount you paid us in the 12 months preceding the claim.</p>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>9.2 Excluded Damages</h3>
+                        <p>We are not liable for:</p>
+                        <ul>
+                            <li>Indirect, incidental, or consequential damages</li>
+                            <li>Loss of profits, data, or business opportunities</li>
+                            <li>Damages resulting from third-party actions</li>
+                            <li>Issues beyond our reasonable control</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>9.3 Essential Purpose</h3>
+                        <p>These limitations apply even if we have been advised of the possibility of such damages and notwithstanding the failure of essential purpose of any limited remedy.</p>
+                    </div>
+                </div>
+
+                <!-- Termination -->
+                <div class="terms-section-item" id="termination">
+                    <h2>10. Termination</h2>
+                    
+                    <div class="terms-subsection">
+                        <h3>10.1 Termination by You</h3>
+                        <p>You may terminate your use of the Service at any time by:</p>
+                        <ul>
+                            <li>Deleting your account through our platform</li>
+                            <li>Contacting our support team</li>
+                            <li>Ceasing to use the Service</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>10.2 Termination by Us</h3>
+                        <p>We may terminate or suspend your access to the Service if:</p>
+                        <ul>
+                            <li>You violate these Terms</li>
+                            <li>You engage in fraudulent or illegal activities</li>
+                            <li>We discontinue the Service</li>
+                            <li>Required by law or regulation</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>10.3 Effect of Termination</h3>
+                        <p>Upon termination:</p>
+                        <ul>
+                            <li>Your right to use the Service ceases immediately</li>
+                            <li>We may delete your account and data</li>
+                            <li>Certain provisions survive termination</li>
+                            <li>You remain liable for any violations</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Governing Law -->
+                <div class="terms-section-item" id="governing-law">
+                    <h2>11. Governing Law</h2>
+                    
+                    <div class="terms-subsection">
+                        <h3>11.1 Applicable Law</h3>
+                        <p>These Terms are governed by and construed in accordance with the laws of India, without regard to conflict of law principles.</p>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>11.2 Jurisdiction</h3>
+                        <p>Any disputes arising from these Terms or your use of the Service shall be subject to the exclusive jurisdiction of the courts in Bangalore, Karnataka, India.</p>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>11.3 Dispute Resolution</h3>
+                        <p>We encourage resolving disputes through good faith discussions. If formal proceedings are necessary, they shall be conducted in English.</p>
+                    </div>
+                </div>
+
+                <!-- Changes to Terms -->
+                <div class="terms-section-item" id="changes">
+                    <h2>12. Changes to Terms</h2>
+                    
+                    <div class="terms-subsection">
+                        <h3>12.1 Modification Rights</h3>
+                        <p>We reserve the right to modify these Terms at any time. We will notify you of significant changes through:</p>
+                        <ul>
+                            <li>Email notifications to registered users</li>
+                            <li>Prominent notices on our website</li>
+                            <li>Updates to the "Last updated" date</li>
+                        </ul>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>12.2 Acceptance of Changes</h3>
+                        <p>Your continued use of the Service after changes become effective constitutes acceptance of the new Terms. If you disagree with changes, you must stop using the Service.</p>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>12.3 Material Changes</h3>
+                        <p>For material changes affecting your rights, we will provide at least 30 days' notice before the changes take effect.</p>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="terms-section-item" id="contact">
+                    <h2>13. Contact Information</h2>
+                    
+                    <div class="terms-subsection">
+                        <h3>13.1 Questions About Terms</h3>
+                        <p>If you have questions about these Terms of Service, please contact us:</p>
+                        
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <strong>Email:</strong> legal@samadhankendra.in
+                                </div>
+                            </div>
+                            
+                            <div class="contact-method">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <strong>Phone:</strong> +91 1800-123-4567
+                                </div>
+                            </div>
+                            
+                            <div class="contact-method">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <strong>Address:</strong><br>
+                                    Samadhan Kendra<br>
+                                    Tech Park, Whitefield<br>
+                                    Bangalore - 560066, India
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="terms-subsection">
+                        <h3>13.2 Legal Notices</h3>
+                        <p>For legal notices or formal communications, please send them to our registered office address above, marked "Legal Department."</p>
+                    </div>
+                </div>
+
+                <!-- Terms Summary -->
+                <div class="terms-summary">
+                    <h2>Terms Summary</h2>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Accept Terms</h3>
+                            <p>By using our service, you agree to these terms and conditions</p>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <i class="fas fa-user-shield"></i>
+                            <h3>Account Security</h3>
+                            <p>You are responsible for keeping your account secure and confidential</p>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h3>Acceptable Use</h3>
+                            <p>Use the service responsibly and report only legitimate civic issues</p>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <i class="fas fa-gavel"></i>
+                            <h3>Legal Compliance</h3>
+                            <p>All users must comply with applicable laws and regulations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Samadhan Kendra</h3>
+                    <p>Empowering Indian citizens through AI-driven civic engagement and smart city solutions.</p>
+                    <div class="social-links"></div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#report">Report Issue</a></li>
+                        <li><a href="index.html#issues">View Issues</a></li>
+                        <li><a href="index.html#leaderboard">Leaderboard</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="rewards-program.html">Rewards Program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section"></div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- App config (API base) -->
+    <script src="./config.js"></script>
+    <!-- Main shared logic (centralized nav/session/points/logout) -->
+    <script type="module" src="./js/main.js"></script>
+    <script>
+        // Mobile Navigation Toggle (defensive)
+        (function initNav() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+                if (hamburger && navMenu) {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                }
+            }));
+        })();
+
+        // Profile dropdown toggle (fallback if not provided by main.js)
+        function toggleProfileMenu() {
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown) dropdown.classList.toggle('active');
+        }
+        window.toggleProfileMenu = window.toggleProfileMenu || toggleProfileMenu;
+
+        // Smooth scroll for terms navigation + highlight on arrival
+        document.querySelectorAll('.terms-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    targetSection.classList.add('highlight');
+                    setTimeout(() => targetSection.classList.remove('highlight'), 1200);
+                }
+            });
+        });
+
+        // If opened with a hash (deep link), bring into view and highlight
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initializePointsDisplay === 'function') {
+                initializePointsDisplay();
+            } else {
+                // Fallback points display
+                if (localStorage.getItem('userLoggedIn')) {
+                    const pts = parseInt(localStorage.getItem('userPoints') || '0', 10);
+                    const el = document.getElementById('navUserPoints');
+                    if (el) el.textContent = (Number.isFinite(pts) ? pts : 0).toLocaleString();
+                }
+            }
+
+            if (location.hash) {
+                const el = document.querySelector(location.hash);
+                if (el) {
+                    el.classList.add('highlight');
+                    setTimeout(() => el.classList.remove('highlight'), 1200);
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

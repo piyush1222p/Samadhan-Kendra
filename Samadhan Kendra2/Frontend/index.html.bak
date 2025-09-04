@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samadhan Kendra - Smart Civic Issue Resolution</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styling for login buttons */
+        .btn-primary[href*="login.html"] {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+            color: white !important;
+            border: 2px solid #3b82f6 !important;
+        }
+
+        .btn-primary[href*="login.html"]:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
+        }
+
+        /* Small helpers for notices */
+        .notice {
+            margin: 12px 0;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .notice.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+        .notice.error { background: #fef2f2; color: #7f1d1d; border: 1px solid #fecaca; }
+        .muted { color: #6b7280; font-size: 0.95rem; }
+        .issue-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: #fff;
+        }
+        .issue-card .meta { font-size: 0.85rem; color: #6b7280; }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            border-radius: 999px;
+            background: #eef2ff;
+            color: #3730a3;
+            border: 1px solid #c7d2fe;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="./index.html">
+                    <i class="fas fa-handshake"></i>
+                    <span>Samadhan Kendra</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#report" class="nav-link">Report Issue</a></li>
+                <li><a href="#issues" class="nav-link">View Issues</a></li>
+                <li><a href="#leaderboard" class="nav-link">Leaderboard</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="help-center.html" class="nav-link">Help Center</a></li>
+                <li><a href="admin-login.html" class="nav-link admin-link">Admin</a></li>
+            </ul>
+            <div class="nav-user">
+                <div class="user-points">
+                    <i class="fas fa-star"></i>
+                    <span id="userPoints">0</span>
+                </div>
+                <div class="user-avatar" onclick="toggleProfileMenu()">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#" onclick="handleProfileAccess()"><i class="fas fa-user"></i> Profile</a>
+                    <a href="rewards-program.html"><i class="fas fa-gift"></i> Rewards</a>
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+                    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-award"></i>
+                    <span>AI-Powered Civic Resolution</span>
+                </div>
+                <h1>समाधान केंद्र</h1>
+                <h2>Smart Solutions for Smart Cities</h2>
+                <p>Report civic issues with AI-powered intelligence. Get real-time updates, earn rewards, and help build better communities across India.</p>
+                <div class="hero-buttons">
+                    <a href="#report" class="btn btn-primary">
+                        <i class="fas fa-camera"></i>
+                        Report Issue Now
+                    </a>
+                    <a href="#issues" class="btn btn-secondary">
+                        <i class="fas fa-eye"></i>
+                        View Issues
+                    </a>
+                </div>
+                <div class="hero-features">
+                    <div class="feature-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>GPS Location</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-robot"></i>
+                        <span>AI Detection</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Earn Rewards</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-flag"></i>
+                        <span class="stat-number">15,247</span>
+                        <span class="stat-label">Issues Reported</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span class="stat-number">12,892</span>
+                        <span class="stat-label">Issues Resolved</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-users"></i>
+                        <span class="stat-number">8,456</span>
+                        <span class="stat-label">Active Citizens</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-rupee-sign"></i>
+                        <span class="stat-number">₹2.5L</span>
+                        <span class="stat-label">Rewards Distributed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Make a Difference?</h2>
+                <p>Join thousands of citizens who are actively improving their communities through Samadhan Kendra.</p>
+                <div class="cta-buttons">
+                    <a href="register.html" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i>
+                        Create Free Account
+                    </a>
+                    <a href="login.html" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Login to Account
+                    </a>
+                </div>
+                <div class="cta-features">
+                    <div class="cta-feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>100% Free</span>
+                    </div>
+                    <div class="cta-feature">
+                        <i class="fas fa-bolt"></i>
+                        <span>Instant Setup</span>
+                    </div>
+                    <div class="cta-feature">
+                        <i class="fas fa-gift"></i>
+                        <span>Earn Rewards</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Report Issue Section -->
+    <section id="report" class="report-section">
+        <div class="container">
+            <h2>Report a Civic Issue</h2>
+            <p class="section-subtitle">Help improve your community with smart reporting. Use AI-powered features for faster resolution.</p>
+            
+            <div id="reportNotice" class="notice muted">
+                Please login to submit an issue. You can still fill the form and we’ll save your input until you login.
+            </div>
+
+            <form id="issueForm" class="issue-form">
+                <!-- Media Upload Section -->
+                <div class="media-upload-section">
+                    <h3><i class="fas fa-camera"></i> Capture the Issue</h3>
+                    <div class="media-upload-area" id="mediaUploadArea">
+                        <div class="upload-placeholder">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload photo/video</p>
+                            <small>Or drag & drop files here</small>
+                        </div>
+                        <input type="file" id="mediaUpload" accept="image/*,video/*" multiple>
+                    </div>
+                    <div class="uploaded-media" id="uploadedMedia"></div>
+                    <div class="muted" style="margin-top:8px;">
+                        Note: Media upload is not sent to the backend yet in this version.
+                    </div>
+                </div>
+
+                <!-- Location Section -->
+                <div class="location-section">
+                    <h3><i class="fas fa-map-marker-alt"></i> Location Details</h3>
+                    <div class="location-row">
+                        <div class="form-group">
+                            <label for="gpsLocation">GPS Location</label>
+                            <div class="gps-input">
+                                <input type="text" id="gpsLocation" placeholder="Latitude, Longitude" readonly>
+                                <button type="button" class="btn btn-secondary" id="getLocationBtn">
+                                    <i class="fas fa-crosshairs"></i>
+                                    Get Current Location
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="landmark">Nearest Landmark</label>
+                            <input type="text" id="landmark" placeholder="e.g., Near Metro Station, Behind Mall">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="address">Full Address</label>
+                            <input type="text" id="address" placeholder="Street address, area, locality" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <select id="city" required>
+                                <option value="">Select your city</option>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="delhi">Delhi</option>
+                                <option value="bangalore">Bangalore</option>
+                                <option value="hyderabad">Hyderabad</option>
+                                <option value="chennai">Chennai</option>
+                                <option value="kolkata">Kolkata</option>
+                                <option value="pune">Pune</option>
+                                <option value="ahmedabad">Ahmedabad</option>
+                                <option value="jaipur">Jaipur</option>
+                                <option value="lucknow">Lucknow</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Issue Details Section -->
+                <div class="issue-details-section">
+                    <h3><i class="fas fa-info-circle"></i> Issue Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="issueType">Issue Category</label>
+                            <select id="issueType" required>
+                                <option value="">Select category</option>
+                                <option value="garbage">🗑️ Garbage & Waste</option>
+                                <option value="road">🚧 Road & Infrastructure</option>
+                                <option value="water">💧 Water Supply</option>
+                                <option value="electricity">⚡ Electricity</option>
+                                <option value="safety">🛡️ Safety & Security</option>
+                                <option value="transport">🚌 Public Transport</option>
+                                <option value="parks">🌳 Parks & Recreation</option>
+                                <option value="noise">🔊 Noise Pollution</option>
+                                <option value="air">🌬️ Air Quality</option>
+                                <option value="other">❓ Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="priority">Priority Level</label>
+                            <select id="priority" required>
+                                <option value="">Select priority</option>
+                                <option value="low">🟢 Low - Minor inconvenience</option>
+                                <option value="medium">🟡 Medium - Needs attention</option>
+                                <option value="high">🟠 High - Affects daily life</option>
+                                <option value="urgent">🔴 Urgent - Safety hazard</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- NEW: Department populated from backend -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="department">Department</label>
+                            <select id="department" required>
+                                <option value="">Loading departments...</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="title">Issue Title</label>
+                        <input type="text" id="title" placeholder="Brief description of the issue" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Detailed Description</label>
+                        <textarea id="description" rows="4" placeholder="Provide detailed information about the issue, when you noticed it, and any other relevant details" required></textarea>
+                    </div>
+                </div>
+
+                <!-- Contact Section -->
+                <div class="contact-section">
+                    <h3><i class="fas fa-user"></i> Contact Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" placeholder="Your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+91 98765 43210" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Email (Optional)</label>
+                        <input type="email" id="contact" placeholder="For status updates and rewards">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-full">
+                    <i class="fas fa-paper-plane"></i>
+                    Submit Issue Report
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- View Issues Section -->
+    <section id="issues" class="issues-section">
+        <div class="container">
+            <h2>Current Issues</h2>
+            <p class="section-subtitle">Track the status of reported issues in your community with AI-powered insights</p>
+            
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="statusFilter">Status:</label>
+                    <select id="statusFilter">
+                        <option value="all">All Statuses</option>
+                        <option value="reported">📝 Reported</option>
+                        <option value="investigating">🔍 Investigating</option>
+                        <option value="in-progress">⚡ In Progress</option>
+                        <option value="resolved">✅ Resolved</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="typeFilter">Category:</label>
+                    <select id="typeFilter">
+                        <option value="all">All Categories</option>
+                        <option value="garbage">🗑️ Garbage & Waste</option>
+                        <option value="road">🚧 Road & Infrastructure</option>
+                        <option value="water">💧 Water Supply</option>
+                        <option value="electricity">⚡ Electricity</option>
+                        <option value="safety">🛡️ Safety & Security</option>
+                        <option value="transport">🚌 Public Transport</option>
+                        <option value="parks">🌳 Parks & Recreation</option>
+                        <option value="noise">🔊 Noise Pollution</option>
+                        <option value="air">🌬️ Air Quality</option>
+                        <option value="other">❓ Other</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="cityFilter">City:</label>
+                    <select id="cityFilter">
+                        <option value="all">All Cities</option>
+                        <option value="mumbai">Mumbai</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="bangalore">Bangalore</option>
+                        <option value="hyderabad">Hyderabad</option>
+                        <option value="chennai">Chennai</option>
+                        <option value="kolkata">Kolkata</option>
+                        <option value="pune">Pune</option>
+                        <option value="ahmedabad">Ahmedabad</option>
+                        <option value="jaipur">Jaipur</option>
+                        <option value="lucknow">Lucknow</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="searchFilter">Search:</label>
+                    <input type="text" id="searchFilter" placeholder="Search by title, description, or address">
+                </div>
+            </div>
+            
+            <div id="issuesList" class="issues-list">
+                <!-- Issues will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section id="leaderboard" class="leaderboard-section">
+        <div class="container">
+            <h2>Citizen Leaderboard</h2>
+            <p class="section-subtitle">Top contributors making a difference in their communities</p>
+            
+            <div class="leaderboard-tabs">
+                <button class="tab-btn active" data-tab="monthly">This Month</button>
+                <button class="tab-btn" data-tab="yearly">This Year</button>
+                <button class="tab-btn" data-tab="alltime">All Time</button>
+            </div>
+            
+            <div class="leaderboard-content">
+                <div class="top-3">
+                    <div class="leaderboard-item second">
+                        <div class="rank">2</div>
+                        <div class="avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="info">
+                            <h4>Priya Sharma</h4>
+                            <p>Mumbai, Maharashtra</p>
+                        </div>
+                        <div class="stats">
+                            <div class="points">2,450 pts</div>
+                            <div class="issues">45 issues</div>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item first">
+                        <div class="rank">1</div>
+                        <div class="avatar">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="info">
+                            <h4>Rajesh Kumar</h4>
+                            <p>Delhi, NCR</p>
+                        </div>
+                        <div class="stats">
+                            <div class="points">3,120 pts</div>
+                            <div class="issues">52 issues</div>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item third">
+                        <div class="rank">3</div>
+                        <div class="avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="info">
+                            <h4>Anita Patel</h4>
+                            <p>Bangalore, Karnataka</p>
+                        </div>
+                        <div class="stats">
+                            <div class="points">2,180 pts</div>
+                            <div class="issues">38 issues</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="leaderboard-list" id="leaderboardList">
+                    <!-- More leaderboard items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2>About Samadhan Kendra</h2>
+        <div class="about-content">
+                <div class="about-text">
+                    <p>Samadhan Kendra is India's premier AI-powered civic issue resolution platform, designed to bridge the gap between citizens and municipal authorities. Our mission is to create smarter, more responsive cities through technology-driven citizen engagement.</p>
+                    
+                    <h3>How It Works</h3>
+                    <div class="workflow">
+                        <div class="workflow-step">
+                            <div class="step-number">1</div>
+                            <h4>Smart Report</h4>
+                            <p>Capture photos/videos with GPS location and AI-powered category detection</p>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-number">2</div>
+                            <h4>AI Analysis</h4>
+                            <p>Our AI detects duplicates, assigns priority, and routes to appropriate departments</p>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-number">3</div>
+                            <h4>Smart Resolution</h4>
+                            <p>Issues are prioritized and resolved with real-time tracking</p>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-number">4</div>
+                            <h4>Rewards & Recognition</h4>
+                            <p>Earn points, climb leaderboards, and redeem rewards for civic services</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Key Features</h3>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <i class="fas fa-camera"></i>
+                            <h4>Media Upload</h4>
+                            <p>Photo/video capture with automatic GPS location</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-robot"></i>
+                            <h4>AI Intelligence</h4>
+                            <p>Duplicate detection and smart categorization</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-route"></i>
+                            <h4>Smart Routing</h4>
+                            <p>Automatic assignment to concerned departments</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-trophy"></i>
+                            <h4>Gamification</h4>
+                            <p>Leaderboards and reward points system</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Benefits</h3>
+                    <ul class="benefits-list">
+                        <li><i class="fas fa-check"></i> Faster response times with AI-powered prioritization</li>
+                        <li><i class="fas fa-check"></i> Transparent tracking from report to resolution</li>
+                        <li><i class="fas fa-check"></i> Earn rewards redeemable for metro cards, discounts, and more</li>
+                        <li><i class="fas fa-check"></i> Build reputation as an active community member</li>
+                        <li><i class="fas fa-check"></i> Contribute to building smarter Indian cities</li>
+                    </ul>
+
+                    <h3>Platform Features</h3>
+                    <div class="platform-features">
+                        <div class="platform-feature">
+                            <i class="fas fa-user-circle"></i>
+                            <h4>User Management</h4>
+                            <p>Create accounts, manage profiles, and track your civic contributions</p>
+                            <a href="register.html" class="feature-link">Get Started →</a>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-eye"></i>
+                            <h4>Issue Tracking</h4>
+                            <p>Monitor the progress of your reported issues with detailed timelines</p>
+                            <a href="track-issue.html" class="feature-link">Learn More →</a>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-gift"></i>
+                            <h4>Rewards Program</h4>
+                            <p>Earn points and redeem them for exciting civic service rewards</p>
+                            <a href="rewards-program.html" class="feature-link">View Rewards →</a>
+                        </div>
+                        <div class="platform-feature">
+                            <i class="fas fa-question-circle"></i>
+                            <h4>Support & Help</h4>
+                            <p>Access comprehensive help center and contact support team</p>
+                            <a href="help-center.html" class="feature-link">Get Help →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Samadhan Kendra</h3>
+                    <p>Empowering Indian citizens through AI-driven civic engagement and smart city solutions.</p>
+                    <div class="social-links"></div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#report">Report Issue</a></li>
+                        <li><a href="#issues">View Issues</a></li>
+                        <li><a href="#leaderboard">Leaderboard</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Account</h4>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                        <li><a href="track-issue.html">Track Issues</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="rewards-program.html">Rewards Program</a></li>
+                        <li><a href="navigation-guide.html">Site Navigation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4></h4>
+                    <p></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Issue Reported Successfully! 🎉</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <i class="fas fa-check-circle success-icon"></i>
+                <p>Your issue has been reported and is now under AI-powered review. You'll receive updates on the status as it progresses.</p>
+                <p><strong>Issue ID:</strong> <span id="issueId"></span></p>
+                <div class="reward-info">
+                    <i class="fas fa-star"></i>
+                    <span>You earned <strong>25 points</strong> for this report!</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal()">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Detection Modal -->
+    <div id="aiModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>AI Detection Alert 🤖</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <i class="fas fa-robot ai-icon"></i>
+                <p>Our AI detected a similar issue reported nearby. Would you like to:</p>
+                <div class="ai-options">
+                    <button class="btn btn-secondary" onclick="mergeWithExisting()">Merge with existing issue</button>
+                    <button class="btn btn-primary" onclick="reportAsNew()">Report as new issue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Existing site script -->
+    <script src="script.js"></script>
+    
+    <script>
+        // Profile dropdown toggle
+        function toggleProfileMenu() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('profileDropdown');
+            const avatar = document.querySelector('.user-avatar');
+            if (!avatar) return;
+            if (!avatar.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Logout function
+        function logout() {
+            if (typeof window.logout === 'function') {
+                window.logout();
+            } else {
+                localStorage.removeItem('userLoggedIn');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userPoints');
+                localStorage.removeItem('userFirstName');
+                localStorage.removeItem('userLastName');
+                localStorage.removeItem('userCity');
+                localStorage.removeItem('userIssues');
+                localStorage.removeItem('userRank');
+                localStorage.removeItem('userPhone');
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Load user data when page loads (legacy points display)
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof initializePointsDisplay === 'function') {
+                initializePointsDisplay();
+            } else {
+                if (localStorage.getItem('userLoggedIn')) {
+                    const userPoints = localStorage.getItem('userPoints') || '0';
+                    const userPointsElement = document.getElementById('userPoints');
+                    if (userPointsElement) {
+                        userPointsElement.textContent = parseInt(userPoints).toLocaleString();
+                    }
+                    const profileDropdown = document.getElementById('profileDropdown');
+                    if (profileDropdown) {
+                        profileDropdown.innerHTML = `
+                            <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                            <a href="index.html#leaderboard"><i class="fas fa-trophy"></i> Leaderboard</a>
+                            <a href="rewards-program.html"><i class="fas fa-gift"></i> Rewards</a>
+                            <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        `;
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- App config for API base Django -->
+    <script src="./config.js"></script>
+
+    <!-- Page wiring to backend -->
+    <script type="module">
+        import { getDepartments, getGrievances, createGrievance } from "./js/api.js";
+
+        const reportNotice = document.getElementById("reportNotice");
+        const issueForm = document.getElementById("issueForm");
+        const issuesList = document.getElementById("issuesList");
+        const getLocationBtn = document.getElementById("getLocationBtn");
+        const gpsLocationEl = document.getElementById("gpsLocation");
+        const addressEl = document.getElementById("address");
+        const cityEl = document.getElementById("city");
+        const landmarkEl = document.getElementById("landmark");
+        const titleEl = document.getElementById("title");
+        const descriptionEl = document.getElementById("description");
+        const priorityEl = document.getElementById("priority");
+        const departmentEl = document.getElementById("department");
+        const statusFilterEl = document.getElementById("statusFilter");
+        const typeFilterEl = document.getElementById("typeFilter");
+        const cityFilterEl = document.getElementById("cityFilter");
+        const searchFilterEl = document.getElementById("searchFilter");
+
+        const PRIORITY_MAP = { low: 1, medium: 2, high: 3, urgent: 4 };
+
+        let grievancesCache = [];
+
+        function isLoggedIn() {
+            // We persist tokens in localStorage in api.js; quick check:
+            return !!localStorage.getItem("accessToken");
+        }
+
+        function setNotice() {
+            if (!reportNotice) return;
+            if (isLoggedIn()) {
+                reportNotice.className = "notice success";
+                reportNotice.textContent = "You are logged in. You can submit issues directly.";
+            } else {
+                reportNotice.className = "notice error";
+                reportNotice.innerHTML = 'You are not logged in. Please <a href="login.html">login</a> to submit an issue.';
+            }
+        }
+
+        async function populateDepartments() {
+            try {
+                const depts = await getDepartments();
+                if (!Array.isArray(depts)) return;
+                departmentEl.innerHTML = `<option value="">Select department</option>` + 
+                    depts.map(d => `<option value="${d.id}">${d.name}</option>`).join("");
+            } catch (e) {
+                console.error("Failed to load departments", e);
+                departmentEl.innerHTML = `<option value="">Failed to load departments</option>`;
+            }
+        }
+
+        function renderIssues(list) {
+            if (!issuesList) return;
+            if (!list || list.length === 0) {
+                issuesList.innerHTML = `<div class="muted">No issues found.</div>`;
+                return;
+            }
+            issuesList.innerHTML = list.map(g => {
+                const dept = g.department_name ?? g.department ?? "";
+                const who = g.citizen_username ?? "";
+                const status = g.status ?? "reported";
+                const created = g.created_at ? new Date(g.created_at).toLocaleString() : "";
+                return `
+                    <div class="issue-card">
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                            <h4 style="margin:0;line-height:1.2">${escapeHtml(g.title || "")}</h4>
+                            <span class="badge">${escapeHtml(String(status).replaceAll("_"," ").toUpperCase())}</span>
+                        </div>
+                        <p style="margin:8px 0 6px 0;">${escapeHtml(g.description || "").slice(0,240)}${(g.description||"").length>240?"…":""}</p>
+                        <div class="meta">
+                            Dept: ${escapeHtml(String(dept))} • Reporter: ${escapeHtml(String(who))} • Created: ${escapeHtml(String(created))} • ID: ${escapeHtml(String(g.id))}
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function escapeHtml(str) {
+            return String(str)
+                .replaceAll("&","&amp;")
+                .replaceAll("<","&lt;")
+                .replaceAll(">","&gt;")
+                .replaceAll('"',"&quot;")
+                .replaceAll("'","&#039;");
+        }
+
+        async function loadIssues() {
+            try {
+                const data = await getGrievances();
+                grievancesCache = Array.isArray(data) ? data : [];
+                applyFilters();
+            } catch (e) {
+                console.error("Failed to load grievances", e);
+                renderIssues([]);
+            }
+        }
+
+        function applyFilters() {
+            let list = grievancesCache.slice();
+
+            // Status filter
+            const statusVal = statusFilterEl?.value || "all";
+            if (statusVal !== "all") {
+                list = list.filter(g => String(g.status || "").toLowerCase() === statusVal);
+            }
+
+            // Category filter: we don't have a category field in backend yet.
+            // We'll retain UI but skip filtering on type.
+
+            // City filter: try to find city in description/address if present
+            const cityVal = cityFilterEl?.value || "all";
+            if (cityVal !== "all") {
+                const needle = cityVal.toLowerCase();
+                list = list.filter(g => {
+                    const text = `${g.description || ""} ${g.address || ""}`.toLowerCase();
+                    return text.includes(needle);
+                });
+            }
+
+            // Search filter
+            const q = (searchFilterEl?.value || "").trim().toLowerCase();
+            if (q) {
+                list = list.filter(g => {
+                    const hay = `${g.title || ""} ${g.description || ""} ${g.address || ""}`.toLowerCase();
+                    return hay.includes(q);
+                });
+            }
+
+            renderIssues(list);
+        }
+
+        statusFilterEl?.addEventListener("change", applyFilters);
+        typeFilterEl?.addEventListener("change", applyFilters);
+        cityFilterEl?.addEventListener("change", applyFilters);
+        searchFilterEl?.addEventListener("input", applyFilters);
+
+        // Geolocation
+        getLocationBtn?.addEventListener("click", () => {
+            if (!navigator.geolocation) {
+                alert("Geolocation is not supported by your browser.");
+                return;
+            }
+            getLocationBtn.disabled = true;
+            getLocationBtn.textContent = "Locating...";
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const { latitude, longitude } = pos.coords;
+                    gpsLocationEl.value = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+                    getLocationBtn.disabled = false;
+                    getLocationBtn.innerHTML = `<i class="fas fa-crosshairs"></i> Get Current Location`;
+                },
+                (err) => {
+                    console.error(err);
+                    alert("Unable to retrieve your location.");
+                    getLocationBtn.disabled = false;
+                    getLocationBtn.innerHTML = `<i class="fas fa-crosshairs"></i> Get Current Location`;
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
+        });
+
+        // Submit report
+        issueForm?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            if (!isLoggedIn()) {
+                alert("Please login to submit an issue.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const title = titleEl.value.trim();
+            const description = descriptionEl.value.trim();
+            const priorityKey = priorityEl.value;
+            const priority = PRIORITY_MAP[priorityKey] ?? 2; // default medium
+            const departmentId = Number(departmentEl.value);
+
+            if (!title || !description || !priority || !departmentId) {
+                alert("Please complete title, description, priority, and department.");
+                return;
+            }
+
+            // Append location/context details into description so backend stores it
+            const extras = [];
+            if (gpsLocationEl.value) extras.push(`GPS: ${gpsLocationEl.value}`);
+            if (addressEl.value) extras.push(`Address: ${addressEl.value}`);
+            if (cityEl.value) extras.push(`City: ${cityEl.options[cityEl.selectedIndex]?.text}`);
+            if (landmarkEl.value) extras.push(`Landmark: ${landmarkEl.value}`);
+            if (extras.length) {
+                // Separate with blank line for readability
+                extras.unshift(""); // leading blank line
+            }
+            const finalDescription = [description, ...extras].join("\n");
+
+            const submitBtn = issueForm.querySelector('button[type="submit"]');
+            const originalHtml = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Submitting...`;
+
+            try {
+                const created = await createGrievance({
+                    title,
+                    description: finalDescription,
+                    priority,
+                    department: departmentId,
+                });
+
+                // Open success modal if present
+                const modal = document.getElementById("successModal");
+                const issueIdSpan = document.getElementById("issueId");
+                if (modal && issueIdSpan) {
+                    issueIdSpan.textContent = created?.id ?? "";
+                    modal.style.display = "block";
+                } else {
+                    alert("Issue created successfully!");
+                }
+
+                issueForm.reset();
+                await loadIssues();
+            } catch (err) {
+                console.error(err);
+                const detail = err?.detail || "Failed to create issue. Please try again.";
+                alert(detail);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalHtml;
+            }
+        });
+
+        // Modal controls (success)
+        window.closeModal = function closeModal() {
+            const modal = document.getElementById("successModal");
+            if (modal) modal.style.display = "none";
+        };
+        document.addEventListener("click", (e) => {
+            const modal = document.getElementById("successModal");
+            if (modal && e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Init
+        (async function boot() {
+            setNotice();
+            await populateDepartments();
+            await loadIssues();
+        })();
+    </script>
+
+    <!-- Chatbot Integration -->
+    <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Samadhan Kendra</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .login-link {
+            color: #3b82f6 !important;
+            text-decoration: none !important;
+            font-weight: 600 !important;
+            transition: all 0.3s ease !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 6px !important;
+            background: rgba(59, 130, 246, 0.1) !important;
+            display: inline-block !important;
+            margin-left: 0.5rem !important;
+        }
+        .login-link:hover {
+            color: #1d4ed8 !important;
+            background: rgba(59, 130, 246, 0.2) !important;
+            text-decoration: none !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2) !important;
+        }
+        .nav-user .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+            color: white !important;
+            border: 2px solid #3b82f6 !important;
+        }
+        .nav-user .btn-primary:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
+        }
+        .strength-bar {
+            width: 100%;
+            height: 7px;
+            background: #e5e7eb;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 0.4rem;
+        }
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            background: #ff4444;
+            border-radius: 6px;
+            transition: width 0.3s, background 0.3s;
+        }
+        .strength-text {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-left: 0.3rem;
+        }
+        .password-feedback {
+            color: #b91c1c;
+            font-size: 0.85rem;
+            margin: 0.25rem 0 0 0.25rem;
+            padding-left: 1rem;
+            list-style: disc;
+        }
+        .notification {
+            margin: 1rem 0 0.5rem 0;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            display: none;
+        }
+        .notification.success { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+        .notification.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="./index.html">
+                    <i class="fas fa-handshake"></i>
+                    <span>Samadhan Kendra</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#report" class="nav-link">Report Issue</a></li>
+                <li><a href="index.html#issues" class="nav-link">View Issues</a></li>
+                <li><a href="index.html#leaderboard" class="nav-link">Leaderboard</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+            </ul>
+            <div class="nav-user">
+                <a href="login.html" class="btn btn-primary">Login</a>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Registration Section -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h1>Create Your Account</h1>
+                    <p>Join Samadhan Kendra and start making a difference in your community</p>
+                </div>
+                <div class="notification" id="notification"></div>
+                <form id="registrationForm" class="auth-form" autocomplete="on">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="firstName" name="firstName" placeholder="Enter first name" required autocomplete="given-name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="lastName" name="lastName" placeholder="Enter last name" required autocomplete="family-name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required autocomplete="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="input-group">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required autocomplete="tel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <div class="input-group">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <select id="city" name="city" required>
+                                <option value="">Select your city</option>
+                                <option value="mumbai">Mumbai, Maharashtra</option>
+                                <option value="delhi">Delhi, NCR</option>
+                                <option value="bangalore">Bangalore, Karnataka</option>
+                                <option value="hyderabad">Hyderabad, Telangana</option>
+                                <option value="chennai">Chennai, Tamil Nadu</option>
+                                <option value="kolkata">Kolkata, West Bengal</option>
+                                <option value="pune">Pune, Maharashtra</option>
+                                <option value="ahmedabad">Ahmedabad, Gujarat</option>
+                                <option value="jaipur">Jaipur, Rajasthan</option>
+                                <option value="lucknow">Lucknow, Uttar Pradesh</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" placeholder="Create a strong password" required autocomplete="new-password">
+                            <button type="button" class="password-toggle" tabindex="-1" onclick="togglePassword('password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill" id="strengthFill"></div>
+                            </div>
+                            <span class="strength-text" id="strengthText">Password strength</span>
+                        </div>
+                        <ul id="passwordFeedback" class="password-feedback"></ul>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required autocomplete="new-password">
+                            <button type="button" class="password-toggle" tabindex="-1" onclick="togglePassword('confirmPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="agreeTerms" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="terms-of-service.html">Terms of Service</a> and <a href="privacy-policy.html">Privacy Policy</a>
+                        </label>
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="newsletter">
+                            <span class="checkmark"></span>
+                            Subscribe to newsletter for updates and rewards
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full" id="registerBtn">
+                        <i class="fas fa-user-plus"></i>
+                        Create Account
+                    </button>
+                </form>
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="login.html" class="login-link">Login here</a></p>
+                </div>
+                <div class="social-signup">
+                    <p>Or sign up with</p>
+                    <div class="social-buttons">
+                        <button class="btn btn-social google" type="button">
+                            <i class="fab fa-google"></i>
+                            Google
+                        </button>
+                        <button class="btn btn-social facebook" type="button">
+                            <i class="fab fa-facebook-f"></i>
+                            Facebook
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Samadhan Kendra</h3>
+                    <p>Empowering Indian citizens through AI-driven civic engagement and smart city solutions.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#report">Report Issue</a></li>
+                        <li><a href="index.html#issues">View Issues</a></li>
+                        <li><a href="index.html#leaderboard">Leaderboard</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="rewards-program.html">Rewards Program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section"></div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- App config (API base) -->
+    <script src="./config.js"></script>
+    <!-- Main shared logic -->
+    <script type="module" src="./js/main.js"></script>
+
+    <script>
+        // Password show/hide
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const btn = input && input.parentElement.querySelector('.password-toggle i');
+            if (!input) return;
+            if (input.type === "password") {
+                input.type = "text";
+                if (btn) btn.className = "fas fa-eye-slash";
+            } else {
+                input.type = "password";
+                if (btn) btn.className = "fas fa-eye";
+            }
+        }
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            let feedback = [];
+            if (password.length >= 8) strength++; else feedback.push('At least 8 characters');
+            if (/[a-z]/.test(password)) strength++; else feedback.push('Include lowercase letters');
+            if (/[A-Z]/.test(password)) strength++; else feedback.push('Include uppercase letters');
+            if (/[0-9]/.test(password)) strength++; else feedback.push('Include numbers');
+            if (/[^A-Za-z0-9]/.test(password)) strength++; else feedback.push('Include special characters');
+            return { strength, feedback };
+        }
+
+        function updatePasswordStrength(password) {
+            const fill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+            if (!password) {
+                if (fill) fill.style.width = '0%';
+                if (strengthText) strengthText.textContent = '';
+                return;
+            }
+            const { strength, feedback } = checkPasswordStrength(password);
+            const pct = (strength / 5) * 100;
+            if (fill) {
+                fill.style.width = pct + '%';
+                let color;
+                if (strength <= 1) color = '#ff4444';
+                else if (strength <= 2) color = '#ff8800';
+                else if (strength <= 3) color = '#ffaa00';
+                else if (strength <= 4) color = '#00aa00';
+                else color = '#00ff00';
+                fill.style.backgroundColor = color;
+            }
+            if (strengthText) {
+                let text;
+                if (strength <= 1) text = 'Very Weak';
+                else if (strength <= 2) text = 'Weak';
+                else if (strength <= 3) text = 'Fair';
+                else if (strength <= 4) text = 'Good';
+                else text = 'Strong';
+                strengthText.textContent = text;
+            }
+            const feedbackList = document.getElementById('passwordFeedback');
+            if (feedbackList) {
+                feedbackList.innerHTML = feedback.map(item => `<li>${item}</li>`).join('');
+            }
+        }
+
+        // Notification
+        function showNotification(msg, type = "success") {
+            const n = document.getElementById("notification");
+            if (!n) return;
+            n.textContent = msg;
+            n.className = `notification ${type}`;
+            n.style.display = "block";
+            setTimeout(() => { n.style.display = "none"; }, 4200);
+        }
+
+        // Form submission - you should REPLACE this with backend API call in production!
+        document.addEventListener('DOMContentLoaded', function() {
+            // Password strength meter
+            const passwordInput = document.getElementById('password');
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    updatePasswordStrength(this.value);
+                });
+            }
+
+            // Prevent logged-in users from accessing register page
+            if (typeof isUserLoggedIn === 'function' && isUserLoggedIn()) {
+                if (typeof preventLoggedInAccess === 'function') { preventLoggedInAccess(); }
+                else window.location.replace('profile.html');
+                return;
+            }
+
+            // Registration form submission (for demo: localStorage, for real app: backend call)
+            document.getElementById("registrationForm").addEventListener("submit", async function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                const userData = {
+                    firstName: formData.get('firstName')?.trim(),
+                    lastName: formData.get('lastName')?.trim(),
+                    email: formData.get('email')?.trim().toLowerCase(),
+                    phone: formData.get('phone'),
+                    city: formData.get('city'),
+                    password: formData.get('password') || "",
+                    confirmPassword: formData.get('confirmPassword') || ""
+                };
+
+                // Validation
+                if (!userData.firstName || !userData.lastName || !userData.email || !userData.phone || !userData.city || !userData.password || !userData.confirmPassword) {
+                    showNotification('Please fill all required fields.', 'error'); return;
+                }
+                if (userData.password !== userData.confirmPassword) {
+                    showNotification('Passwords do not match!', 'error'); return;
+                }
+                const { strength } = checkPasswordStrength(userData.password);
+                if (strength < 3) {
+                    showNotification('Password is too weak. Please choose a stronger password.', 'error'); return;
+                }
+
+                // Demo: Check existing user in localStorage
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                if (users.some(u => u.email === userData.email)) {
+                    showNotification('User with this email already exists!', 'error'); return;
+                }
+
+                // Save user (DEMO ONLY, replace with backend API)
+                const newUser = {
+                    id: 'user-' + Date.now(),
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    email: userData.email,
+                    phone: userData.phone,
+                    city: userData.city,
+                    password: userData.password, // In prod, hash this!
+                    points: 0,
+                    issues: [],
+                    rank: 'Newcomer',
+                    joined: new Date().toISOString().split('T')[0],
+                    status: 'active'
+                };
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                // Auto-login
+                localStorage.setItem('userLoggedIn', 'true');
+                localStorage.setItem('userEmail', userData.email);
+                localStorage.setItem('userFirstName', userData.firstName);
+                localStorage.setItem('userLastName', userData.lastName);
+                localStorage.setItem('userCity', userData.city);
+                localStorage.setItem('userPhone', userData.phone);
+                localStorage.setItem('userPoints', '0');
+                localStorage.setItem('userIssues', '[]');
+                localStorage.setItem('userRank', 'Newcomer');
+
+                showNotification('Registration successful! Welcome to Samadhan Kendra!', 'success');
+                setTimeout(() => { window.location.href = 'profile.html'; }, 1500);
+            });
+        });
+    </script>
+    
+    <!-- Chatbot Integration -->
+    <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer></script>
+</body>
+</html>

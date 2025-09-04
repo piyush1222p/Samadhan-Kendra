@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Samadhan Kendra</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <style>
         /* Forgot Password Modal Styles */
         .modal-overlay {
@@ -469,7 +467,7 @@
                         <label for="username">Username</label>
                         <div class="input-group">
                             <i class="fas fa-user"></i>
-                            <input type="text" id="username" placeholder="Enter your username" required>
+                            <input type="text" id="username" placeholder="Enter your username" required="">
                         </div>
                     </div>
                     
@@ -477,7 +475,7 @@
                         <label for="password">Password</label>
                         <div class="input-group">
                             <i class="fas fa-lock"></i>
-                            <input type="password" id="password" placeholder="Enter your password" required>
+                            <input type="password" id="password" placeholder="Enter your password" required="">
                             <button type="button" class="password-toggle" onclick="togglePassword()">
                                 <i class="fas fa-eye"></i>
                             </button>
@@ -524,13 +522,7 @@
                                         <label for="resetEmail">Email Address</label>
                                         <div class="input-group">
                                             <i class="fas fa-envelope"></i>
-                                            <input 
-                                                type="email" 
-                                                id="resetEmail" 
-                                                placeholder="Enter your registered email"
-                                                required
-                                                oninput="validateResetEmail(this.value)"
-                                            >
+                                            <input type="email" id="resetEmail" placeholder="Enter your registered email" required="" oninput="validateResetEmail(this.value)">
                                             <div class="input-validation">
                                                 <i class="fas fa-check-circle valid-icon" id="validEmailIcon"></i>
                                                 <i class="fas fa-exclamation-circle invalid-icon" id="invalidEmailIcon"></i>
@@ -620,7 +612,7 @@
                 <div class="footer-section"></div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
+                <p>© 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
             </div>
         </div>
     </footer>
@@ -938,6 +930,10 @@
     
     <!-- Chatbot Integration -->
     <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer></script>
-</body>
-</html>
+    <script src="https://files.bpcontent.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer=""></script>
+
+
+<script type="module" src="./js/api.js"></script>
+
+<script type="module" src="./js/auth-bootstrap.js"></script>
+</body></html>

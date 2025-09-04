@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - Samadhan Kendra</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <style>
         .admin-login-container {
             min-height: 100vh;
@@ -206,7 +204,7 @@
             <form class="admin-login-form" id="adminLoginForm" autocomplete="on">
                 <div class="form-group">
                     <label for="adminUsername">Username or Email</label>
-                    <input type="text" id="adminUsername" placeholder="admin or admin@samadhankendra.com" required autocomplete="username">
+                    <input type="text" id="adminUsername" placeholder="admin or admin@samadhankendra.com" required="" autocomplete="username">
                 </div>
 
                 <div class="form-group">
@@ -214,7 +212,7 @@
                         <label for="adminPassword" style="margin:0;">Password</label>
                         <a href="login.html" title="Use user login page if you are not an admin">User login?</a>
                     </div>
-                    <input type="password" id="adminPassword" placeholder="Enter your password" required autocomplete="current-password">
+                    <input type="password" id="adminPassword" placeholder="Enter your password" required="" autocomplete="current-password">
                 </div>
 
                 <button type="submit" class="admin-login-btn" id="loginBtn">
@@ -307,6 +305,10 @@
 
     <!-- Chatbot Integration -->
     <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
-    <script src="https://files.botpress.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer></script>
-</body>
-</html>
+    <script src="https://files.botpress.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer=""></script>
+
+
+<script type="module" src="./js/api.js"></script>
+
+<script type="module" src="./js/auth-bootstrap.js"></script>
+</body></html>
