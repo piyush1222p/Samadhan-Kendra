@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Subtle highlight for anchor-target sections */
+        .highlight {
+            outline: 3px solid rgba(220,38,38,.25);
+            border-radius: 12px;
+            transition: outline-color .8s ease;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -28,7 +36,7 @@
             <div class="nav-user">
                 <div class="user-points">
                     <i class="fas fa-star"></i>
-                                            <span id="navUserPoints">0</span>
+                    <span id="navUserPoints">0</span>
                 </div>
                 <div class="user-avatar" onclick="toggleProfileMenu()">
                     <i class="fas fa-user-circle"></i>
@@ -493,9 +501,7 @@
                 <div class="footer-section">
                     <h3>Samadhan Kendra</h3>
                     <p>Empowering Indian citizens through AI-driven civic engagement and smart city solutions.</p>
-                    <div class="social-links">
-                        
-                    </div>
+                    <div class="social-links"></div>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
@@ -517,9 +523,7 @@
                         <li><a href="rewards-program.html">Rewards Program</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    
-                </div>
+                <div class="footer-section"></div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
@@ -527,74 +531,72 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- App config (API base) -->
+    <script src="./config.js"></script>
+    <!-- Main shared logic (centralized nav/session/points/logout) -->
+    <script type="module" src="./js/main.js"></script>
     <script>
-        // Mobile Navigation Toggle
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
+        // Mobile Navigation Toggle (defensive)
+        (function initNav() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+                if (hamburger && navMenu) {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                }
+            }));
+        })();
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
-
-        // Profile dropdown toggle
+        // Profile dropdown toggle (fallback if not provided by main.js)
         function toggleProfileMenu() {
             const dropdown = document.getElementById('profileDropdown');
-            dropdown.classList.toggle('active');
+            if (dropdown) dropdown.classList.toggle('active');
         }
+        window.toggleProfileMenu = window.toggleProfileMenu || toggleProfileMenu;
 
-        // Logout function
-        function logout() {
-            // Use centralized logout if available
-            if (typeof window.logout === 'function') {
-                window.logout();
-            } else {
-                // Fallback logout - match the main script.js logout function
-                localStorage.removeItem('userToken');
-                localStorage.removeItem('userData');
-                localStorage.removeItem('userPoints');
-                localStorage.removeItem('userLoggedIn');
-                localStorage.removeItem('userEmail');
-                localStorage.removeItem('userFirstName');
-                localStorage.removeItem('userLastName');
-                localStorage.removeItem('userCity');
-                localStorage.removeItem('userPhone');
-                localStorage.removeItem('userIssues');
-                localStorage.removeItem('userRank');
-                
-                // Show logout message
-                alert('Successfully logged out!');
-                
-                // Redirect to home page
-                window.location.href = 'index.html';
-            }
-        }
-
-        // Smooth scroll for terms navigation
+        // Smooth scroll for terms navigation + highlight on arrival
         document.querySelectorAll('.terms-nav a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href').substring(1);
                 const targetSection = document.getElementById(targetId);
-                
                 if (targetSection) {
-                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    targetSection.classList.add('highlight');
+                    setTimeout(() => targetSection.classList.remove('highlight'), 1200);
                 }
             });
         });
 
-        // Load user data if logged in
-        function loadUserData() {
-            if (localStorage.getItem('userLoggedIn')) {
-                const userPoints = localStorage.getItem('userPoints') || '1250';
-                document.getElementById('navUserPoints').textContent = parseInt(userPoints).toLocaleString();
+        // If opened with a hash (deep link), bring into view and highlight
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initializePointsDisplay === 'function') {
+                initializePointsDisplay();
+            } else {
+                // Fallback points display
+                if (localStorage.getItem('userLoggedIn')) {
+                    const pts = parseInt(localStorage.getItem('userPoints') || '0', 10);
+                    const el = document.getElementById('navUserPoints');
+                    if (el) el.textContent = (Number.isFinite(pts) ? pts : 0).toLocaleString();
+                }
             }
-        }
 
-        // Load user data when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            loadUserData();
+            if (location.hash) {
+                const el = document.querySelector(location.hash);
+                if (el) {
+                    el.classList.add('highlight');
+                    setTimeout(() => el.classList.remove('highlight'), 1200);
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
         });
     </script>
 </body>

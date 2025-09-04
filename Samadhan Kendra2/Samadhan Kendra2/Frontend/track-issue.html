@@ -7,6 +7,28 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Inline helpers */
+        .notification {
+            margin: 1rem 0 0;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: none;
+        }
+        .notification.success { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+        .notification.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        .status-badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 999px; font-weight: 600; font-size: 0.8rem; }
+        .status-badge.investigating { background: #fee2e2; color: #991b1b; }
+        .status-badge.in-progress { background: #fef9c3; color: #854d0e; }
+        .status-badge.resolved { background: #dcfce7; color: #166534; }
+        .video-placeholder {
+            display: grid; place-items: center; gap: .35rem; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 2.5rem 1rem; color: #475569; cursor: pointer;
+        }
+        .video-placeholder i { font-size: 1.5rem; color: #0ea5e9; }
+        .media-item img { width: 100%; height: auto; border-radius: 8px; cursor: pointer; }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -28,7 +50,7 @@
             <div class="nav-user">
                 <div class="user-points">
                     <i class="fas fa-star"></i>
-                                            <span id="navUserPoints">0</span>
+                    <span id="navUserPoints">0</span>
                 </div>
                 <div class="user-avatar" onclick="toggleProfileMenu()">
                     <i class="fas fa-user-circle"></i>
@@ -41,7 +63,7 @@
                     <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 </div>
             </div>
-            <div class="hamburger">
+            <div class="hamburger" aria-label="Toggle menu" aria-expanded="false" role="button" tabindex="0">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -59,6 +81,7 @@
                 </a>
                 <h1>Issue Tracking</h1>
                 <p>Monitor the progress of your reported civic issue</p>
+                <div class="notification" id="pageNotice"></div>
             </div>
 
             <div class="issue-details-card">
@@ -72,11 +95,11 @@
                         </div>
                     </div>
                     <div class="issue-actions">
-                        <button class="btn btn-secondary" onclick="shareIssue()">
+                        <button class="btn btn-secondary" id="shareBtn">
                             <i class="fas fa-share"></i>
                             Share
                         </button>
-                        <button class="btn btn-primary" onclick="upvoteIssue()">
+                        <button class="btn btn-primary" id="upvoteBtn">
                             <i class="fas fa-thumbs-up"></i>
                             <span id="upvoteCount">12</span> Upvotes
                         </button>
@@ -108,26 +131,20 @@
 
                 <div class="issue-media">
                     <h3>Media Evidence</h3>
-                    <div class="media-gallery" id="mediaGallery">
-                        <!-- Media will be populated by JavaScript -->
-                    </div>
+                    <div class="media-gallery" id="mediaGallery"></div>
                 </div>
             </div>
 
             <!-- Progress Timeline -->
             <div class="progress-section">
                 <h2>Progress Timeline</h2>
-                <div class="timeline" id="progressTimeline">
-                    <!-- Timeline will be populated by JavaScript -->
-                </div>
+                <div class="timeline" id="progressTimeline"></div>
             </div>
 
             <!-- Status Updates -->
             <div class="status-updates-section">
                 <h2>Status Updates</h2>
-                <div class="status-updates" id="statusUpdates">
-                    <!-- Status updates will be populated by JavaScript -->
-                </div>
+                <div class="status-updates" id="statusUpdates"></div>
             </div>
 
             <!-- Department Assignment -->
@@ -135,16 +152,16 @@
                 <h2>Assigned Department</h2>
                 <div class="department-card">
                     <div class="department-info">
-                        <h3>Mumbai Municipal Corporation</h3>
-                        <p>Roads & Infrastructure Department</p>
+                        <h3 id="deptName">Mumbai Municipal Corporation</h3>
+                        <p id="deptTeam">Roads & Infrastructure Department</p>
                         <div class="contact-info">
-                            <span><i class="fas fa-phone"></i> +91 22 2262 1234</span>
-                            <span><i class="fas fa-envelope"></i> roads@mcgm.gov.in</span>
+                            <span><i class="fas fa-phone"></i> <span id="deptPhone">+91 22 2262 1234</span></span>
+                            <span><i class="fas fa-envelope"></i> <span id="deptEmail">roads@mcgm.gov.in</span></span>
                         </div>
                     </div>
                     <div class="department-status">
-                        <span class="status-badge investigating">Investigating</span>
-                        <p>Issue under review by department officials</p>
+                        <span class="status-badge investigating" id="deptStatusBadge">Investigating</span>
+                        <p id="deptStatusText">Issue under review by department officials</p>
                     </div>
                 </div>
             </div>
@@ -153,26 +170,26 @@
             <div class="resolution-section">
                 <h2>Estimated Resolution</h2>
                 <div class="resolution-card">
-                    <div class="resolution-info">
+                    <div class="resolution-info" id="resolutionInfo">
                         <div class="resolution-item">
                             <i class="fas fa-calendar-alt"></i>
                             <div>
                                 <h4>Estimated Start Date</h4>
-                                <p>December 20, 2024</p>
+                                <p id="resStart">December 20, 2024</p>
                             </div>
                         </div>
                         <div class="resolution-item">
                             <i class="fas fa-clock"></i>
                             <div>
                                 <h4>Estimated Duration</h4>
-                                <p>3-5 working days</p>
+                                <p id="resDuration">3-5 working days</p>
                             </div>
                         </div>
                         <div class="resolution-item">
                             <i class="fas fa-tools"></i>
                             <div>
                                 <h4>Work Type</h4>
-                                <p>Road repair and resurfacing</p>
+                                <p id="resType">Road repair and resurfacing</p>
                             </div>
                         </div>
                     </div>
@@ -182,9 +199,7 @@
             <!-- Related Issues -->
             <div class="related-issues-section">
                 <h2>Related Issues Nearby</h2>
-                <div class="related-issues" id="relatedIssues">
-                    <!-- Related issues will be populated by JavaScript -->
-                </div>
+                <div class="related-issues" id="relatedIssues"></div>
             </div>
         </div>
     </section>
@@ -196,7 +211,6 @@
                 <div class="footer-section">
                     <h3>Samadhan Kendra</h3>
                     <p>Empowering Indian citizens through AI-driven civic engagement and smart city solutions.</p>
-                    
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
@@ -218,8 +232,7 @@
                         <li><a href="rewards-program.html">Rewards Program</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                </div>
+                <div class="footer-section"></div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
@@ -227,10 +240,13 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- App config and shared main -->
+    <script src="./config.js"></script>
+    <script type="module" src="./js/main.js"></script>
+
     <script>
-        // Sample issue data (in a real app, this would come from URL parameters or an API)
-        const issueData = {
+        // Demo/default issue (fallback)
+        const defaultIssue = {
             id: 'SK-2024-001',
             title: 'Large pothole on Andheri West Road',
             category: '🚧 Road & Infrastructure',
@@ -242,9 +258,9 @@
             gps: '19.1197, 72.8464',
             upvotes: 12,
             media: [
-                { type: 'image', url: 'https://via.placeholder.com/300x200/ff6b6b/ffffff?text=Pothole+Image+1', alt: 'Pothole Image 1' },
-                { type: 'image', url: 'https://via.placeholder.com/300x200/4ecdc4/ffffff?text=Pothole+Image+2', alt: 'Pothole Image 2' },
-                { type: 'video', url: 'https://via.placeholder.com/300x200/45b7d1/ffffff?text=Video+Evidence', alt: 'Video Evidence' }
+                { type: 'image', url: 'https://via.placeholder.com/800x500/ff6b6b/ffffff?text=Pothole+Image+1', alt: 'Pothole Image 1' },
+                { type: 'image', url: 'https://via.placeholder.com/800x500/4ecdc4/ffffff?text=Pothole+Image+2', alt: 'Pothole Image 2' },
+                { type: 'video', url: 'https://via.placeholder.com/800x500/45b7d1/ffffff?text=Video+Evidence', alt: 'Video Evidence' }
             ],
             progress: [
                 { date: '2024-12-15', status: 'Reported', description: 'Issue reported by citizen', icon: 'fas fa-flag' },
@@ -259,226 +275,312 @@
             related: [
                 { id: 'SK-2024-002', title: 'Street light not working', category: '⚡ Electricity', status: 'In Progress', distance: '0.2 km' },
                 { id: 'SK-2024-003', title: 'Garbage accumulation', category: '🗑️ Garbage & Waste', status: 'Resolved', distance: '0.5 km' }
-            ]
+            ],
+            department: {
+                name: 'Mumbai Municipal Corporation',
+                team: 'Roads & Infrastructure Department',
+                phone: '+91 22 2262 1234',
+                email: 'roads@mcgm.gov.in',
+                status: 'Investigating',
+                note: 'Issue under review by department officials'
+            },
+            resolution: {
+                start: '2024-12-20',
+                duration: '3-5 working days',
+                type: 'Road repair and resurfacing'
+            }
         };
 
-        // Load issue data
-        function loadIssueData() {
-            document.getElementById('issueTitle').textContent = issueData.title;
-            document.getElementById('issueCategory').textContent = issueData.category;
-            document.getElementById('issuePriority').textContent = issueData.priority;
-            document.getElementById('issueStatus').textContent = issueData.status;
-            document.getElementById('issueDescription').textContent = issueData.description;
-            document.getElementById('issueAddress').textContent = issueData.address;
-            document.getElementById('issueCity').textContent = issueData.city;
-            document.getElementById('issueGPS').textContent = issueData.gps;
-            document.getElementById('upvoteCount').textContent = issueData.upvotes;
-            
-            loadMediaGallery();
-            loadProgressTimeline();
-            loadStatusUpdates();
-            loadRelatedIssues();
+        // Utilities
+        function qs(param) {
+            const url = new URL(window.location.href);
+            return url.searchParams.get(param);
+        }
+        function setNotice(msg, type = 'success') {
+            const n = document.getElementById('pageNotice');
+            if (!n) return;
+            n.textContent = msg;
+            n.className = `notification ${type}`;
+            n.style.display = 'block';
+            setTimeout(() => { n.style.display = 'none'; }, 4200);
+        }
+        function isLoggedIn() {
+            return !!localStorage.getItem('accessToken') || localStorage.getItem('userLoggedIn') === 'true';
+        }
+        function normalizeStatusClass(s) {
+            return (s || '').toLowerCase().replace(/\s+/g, '-');
         }
 
-        // Load media gallery
-        function loadMediaGallery() {
+        // Resolve issue: from URL (?id=), or localStorage 'issues', or default
+        function resolveIssue() {
+            const wantedId = qs('id');
+            if (!wantedId) return defaultIssue;
+            try {
+                const localIssues = JSON.parse(localStorage.getItem('issues') || '[]');
+                const found = localIssues.find(i => (i.id || i.issueId) === wantedId);
+                if (found) return mapLegacyIssue(found);
+            } catch {}
+            // Could fetch from backend here if API exists
+            return defaultIssue;
+        }
+
+        // Map a possible stored issue shape to our display shape (best-effort)
+        function mapLegacyIssue(i) {
+            return {
+                id: i.id || i.issueId || defaultIssue.id,
+                title: i.title || defaultIssue.title,
+                category: i.category || defaultIssue.category,
+                priority: i.priority || defaultIssue.priority,
+                status: i.status || defaultIssue.status,
+                description: i.description || defaultIssue.description,
+                address: i.address || defaultIssue.address,
+                city: i.city || defaultIssue.city,
+                gps: i.gps || defaultIssue.gps,
+                upvotes: Number(i.upvotes || i.votes || defaultIssue.upvotes),
+                media: Array.isArray(i.media) && i.media.length ? i.media : defaultIssue.media,
+                progress: Array.isArray(i.progress) && i.progress.length ? i.progress : defaultIssue.progress,
+                updates: Array.isArray(i.updates) && i.updates.length ? i.updates : defaultIssue.updates,
+                related: Array.isArray(i.related) && i.related.length ? i.related : defaultIssue.related,
+                department: i.department || defaultIssue.department,
+                resolution: i.resolution || defaultIssue.resolution
+            };
+        }
+
+        // Renderers
+        function renderIssue(issue) {
+            document.getElementById('issueTitle').textContent = issue.title;
+            document.getElementById('issueCategory').textContent = issue.category;
+            document.getElementById('issuePriority').textContent = issue.priority;
+            document.getElementById('issueStatus').textContent = issue.status;
+            document.getElementById('issueDescription').textContent = issue.description;
+            document.getElementById('issueAddress').textContent = issue.address;
+            document.getElementById('issueCity').textContent = issue.city;
+            document.getElementById('issueGPS').textContent = issue.gps;
+            document.getElementById('upvoteCount').textContent = Number(issue.upvotes || 0);
+
+            // Department
+            if (issue.department) {
+                document.getElementById('deptName').textContent = issue.department.name || '';
+                document.getElementById('deptTeam').textContent = issue.department.team || '';
+                document.getElementById('deptPhone').textContent = issue.department.phone || '';
+                document.getElementById('deptEmail').textContent = issue.department.email || '';
+                const badge = document.getElementById('deptStatusBadge');
+                const text = document.getElementById('deptStatusText');
+                if (badge) {
+                    const cls = normalizeStatusClass(issue.department.status || 'Investigating');
+                    badge.className = `status-badge ${cls}`;
+                    badge.textContent = issue.department.status || 'Investigating';
+                }
+                if (text) text.textContent = issue.department.note || '';
+            }
+
+            // Resolution
+            if (issue.resolution) {
+                document.getElementById('resStart').textContent = new Date(issue.resolution.start || '').toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) || '—';
+                document.getElementById('resDuration').textContent = issue.resolution.duration || '—';
+                document.getElementById('resType').textContent = issue.resolution.type || '—';
+            }
+
+            renderMedia(issue.media || []);
+            renderProgress(issue.progress || []);
+            renderUpdates(issue.updates || []);
+            renderRelated(issue.related || []);
+        }
+
+        function renderMedia(items) {
             const gallery = document.getElementById('mediaGallery');
             gallery.innerHTML = '';
-            
-            issueData.media.forEach(media => {
-                const mediaElement = document.createElement('div');
-                mediaElement.className = 'media-item';
-                
+            items.forEach(media => {
+                const wrap = document.createElement('div');
+                wrap.className = 'media-item';
                 if (media.type === 'image') {
-                    mediaElement.innerHTML = `
-                        <img src="${media.url}" alt="${media.alt}" onclick="openMediaViewer('${media.url}')">
-                    `;
+                    wrap.innerHTML = `<img src="${media.url}" alt="${media.alt || 'Issue image'}" loading="lazy">`;
+                    wrap.addEventListener('click', () => window.open(media.url, '_blank'));
                 } else if (media.type === 'video') {
-                    mediaElement.innerHTML = `
-                        <div class="video-placeholder" onclick="openMediaViewer('${media.url}')">
+                    wrap.innerHTML = `
+                        <div class="video-placeholder">
                             <i class="fas fa-play"></i>
-                            <span>Video Evidence</span>
+                            <span>${media.alt || 'Video Evidence'}</span>
                         </div>
                     `;
+                    wrap.addEventListener('click', () => window.open(media.url, '_blank'));
                 }
-                
-                gallery.appendChild(mediaElement);
+                gallery.appendChild(wrap);
             });
         }
 
-        // Load progress timeline
-        function loadProgressTimeline() {
+        function renderProgress(steps) {
             const timeline = document.getElementById('progressTimeline');
             timeline.innerHTML = '';
-            
-            issueData.progress.forEach((step, index) => {
-                const timelineItem = document.createElement('div');
-                timelineItem.className = `timeline-item ${index === issueData.progress.length - 1 ? 'current' : ''}`;
-                
-                timelineItem.innerHTML = `
-                    <div class="timeline-icon">
-                        <i class="${step.icon}"></i>
-                    </div>
+            // sort ascending by date
+            const sorted = [...steps].sort((a, b) => new Date(a.date) - new Date(b.date));
+            const lastIndex = sorted.length - 1;
+            sorted.forEach((step, idx) => {
+                const item = document.createElement('div');
+                item.className = `timeline-item ${idx === lastIndex ? 'current' : ''}`;
+                item.innerHTML = `
+                    <div class="timeline-icon"><i class="${step.icon || 'fas fa-circle'}"></i></div>
                     <div class="timeline-content">
-                        <h4>${step.status}</h4>
-                        <p>${step.description}</p>
-                        <span class="timeline-date">${new Date(step.date).toLocaleDateString('en-IN')}</span>
+                        <h4>${step.status || ''}</h4>
+                        <p>${step.description || ''}</p>
+                        <span class="timeline-date">${step.date ? new Date(step.date).toLocaleDateString('en-IN') : ''}</span>
                     </div>
                 `;
-                
-                timeline.appendChild(timelineItem);
+                timeline.appendChild(item);
             });
         }
 
-        // Load status updates
-        function loadStatusUpdates() {
-            const updates = document.getElementById('statusUpdates');
-            updates.innerHTML = '';
-            
-            issueData.updates.forEach(update => {
-                const updateElement = document.createElement('div');
-                updateElement.className = 'status-update';
-                
-                updateElement.innerHTML = `
+        function renderUpdates(updates) {
+            const container = document.getElementById('statusUpdates');
+            container.innerHTML = '';
+            // sort desc by date
+            const sorted = [...updates].sort((a, b) => new Date(b.date) - new Date(a.date));
+            sorted.forEach(update => {
+                const el = document.createElement('div');
+                el.className = 'status-update';
+                el.innerHTML = `
                     <div class="update-header">
-                        <span class="update-date">${new Date(update.date).toLocaleDateString('en-IN')}</span>
-                        <span class="update-author">${update.author}</span>
+                        <span class="update-date">${update.date ? new Date(update.date).toLocaleDateString('en-IN') : ''}</span>
+                        <span class="update-author">${update.author || ''}</span>
                     </div>
-                    <p>${update.update}</p>
+                    <p>${update.update || ''}</p>
                 `;
-                
-                updates.appendChild(updateElement);
+                container.appendChild(el);
             });
         }
 
-        // Load related issues
-        function loadRelatedIssues() {
-            const related = document.getElementById('relatedIssues');
-            related.innerHTML = '';
-            
-            issueData.related.forEach(issue => {
-                const issueElement = document.createElement('div');
-                issueElement.className = 'related-issue';
-                
-                issueElement.innerHTML = `
+        function renderRelated(related) {
+            const container = document.getElementById('relatedIssues');
+            container.innerHTML = '';
+            related.forEach(issue => {
+                const el = document.createElement('a');
+                el.className = 'related-issue';
+                el.href = `track-issue.html?id=${encodeURIComponent(issue.id)}`;
+                const statusCls = normalizeStatusClass(issue.status || '');
+                el.innerHTML = `
                     <div class="issue-info">
                         <h4>${issue.title}</h4>
                         <span class="issue-category">${issue.category}</span>
-                        <span class="issue-status ${issue.status.toLowerCase().replace(' ', '-')}">${issue.status}</span>
+                        <span class="issue-status ${statusCls}">${issue.status}</span>
                     </div>
                     <div class="issue-distance">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>${issue.distance}</span>
+                        <span>${issue.distance || ''}</span>
                     </div>
                 `;
-                
-                related.appendChild(issueElement);
+                container.appendChild(el);
             });
         }
 
-        // Share issue
-        function shareIssue() {
+        // Upvote handling (prevent multiple upvotes per issue per user using localStorage)
+        function hasUpvoted(issueId) {
+            const s = localStorage.getItem('upvotedIssues') || '[]';
+            try { return JSON.parse(s).includes(issueId); } catch { return false; }
+        }
+        function setUpvoted(issueId) {
+            const s = localStorage.getItem('upvotedIssues') || '[]';
+            let arr = [];
+            try { arr = JSON.parse(s); } catch {}
+            if (!arr.includes(issueId)) {
+                arr.push(issueId);
+                localStorage.setItem('upvotedIssues', JSON.stringify(arr));
+            }
+        }
+
+        // Event handlers
+        function shareIssue(issue) {
+            const url = window.location.href;
+            const text = `Check out this civic issue: ${issue.title}`;
             if (navigator.share) {
-                navigator.share({
-                    title: issueData.title,
-                    text: `Check out this civic issue: ${issueData.title}`,
-                    url: window.location.href
-                });
+                navigator.share({ title: issue.title, text, url })
+                    .catch(() => {});
             } else {
-                // Fallback for browsers that don't support Web Share API
-                navigator.clipboard.writeText(window.location.href).then(() => {
-                    alert('Link copied to clipboard!');
-                });
+                navigator.clipboard.writeText(url).then(
+                    () => setNotice('Link copied to clipboard.', 'success'),
+                    () => setNotice('Could not copy link. Please copy manually.', 'error'),
+                );
             }
         }
 
-        // Upvote issue
-        function upvoteIssue() {
-            const upvoteCount = document.getElementById('upvoteCount');
-            const currentCount = parseInt(upvoteCount.textContent);
-            upvoteCount.textContent = currentCount + 1;
-            
-            // Add points to user using centralized system
-            if (typeof addUserPoints === 'function') {
-                addUserPoints(5);
-            } else {
-                const currentPoints = parseInt(localStorage.getItem('userPoints') || '0');
-                localStorage.setItem('userPoints', (currentPoints + 5).toString());
-                document.getElementById('navUserPoints').textContent = (currentPoints + 5).toLocaleString();
+        function upvoteIssue(issue) {
+            if (!isLoggedIn()) {
+                setNotice('Please login to upvote issues.', 'error');
+                return;
             }
-            
-            alert('Thank you for upvoting! You earned 5 points.');
+            if (hasUpvoted(issue.id)) {
+                setNotice('You already upvoted this issue.', 'error');
+                return;
+            }
+            // Update UI count
+            const el = document.getElementById('upvoteCount');
+            const current = parseInt(el.textContent || '0', 10) || 0;
+            el.textContent = (current + 1).toLocaleString();
+            setUpvoted(issue.id);
+
+            // Award points (prefer centralized addUserPoints, else fallback)
+            try {
+                if (typeof addUserPoints === 'function') addUserPoints(5);
+                else {
+                    const pts = parseInt(localStorage.getItem('userPoints') || '0', 10) || 0;
+                    const newPts = pts + 5;
+                    localStorage.setItem('userPoints', String(newPts));
+                    const navEl = document.getElementById('navUserPoints');
+                    if (navEl) navEl.textContent = newPts.toLocaleString();
+                }
+            } catch {}
+
+            setNotice('Thank you for upvoting! You earned 5 points.', 'success');
         }
 
-        // Open media viewer
-        function openMediaViewer(url) {
-            // In a real app, this would open a modal with the media
-            window.open(url, '_blank');
-        }
+        // Mobile Navigation Toggle (defensive)
+        (function initNav() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            if (hamburger && navMenu) {
+                const toggle = () => {
+                    const active = hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active', active);
+                    hamburger.setAttribute('aria-expanded', active ? 'true' : 'false');
+                };
+                hamburger.addEventListener('click', toggle);
+                hamburger.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+                });
+                document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                }));
+            }
+        })();
 
-        // Mobile Navigation Toggle
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
-
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
+        // Close profile dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('profileDropdown');
+            const avatar = document.querySelector('.user-avatar');
+            if (!dropdown || !avatar) return;
+            if (!avatar.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
         });
 
-        // Profile dropdown toggle
-        function toggleProfileMenu() {
-            const dropdown = document.getElementById('profileDropdown');
-            dropdown.classList.toggle('active');
-        }
-
-        // Logout function
-        function logout() {
-            // Use centralized logout if available
-            if (typeof window.logout === 'function') {
-                window.logout();
-            } else {
-                // Fallback logout - match the main script.js logout function
-                localStorage.removeItem('userToken');
-                localStorage.removeItem('userData');
-                localStorage.removeItem('userPoints');
-                localStorage.removeItem('userLoggedIn');
-                localStorage.removeItem('userEmail');
-                localStorage.removeItem('userFirstName');
-                localStorage.removeItem('userLastName');
-                localStorage.removeItem('userCity');
-                localStorage.removeItem('userPhone');
-                localStorage.removeItem('userIssues');
-                localStorage.removeItem('userRank');
-                
-                // Show logout message
-                alert('Successfully logged out!');
-                
-                // Redirect to home page
-                window.location.href = 'index.html';
-            }
-        }
-
-        // Load user data if logged in
-        function loadUserData() {
-            // Use centralized points display system
-            if (typeof initializePointsDisplay === 'function') {
-                initializePointsDisplay();
-            } else {
-                // Fallback for pages without the centralized system
-                if (localStorage.getItem('userLoggedIn')) {
-                    const userPoints = localStorage.getItem('userPoints') || '0';
-                    const navUserPoints = document.getElementById('navUserPoints');
-                    if (navUserPoints) {
-                        navUserPoints.textContent = parseInt(userPoints).toLocaleString();
-                    }
-                }
-            }
-        }
-
-        // Load data when page loads
+        // Page init
         document.addEventListener('DOMContentLoaded', function() {
-            loadIssueData();
-            loadUserData();
+            if (typeof initializePointsDisplay === 'function') initializePointsDisplay();
+
+            const issue = resolveIssue();
+            window.currentIssue = issue;
+            renderIssue(issue);
+
+            // Wire buttons
+            const shareBtn = document.getElementById('shareBtn');
+            const upvoteBtn = document.getElementById('upvoteBtn');
+            shareBtn?.addEventListener('click', () => shareIssue(issue));
+            upvoteBtn?.addEventListener('click', () => upvoteIssue(issue));
+
+            // Show info if opened by deep link
+            const id = qs('id');
+            if (id) setNotice(`Tracking issue ${id}`, 'success');
         });
     </script>
     

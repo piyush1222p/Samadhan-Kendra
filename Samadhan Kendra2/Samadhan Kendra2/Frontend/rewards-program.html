@@ -7,6 +7,18 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .notification {
+            margin: 1rem 0 1.5rem 0;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            display: none;
+        }
+        .notification.success { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+        .notification.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -28,7 +40,7 @@
             <div class="nav-user">
                 <div class="user-points">
                     <i class="fas fa-star"></i>
-                                            <span id="navUserPoints">0</span>
+                    <span id="navUserPoints">0</span>
                 </div>
                 <div class="user-avatar" onclick="toggleProfileMenu()">
                     <i class="fas fa-user-circle"></i>
@@ -55,6 +67,8 @@
             <div class="rewards-header">
                 <h1>Rewards Program</h1>
                 <p>Earn points for your civic contributions and redeem them for exciting rewards that make a difference in your community.</p>
+
+                <div class="notification" id="notification"></div>
                 
                 <div class="user-rewards-summary">
                     <div class="rewards-card">
@@ -536,7 +550,6 @@
                 <div class="footer-section">
                     <h3>Samadhan Kendra</h3>
                     <p>Empowering Indian citizens through AI-driven civic engagement and smart city solutions.</p>
-                    
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
@@ -558,9 +571,7 @@
                         <li><a href="rewards-program.html">Rewards Program</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    
-                </div>
+                <div class="footer-section"></div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
@@ -568,102 +579,99 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- App config (API base) -->
+    <script src="./config.js"></script>
+    <!-- Main shared logic (centralized nav/session/points) -->
+    <script type="module" src="./js/main.js"></script>
     <script>
-        // Mobile Navigation Toggle
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
+        // Mobile Navigation Toggle (defensive)
+        (function initNav() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+            document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+                if (hamburger && navMenu) {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                }
+            }));
+        })();
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
-
-        // Profile dropdown toggle
+        // Profile dropdown toggle (fallback if not provided by main.js)
         function toggleProfileMenu() {
             const dropdown = document.getElementById('profileDropdown');
-            dropdown.classList.toggle('active');
+            if (dropdown) dropdown.classList.toggle('active');
+        }
+        window.toggleProfileMenu = window.toggleProfileMenu || toggleProfileMenu;
+
+        // Notification helper
+        function showNotification(msg, type = "success") {
+            const n = document.getElementById("notification");
+            if (!n) return;
+            n.textContent = msg;
+            n.className = `notification ${type}`;
+            n.style.display = "block";
+            setTimeout(() => { n.style.display = "none"; }, 4200);
         }
 
-        // Logout function
-        function logout() {
-            // Use centralized logout if available
-            if (typeof window.logout === 'function') {
-                window.logout();
-            } else {
-                // Fallback logout - match the main script.js logout function
-                localStorage.removeItem('userToken');
-                localStorage.removeItem('userData');
-                localStorage.removeItem('userPoints');
-                localStorage.removeItem('userLoggedIn');
-                localStorage.removeItem('userEmail');
-                localStorage.removeItem('userFirstName');
-                localStorage.removeItem('userLastName');
-                localStorage.removeItem('userCity');
-                localStorage.removeItem('userPhone');
-                localStorage.removeItem('userIssues');
-                localStorage.removeItem('userRank');
-                
-                // Show logout message
-                alert('Successfully logged out!');
-                
-                // Redirect to home page
-                window.location.href = 'index.html';
+        function isLoggedIn() {
+            return !!localStorage.getItem('accessToken') || localStorage.getItem('userLoggedIn') === 'true';
+        }
+
+        function updatePointsDisplay(newPoints) {
+            const points = Number(newPoints) || 0;
+            localStorage.setItem('userPoints', String(points));
+            const navPts = document.getElementById('navUserPoints');
+            const balPts = document.getElementById('userCurrentPoints');
+            if (navPts) navPts.textContent = points.toLocaleString();
+            if (balPts) balPts.textContent = points.toLocaleString();
+        }
+
+        // Reward redemption function (uses notification instead of alerts)
+        window.redeemReward = function redeemReward(rewardType, pointsRequired) {
+            if (!isLoggedIn()) {
+                showNotification('Please login to redeem rewards.', 'error');
+                return;
             }
-        }
+            const currentPoints = parseInt(localStorage.getItem('userPoints') || '0', 10) || 0;
+            const need = Number(pointsRequired) || 0;
 
-        // Reward redemption function
-        function redeemReward(rewardType, pointsRequired) {
-            const currentPoints = parseInt(localStorage.getItem('userPoints') || '0');
-            
-            if (currentPoints >= pointsRequired) {
-                // Deduct points
-                const newPoints = currentPoints - pointsRequired;
-                
-                // Use centralized points update function
+            if (currentPoints >= need) {
+                const newPoints = currentPoints - need;
+
+                // Prefer centralized updater if available
                 if (typeof updateUserPoints === 'function') {
-                    updateUserPoints(newPoints);
+                    try { updateUserPoints(newPoints); } catch { updatePointsDisplay(newPoints); }
                 } else {
-                    localStorage.setItem('userPoints', newPoints.toString());
-                    document.getElementById('userCurrentPoints').textContent = newPoints.toLocaleString();
-                    document.getElementById('navUserPoints').textContent = newPoints.toLocaleString();
+                    updatePointsDisplay(newPoints);
                 }
-                
-                // Show success message
-                alert(`Congratulations! You've successfully redeemed the ${rewardType} reward. Your new balance is ${newPoints.toLocaleString()} points.`);
-                
-                // In a real app, this would trigger the reward delivery process
-            } else {
-                alert(`Sorry, you don't have enough points. You need ${pointsRequired} points but only have ${currentPoints.toLocaleString()} points.`);
-            }
-        }
 
-        // Load user data if logged in
+                const pretty = rewardType.replace(/-/g, ' ');
+                showNotification(`Congratulations! You've redeemed the ${pretty} reward. New balance: ${newPoints.toLocaleString()} points.`, 'success');
+
+                // TODO: call backend to record redemption and deliver reward
+            } else {
+                showNotification(`Insufficient points. Need ${need} points but you have ${currentPoints.toLocaleString()}.`, 'error');
+            }
+        };
+
+        // Load user data on page load
         function loadUserData() {
-            // Use centralized points display system
             if (typeof initializePointsDisplay === 'function') {
                 initializePointsDisplay();
-            } else {
-                // Fallback for pages without the centralized system
-                if (localStorage.getItem('userLoggedIn')) {
-                    const userPoints = localStorage.getItem('userPoints') || '0';
-                    const navUserPoints = document.getElementById('navUserPoints');
-                    const userCurrentPoints = document.getElementById('userCurrentPoints');
-                    
-                    if (navUserPoints) {
-                        navUserPoints.textContent = parseInt(userPoints).toLocaleString();
-                    }
-                    if (userCurrentPoints) {
-                        userCurrentPoints.textContent = parseInt(userPoints).toLocaleString();
-                    }
-                }
             }
+            // Ensure the balance tile mirrors current points
+            const stored = parseInt(localStorage.getItem('userPoints') || '0', 10) || 0;
+            const balPts = document.getElementById('userCurrentPoints');
+            if (balPts) balPts.textContent = stored.toLocaleString();
         }
 
-        // Load user data when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            loadUserData();
-        });
+        document.addEventListener('DOMContentLoaded', loadUserData);
     </script>
     
     <!-- Chatbot Integration -->

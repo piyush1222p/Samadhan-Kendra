@@ -5,158 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard Test - Samadhan Kendra</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        .leaderboard-section {
-            padding: 4rem 0;
-            background: #f8fafc;
+        :root {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --muted: #64748b;
+            --text: #1e293b;
+            --primary: #3b82f6;
+            --green: #059669;
+            --gold: #fbbf24;
+            --silver: #9ca3af;
+            --bronze: #f87171;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
+        body { font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
+        .leaderboard-section { padding: 4rem 0; background: var(--bg); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        h2 { color: var(--text); margin: 0 0 .25rem 0; }
+        .section-subtitle { color: var(--muted); margin: 0 0 1.25rem 0; }
+
         .leaderboard-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            justify-content: center;
+            display: flex; gap: .5rem; margin-bottom: 2rem; justify-content: center; flex-wrap: wrap;
         }
-        
         .tab-btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            background: white;
-            color: #64748b;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            padding: .75rem 1.5rem; border: none; background: var(--card); color: var(--muted);
+            border-radius: 8px; font-weight: 600; cursor: pointer; transition: all .2s ease; outline-offset: 2px;
         }
-        
-        .tab-btn.active {
-            background: #3b82f6;
-            color: white;
-        }
-        
+        .tab-btn:hover, .tab-btn:focus-visible { box-shadow: 0 0 0 3px rgba(59,130,246,.15); }
+        .tab-btn.active { background: var(--primary); color: #fff; }
+
         .top-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 2rem;
         }
-        
         .leaderboard-item {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            background: var(--card); border-radius: 12px; padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,.1); text-align: center;
         }
-        
         .leaderboard-item.first {
-            border: 2px solid #fbbf24;
+            border: 2px solid var(--gold);
             background: linear-gradient(135deg, #fef3c7, #fde68a);
         }
-        
         .leaderboard-item.second {
-            border: 2px solid #9ca3af;
+            border: 2px solid var(--silver);
             background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
         }
-        
         .leaderboard-item.third {
-            border: 2px solid #f87171;
+            border: 2px solid var(--bronze);
             background: linear-gradient(135deg, #fef2f2, #fecaca);
         }
-        
-        .rank {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #1e293b;
-            margin-bottom: 1rem;
-        }
-        
-        .avatar {
-            font-size: 3rem;
-            color: #3b82f6;
-            margin-bottom: 1rem;
-        }
-        
-        .info h4 {
-            margin: 0 0 0.5rem 0;
-            color: #1e293b;
-            font-size: 1.2rem;
-        }
-        
-        .info p {
-            margin: 0 0 1rem 0;
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-        
-        .stats {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        
-        .points {
-            font-weight: 700;
-            color: #059669;
-            font-size: 1.1rem;
-        }
-        
-        .issues {
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-        
-        .leaderboard-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
+        .rank { font-size: 2rem; font-weight: 800; color: var(--text); margin-bottom: 1rem; }
+        .avatar { font-size: 3rem; color: var(--primary); margin-bottom: 1rem; }
+        .info h4 { margin: 0 0 .4rem 0; color: var(--text); font-size: 1.2rem; }
+        .info p { margin: 0 0 1rem 0; color: var(--muted); font-size: .95rem; }
+        .stats { display: flex; flex-direction: column; gap: .35rem; }
+        .points { font-weight: 700; color: var(--green); font-size: 1.05rem; }
+        .issues { color: var(--muted); font-size: .9rem; }
+
+        .leaderboard-list { display: flex; flex-direction: column; gap: 1rem; }
         .leaderboard-list .leaderboard-item {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 1rem;
-            align-items: center;
-            text-align: left;
+            display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: center; text-align: left;
         }
-        
-        .leaderboard-list .rank {
-            font-size: 1.5rem;
-            margin-bottom: 0;
-        }
-        
-        .leaderboard-list .avatar {
-            font-size: 2rem;
-            margin-bottom: 0;
-        }
-        
-        .leaderboard-list .stats {
-            text-align: right;
-        }
-        
+        .leaderboard-list .rank { font-size: 1.5rem; margin-bottom: 0; }
+        .leaderboard-list .avatar { font-size: 2rem; margin-bottom: 0; }
+        .leaderboard-list .stats { text-align: right; }
+
         .test-info {
-            background: #dbeafe;
-            border: 1px solid #3b82f6;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 2rem;
-            text-align: center;
+            background: #dbeafe; border: 1px solid var(--primary); border-radius: 8px;
+            padding: 1rem; margin-bottom: 2rem; text-align: center;
         }
-        
-        .test-info h3 {
-            margin: 0 0 0.5rem 0;
-            color: #1e40af;
+        .test-info h3 { margin: 0 0 .5rem 0; color: #1e40af; }
+        .test-info p { margin: 0; color: #1e40af; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .top-3 { grid-template-columns: 1fr 1fr; }
         }
-        
-        .test-info p {
-            margin: 0;
-            color: #1e40af;
+        @media (max-width: 640px) {
+            .top-3 { grid-template-columns: 1fr; }
+            .leaderboard-list .leaderboard-item { grid-template-columns: 1.5rem 1fr; grid-template-areas: "rank info" "rank stats"; }
+            .leaderboard-list .rank { grid-area: rank; }
+            .leaderboard-list .info { grid-area: info; }
+            .leaderboard-list .stats { grid-area: stats; text-align: left; }
         }
     </style>
 </head>
@@ -171,17 +101,17 @@
             <h2>Citizen Leaderboard</h2>
             <p class="section-subtitle">Top contributors making a difference in their communities</p>
             
-            <div class="leaderboard-tabs">
-                <button class="tab-btn active" data-tab="monthly">This Month</button>
-                <button class="tab-btn" data-tab="yearly">This Year</button>
-                <button class="tab-btn" data-tab="alltime">All Time</button>
+            <div class="leaderboard-tabs" role="tablist" aria-label="Leaderboard periods">
+                <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="leaderboard-panel" data-tab="monthly" tabindex="0">This Month</button>
+                <button class="tab-btn" role="tab" aria-selected="false" aria-controls="leaderboard-panel" data-tab="yearly" tabindex="-1">This Year</button>
+                <button class="tab-btn" role="tab" aria-selected="false" aria-controls="leaderboard-panel" data-tab="alltime" tabindex="-1">All Time</button>
             </div>
             
-            <div class="leaderboard-content">
-                <div class="top-3">
-                    <div class="leaderboard-item second">
-                        <div class="rank">2</div>
-                        <div class="avatar">
+            <div id="leaderboard-panel" class="leaderboard-content" role="region" aria-live="polite">
+                <div class="top-3" aria-label="Top 3">
+                    <div class="leaderboard-item second" aria-label="Second place">
+                        <div class="rank" aria-hidden="true">2</div>
+                        <div class="avatar" aria-hidden="true">
                             <i class="fas fa-user-circle"></i>
                         </div>
                         <div class="info">
@@ -193,9 +123,9 @@
                             <div class="issues">45 issues</div>
                         </div>
                     </div>
-                    <div class="leaderboard-item first">
-                        <div class="rank">1</div>
-                        <div class="avatar">
+                    <div class="leaderboard-item first" aria-label="First place">
+                        <div class="rank" aria-hidden="true">1</div>
+                        <div class="avatar" aria-hidden="true">
                             <i class="fas fa-crown"></i>
                         </div>
                         <div class="info">
@@ -207,9 +137,9 @@
                             <div class="issues">52 issues</div>
                         </div>
                     </div>
-                    <div class="leaderboard-item third">
-                        <div class="rank">3</div>
-                        <div class="avatar">
+                    <div class="leaderboard-item third" aria-label="Third place">
+                        <div class="rank" aria-hidden="true">3</div>
+                        <div class="avatar" aria-hidden="true">
                             <i class="fas fa-user-circle"></i>
                         </div>
                         <div class="info">
@@ -223,7 +153,7 @@
                     </div>
                 </div>
                 
-                <div class="leaderboard-list" id="leaderboardList">
+                <div class="leaderboard-list" id="leaderboardList" aria-label="Leaderboard list (from 4th)">
                     <!-- More leaderboard items will be populated by JavaScript -->
                 </div>
             </div>
@@ -231,49 +161,53 @@
     </div>
 
     <script>
-        // Leaderboard data
+        // Leaderboard data (demo)
         const leaderboardData = {
             monthly: [
-                { name: 'Rajesh Kumar', city: 'Mumbai', points: 3120, issues: 52, rank: 1 },
-                { name: 'Priya Sharma', city: 'Mumbai', points: 2450, issues: 45, rank: 2 },
-                { name: 'Anita Patel', city: 'Bangalore', points: 2180, issues: 38, rank: 3 },
-                { name: 'Amit Singh', city: 'Delhi', points: 1950, issues: 35, rank: 4 },
-                { name: 'Neha Gupta', city: 'Pune', points: 1820, issues: 32, rank: 5 },
-                { name: 'Rahul Verma', city: 'Chennai', points: 1680, issues: 28, rank: 6 },
-                { name: 'Kavita Reddy', city: 'Hyderabad', points: 1540, issues: 25, rank: 7 },
-                { name: 'Vikram Malhotra', city: 'Kolkata', points: 1420, issues: 22, rank: 8 }
+                { name: 'Rajesh Kumar', city: 'Mumbai, Maharashtra', points: 3120, issues: 52 },
+                { name: 'Priya Sharma', city: 'Mumbai, Maharashtra', points: 2450, issues: 45 },
+                { name: 'Anita Patel', city: 'Bangalore, Karnataka', points: 2180, issues: 38 },
+                { name: 'Amit Singh', city: 'Delhi, NCR', points: 1950, issues: 35 },
+                { name: 'Neha Gupta', city: 'Pune, Maharashtra', points: 1820, issues: 32 },
+                { name: 'Rahul Verma', city: 'Chennai, Tamil Nadu', points: 1680, issues: 28 },
+                { name: 'Kavita Reddy', city: 'Hyderabad, Telangana', points: 1540, issues: 25 },
+                { name: 'Vikram Malhotra', city: 'Kolkata, West Bengal', points: 1420, issues: 22 }
             ],
             yearly: [
-                { name: 'Rajesh Kumar', city: 'Mumbai', points: 28450, issues: 156, rank: 1 },
-                { name: 'Priya Sharma', city: 'Mumbai', points: 22180, issues: 142, rank: 2 },
-                { name: 'Anita Patel', city: 'Bangalore', points: 19870, issues: 128, rank: 3 },
-                { name: 'Amit Singh', city: 'Delhi', points: 18760, issues: 115, rank: 4 },
-                { name: 'Neha Gupta', city: 'Pune', points: 17240, issues: 98, rank: 5 }
+                { name: 'Rajesh Kumar', city: 'Mumbai, Maharashtra', points: 28450, issues: 156 },
+                { name: 'Priya Sharma', city: 'Mumbai, Maharashtra', points: 22180, issues: 142 },
+                { name: 'Anita Patel', city: 'Bangalore, Karnataka', points: 19870, issues: 128 },
+                { name: 'Amit Singh', city: 'Delhi, NCR', points: 18760, issues: 115 },
+                { name: 'Neha Gupta', city: 'Pune, Maharashtra', points: 17240, issues: 98 }
             ],
             alltime: [
-                { name: 'Rajesh Kumar', city: 'Mumbai', points: 125680, issues: 456, rank: 1 },
-                { name: 'Priya Sharma', city: 'Mumbai', points: 98750, issues: 389, rank: 2 },
-                { name: 'Anita Patel', city: 'Bangalore', points: 89420, issues: 342, rank: 3 },
-                { name: 'Amit Singh', city: 'Delhi', points: 76540, issues: 298, rank: 4 },
-                { name: 'Neha Gupta', city: 'Pune', points: 69870, issues: 267, rank: 5 }
+                { name: 'Rajesh Kumar', city: 'Mumbai, Maharashtra', points: 125680, issues: 456 },
+                { name: 'Priya Sharma', city: 'Mumbai, Maharashtra', points: 98750, issues: 389 },
+                { name: 'Anita Patel', city: 'Bangalore, Karnataka', points: 89420, issues: 342 },
+                { name: 'Amit Singh', city: 'Delhi, NCR', points: 76540, issues: 298 },
+                { name: 'Neha Gupta', city: 'Pune, Maharashtra', points: 69870, issues: 267 }
             ]
         };
 
-        // Leaderboard functionality
+        // Return a sorted, re-ranked copy for a given period
+        function getRanked(period = 'monthly') {
+            const base = leaderboardData[period] || [];
+            const sorted = base.map(u => ({ ...u })) // copy objects
+                               .sort((a, b) => b.points - a.points);
+            sorted.forEach((u, i) => u.rank = i + 1);
+            return sorted;
+        }
+
         function displayLeaderboard(period = 'monthly') {
-            const leaderboardList = document.getElementById('leaderboardList');
-            const data = leaderboardData[period];
-            
-            // Update top 3 positions dynamically
+            const data = getRanked(period);
+            // Update top 3
             updateTop3Positions(data);
-            
-            // Display remaining positions (4th onwards)
-            leaderboardList.innerHTML = data.slice(3).map((user, index) => `
-                <div class="leaderboard-item">
+            // Render rows 4+
+            const list = document.getElementById('leaderboardList');
+            list.innerHTML = data.slice(3).map(user => `
+                <div class="leaderboard-item" aria-label="Rank ${user.rank}">
                     <div class="rank">${user.rank}</div>
-                    <div class="avatar">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
+                    <div class="avatar" aria-hidden="true"><i class="fas fa-user-circle"></i></div>
                     <div class="info">
                         <h4>${user.name}</h4>
                         <p>${user.city}</p>
@@ -286,53 +220,61 @@
             `).join('');
         }
 
-        // Function to update top 3 positions dynamically
         function updateTop3Positions(data) {
-            const top3 = data.slice(0, 3);
-            
-            // Update first position
-            const firstPosition = document.querySelector('.leaderboard-item.first');
-            if (firstPosition && top3[0]) {
-                firstPosition.querySelector('.info h4').textContent = top3[0].name;
-                firstPosition.querySelector('.info p').textContent = top3[0].city;
-                firstPosition.querySelector('.stats .points').textContent = `${top3[0].points.toLocaleString()} pts`;
-                firstPosition.querySelector('.stats .issues').textContent = `${top3[0].issues} issues`;
+            const [first, second, third] = [data[0], data[1], data[2]];
+
+            const firstEl = document.querySelector('.leaderboard-item.first');
+            if (firstEl && first) {
+                firstEl.querySelector('.info h4').textContent = first.name;
+                firstEl.querySelector('.info p').textContent = first.city;
+                firstEl.querySelector('.stats .points').textContent = `${first.points.toLocaleString()} pts`;
+                firstEl.querySelector('.stats .issues').textContent = `${first.issues} issues`;
             }
-            
-            // Update second position
-            const secondPosition = document.querySelector('.leaderboard-item.second');
-            if (secondPosition && top3[1]) {
-                secondPosition.querySelector('.info h4').textContent = top3[1].name;
-                secondPosition.querySelector('.info p').textContent = top3[1].city;
-                secondPosition.querySelector('.stats .points').textContent = `${top3[1].points.toLocaleString()} pts`;
-                secondPosition.querySelector('.stats .issues').textContent = `${top3[1].issues} issues`;
+
+            const secondEl = document.querySelector('.leaderboard-item.second');
+            if (secondEl && second) {
+                secondEl.querySelector('.info h4').textContent = second.name;
+                secondEl.querySelector('.info p').textContent = second.city;
+                secondEl.querySelector('.stats .points').textContent = `${second.points.toLocaleString()} pts`;
+                secondEl.querySelector('.stats .issues').textContent = `${second.issues} issues`;
             }
-            
-            // Update third position
-            const thirdPosition = document.querySelector('.leaderboard-item.third');
-            if (thirdPosition && top3[2]) {
-                thirdPosition.querySelector('.info h4').textContent = top3[2].name;
-                thirdPosition.querySelector('.info p').textContent = top3[2].city;
-                thirdPosition.querySelector('.stats .points').textContent = `${top3[2].points.toLocaleString()} pts`;
-                thirdPosition.querySelector('.stats .issues').textContent = `${top3[2].issues} issues`;
+
+            const thirdEl = document.querySelector('.leaderboard-item.third');
+            if (thirdEl && third) {
+                thirdEl.querySelector('.info h4').textContent = third.name;
+                thirdEl.querySelector('.info p').textContent = third.city;
+                thirdEl.querySelector('.stats .points').textContent = `${third.points.toLocaleString()} pts`;
+                thirdEl.querySelector('.stats .issues').textContent = `${third.issues} issues`;
             }
         }
 
-        // Leaderboard tab switching
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all tabs
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                // Add active class to clicked tab
-                btn.classList.add('active');
-                // Display corresponding leaderboard
-                displayLeaderboard(btn.dataset.tab);
+        // Tabs: click + keyboard support
+        function setActiveTab(btn) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(b => {
+                b.classList.toggle('active', b === btn);
+                b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+                b.setAttribute('tabindex', b === btn ? '0' : '-1');
+            });
+            const period = btn.dataset.tab;
+            displayLeaderboard(period);
+        }
+
+        document.querySelectorAll('.tab-btn').forEach((btn, idx, all) => {
+            btn.addEventListener('click', () => setActiveTab(btn));
+            btn.addEventListener('keydown', (e) => {
+                const code = e.key;
+                if (code === 'ArrowRight' || code === 'ArrowLeft') {
+                    e.preventDefault();
+                    const dir = code === 'ArrowRight' ? 1 : -1;
+                    const nextIndex = (idx + dir + all.length) % all.length;
+                    setActiveTab(all[nextIndex]);
+                    all[nextIndex].focus();
+                }
             });
         });
 
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            // Display initial leaderboard
+        document.addEventListener('DOMContentLoaded', () => {
             displayLeaderboard('monthly');
         });
     </script>

@@ -12,28 +12,39 @@
             padding: 120px 0 80px;
             background: #f8fafc;
         }
-        
         .nav-guide h1 {
             text-align: center;
             color: #1f2937;
-            margin-bottom: 3rem;
+            margin-bottom: 0.75rem;
             font-size: 2.5rem;
         }
-        
+        .nav-guide .subtitle {
+            text-align: center;
+            margin-bottom: 2.25rem;
+            font-size: 1.05rem;
+            color: #6b7280;
+        }
+        .notice {
+            margin: 0 auto 1.5rem;
+            max-width: 960px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .notice.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+        .notice.info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
         .nav-sections {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-bottom: 3rem;
         }
-        
         .nav-section {
             background: white;
             padding: 2rem;
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
-        
         .nav-section h3 {
             color: #dc2626;
             margin-bottom: 1rem;
@@ -41,38 +52,22 @@
             align-items: center;
             gap: 0.5rem;
         }
-        
-        .nav-section ul {
-            list-style: none;
-        }
-        
-        .nav-section li {
-            margin-bottom: 0.5rem;
-        }
-        
+        .nav-section ul { list-style: none; }
+        .nav-section li { margin-bottom: 0.5rem; }
         .nav-section a {
             color: #374151;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color 0.2s ease;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-        
-        .nav-section a:hover {
-            color: #dc2626;
-        }
-        
-        .nav-section a i {
-            width: 20px;
-            color: #6b7280;
-        }
-        
+        .nav-section a:hover { color: #dc2626; }
+        .nav-section a i { width: 20px; color: #6b7280; }
         .back-home {
             text-align: center;
             margin-top: 2rem;
         }
-        
         .back-home a {
             display: inline-block;
             background: #dc2626;
@@ -81,11 +76,15 @@
             text-decoration: none;
             border-radius: 10px;
             font-weight: 600;
-            transition: background 0.3s ease;
+            transition: background 0.2s ease, transform 0.1s ease;
         }
-        
-        .back-home a:hover {
-            background: #b91c1c;
+        .back-home a:hover { background: #b91c1c; }
+        .back-home a:active { transform: translateY(1px); }
+        /* Small helper for highlighting when visiting via hash */
+        .highlight {
+            outline: 3px solid rgba(220,38,38,.25);
+            border-radius: 12px;
+            transition: outline-color .8s ease;
         }
     </style>
 </head>
@@ -110,7 +109,7 @@
             <div class="nav-user">
                 <div class="user-points">
                     <i class="fas fa-star"></i>
-                                            <span id="navUserPoints">0</span>
+                    <span id="navUserPoints">0</span>
                 </div>
                 <div class="user-avatar" onclick="toggleProfileMenu()">
                     <i class="fas fa-user-circle"></i>
@@ -132,15 +131,14 @@
     </nav>
 
     <!-- Navigation Guide Section -->
-    <section class="nav-guide">
+    <section class="nav-guide" id="nav-guide">
         <div class="container">
             <h1>🚀 Complete Site Navigation Guide</h1>
-            <p style="text-align: center; margin-bottom: 3rem; font-size: 1.2rem; color: #6b7280;">
-                Here's how all the pages in Samadhan Kendra are connected and accessible
-            </p>
+            <p class="subtitle">Here's how all the pages in Samadhan Kendra are connected and accessible</p>
+            <div id="loginNotice" class="notice"></div>
             
             <div class="nav-sections">
-                <div class="nav-section">
+                <div class="nav-section" id="main-pages">
                     <h3><i class="fas fa-home"></i> Main Pages</h3>
                     <ul>
                         <li><a href="index.html"><i class="fas fa-arrow-right"></i>Home Page (Main Landing)</a></li>
@@ -151,7 +149,7 @@
                     </ul>
                 </div>
                 
-                <div class="nav-section">
+                <div class="nav-section" id="account-pages">
                     <h3><i class="fas fa-user"></i> User Account Pages</h3>
                     <ul>
                         <li><a href="login.html"><i class="fas fa-arrow-right"></i>Login Page</a></li>
@@ -161,7 +159,7 @@
                     </ul>
                 </div>
                 
-                <div class="nav-section">
+                <div class="nav-section" id="support-pages">
                     <h3><i class="fas fa-question-circle"></i> Support & Information</h3>
                     <ul>
                         <li><a href="help-center.html"><i class="fas fa-arrow-right"></i>Help Center</a></li>
@@ -171,7 +169,7 @@
                     </ul>
                 </div>
                 
-                <div class="nav-section">
+                <div class="nav-section" id="rewards-pages">
                     <h3><i class="fas fa-gift"></i> Rewards & Features</h3>
                     <ul>
                         <li><a href="rewards-program.html"><i class="fas fa-arrow-right"></i>Rewards Program</a></li>
@@ -181,7 +179,7 @@
                 </div>
             </div>
             
-            <div class="nav-section" style="grid-column: 1 / -1;">
+            <div class="nav-section" style="grid-column: 1 / -1;" id="how-to-navigate">
                 <h3><i class="fas fa-sitemap"></i> How to Navigate Between Pages</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
                     <div>
@@ -230,7 +228,6 @@
                 <div class="footer-section">
                     <h3>Samadhan Kendra</h3>
                     <p>Empowering Indian citizens through AI-driven civic engagement and smart city solutions.</p>
-                    
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
@@ -261,9 +258,7 @@
                         <li><a href="rewards-program.html">Rewards Program</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                   
-                </div>
+                <div class="footer-section"></div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
@@ -271,62 +266,112 @@
         </div>
     </footer>
 
+    <!-- Existing shared site script -->
     <script src="script.js"></script>
+
     <script>
-        // Mobile Navigation Toggle
+        // Mobile Navigation Toggle (defensive checks)
         const hamburger = document.querySelector('.hamburger');
         const navMenu = document.querySelector('.nav-menu');
+        if (hamburger && navMenu) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+            if (hamburger && navMenu) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        }));
 
         // Profile dropdown toggle
         function toggleProfileMenu() {
             const dropdown = document.getElementById('profileDropdown');
-            dropdown.classList.toggle('active');
+            if (dropdown) dropdown.classList.toggle('active');
         }
+        window.toggleProfileMenu = toggleProfileMenu;
 
-        // Logout function
-        function logout() {
-            // Use centralized logout if available
-            if (typeof window.logout === 'function') {
-                window.logout();
-            } else {
-                // Fallback logout - match the main script.js logout function
-                localStorage.removeItem('userToken');
-                localStorage.removeItem('userData');
-                localStorage.removeItem('userPoints');
-                localStorage.removeItem('userLoggedIn');
-                localStorage.removeItem('userEmail');
-                localStorage.removeItem('userFirstName');
-                localStorage.removeItem('userLastName');
-                localStorage.removeItem('userCity');
-                localStorage.removeItem('userPhone');
-                localStorage.removeItem('userIssues');
-                localStorage.removeItem('userRank');
-                
-                // Show logout message
-                alert('Successfully logged out!');
-                
-                // Redirect to home page
-                window.location.href = 'index.html';
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('profileDropdown');
+            const avatar = document.querySelector('.user-avatar');
+            if (!dropdown || !avatar) return;
+            if (!avatar.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.remove('active');
             }
-        }
-
-        // Load user data if logged in
-        function loadUserData() {
-            if (localStorage.getItem('userLoggedIn')) {
-                const userPoints = localStorage.getItem('userPoints') || '1250';
-                document.getElementById('navUserPoints').textContent = parseInt(userPoints).toLocaleString();
-            }
-        }
-
-        // Load user data when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            loadUserData();
         });
+
+        // Load user points (fallback if centralized function isn't present)
+        function loadUserDataFallback() {
+            if (localStorage.getItem('userLoggedIn')) {
+                const userPoints = localStorage.getItem('userPoints') || '0';
+                const el = document.getElementById('navUserPoints');
+                if (el) el.textContent = parseInt(userPoints).toLocaleString();
+            }
+        }
+
+        // Hash highlight when linked directly to a section
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initializePointsDisplay === 'function') {
+                initializePointsDisplay();
+            } else {
+                loadUserDataFallback();
+            }
+            if (location.hash) {
+                const target = document.querySelector(location.hash);
+                if (target) {
+                    target.classList.add('highlight');
+                    setTimeout(() => target.classList.remove('highlight'), 1200);
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    </script>
+
+    <!-- App config (points API_BASE to your Django backend) -->
+    <script src="./config.js"></script>
+
+    <!-- Centralized logout + login notice -->
+    <script type="module">
+        import { logout as apiLogout } from "./js/api.js";
+
+        // Centralized logout clears JWTs and legacy flags
+        window.logout = function logout() {
+            try { apiLogout(); } catch {}
+            localStorage.removeItem('userLoggedIn');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userPoints');
+            localStorage.removeItem('userFirstName');
+            localStorage.removeItem('userLastName');
+            localStorage.removeItem('userCity');
+            localStorage.removeItem('userPhone');
+            localStorage.removeItem('userIssues');
+            localStorage.removeItem('userRank');
+            // Ensure JWT tokens are cleared
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            window.location.href = 'index.html';
+        };
+
+        // Show a helpful notice about login state
+        const notice = document.getElementById('loginNotice');
+        function setNotice(msg, type = 'info') {
+            if (!notice) return;
+            notice.className = `notice ${type}`;
+            notice.innerHTML = msg;
+        }
+        (function initPage() {
+            const loggedIn = !!localStorage.getItem('accessToken');
+            if (loggedIn) {
+                setNotice("You are logged in. Use the links below to quickly jump to key pages like your Profile or the Report Issue section.", "success");
+            } else {
+                setNotice('Tip: <a href="login.html">Login</a> for a personalized experience. You can access your profile, points, and faster issue reporting.', "info");
+            }
+        })();
     </script>
 </body>
 </html>

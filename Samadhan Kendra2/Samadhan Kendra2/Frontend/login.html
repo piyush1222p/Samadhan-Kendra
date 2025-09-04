@@ -433,7 +433,7 @@
             <div class="nav-user">
                 <div class="user-points">
                     <i class="fas fa-star"></i>
-                                            <span id="navUserPoints">0</span>
+                    <span id="navUserPoints">0</span>
                 </div>
                 <div class="user-avatar" onclick="toggleProfileMenu()">
                     <i class="fas fa-user-circle"></i>
@@ -461,14 +461,15 @@
                 <div class="auth-header">
                     <h1>Welcome Back</h1>
                     <p>Login to your Samadhan Kendra account to continue making a difference</p>
+                    <div id="message" style="margin-top: 8px; font-weight: 500;"></div>
                 </div>
                 
                 <form id="loginForm" class="auth-form">
                     <div class="form-group">
-                        <label for="email">Email Address</label>
+                        <label for="username">Username</label>
                         <div class="input-group">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="email" placeholder="Enter your email" required>
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="username" placeholder="Enter your username" required>
                         </div>
                     </div>
                     
@@ -492,12 +493,10 @@
                         <a href="#" class="forgot-password" onclick="showForgotPassword()">Forgot Password?</a>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary btn-full">
+                    <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
                         <i class="fas fa-sign-in-alt"></i>
                         Login to Account
                     </button>
-                    
-
                 </form>
                 
                 <!-- Forgot Password Modal -->
@@ -597,7 +596,6 @@
                 <div class="footer-section">
                     <h3>Samadhan Kendra</h3>
                     <p>Empowering Indian citizens through AI-driven civic engagement and smart city solutions.</p>
-                   
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
@@ -619,9 +617,7 @@
                         <li><a href="rewards-program.html">Rewards Program</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    
-                </div>
+                <div class="footer-section"></div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Samadhan Kendra. Empowering India's Smart Cities.</p>
@@ -666,52 +662,6 @@
             }
         }
 
-        // Login form handling
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Validate inputs
-            if (!email || !password) {
-                alert('Please enter both email and password');
-                return;
-            }
-            
-            // Simulate login process
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
-            submitBtn.disabled = true;
-            
-            // Simulate API call
-            setTimeout(() => {
-                // Store user data in localStorage (simulating successful login)
-                localStorage.setItem('userLoggedIn', 'true');
-                localStorage.setItem('userEmail', email);
-                localStorage.setItem('userPoints', '1250');
-                localStorage.setItem('userFirstName', 'John');
-                localStorage.setItem('userLastName', 'Doe');
-                localStorage.setItem('userCity', 'mumbai');
-                localStorage.setItem('userIssues', '8');
-                localStorage.setItem('userRank', '5');
-                localStorage.setItem('userPhone', '+91 98765 43210');
-                
-                // Update points display immediately
-                if (typeof initializePointsDisplay === 'function') {
-                    initializePointsDisplay();
-                }
-                
-                // Show success message before redirect
-                alert('Login successful! Redirecting to profile page...');
-                
-                // Redirect to profile page
-                window.location.href = 'profile.html';
-            }, 2000);
-        });
-
         // Profile dropdown toggle
         function toggleProfileMenu() {
             const dropdown = document.getElementById('profileDropdown');
@@ -722,40 +672,35 @@
         document.addEventListener('click', function(event) {
             const dropdown = document.getElementById('profileDropdown');
             const avatar = document.querySelector('.user-avatar');
-            
+            if (!avatar) return;
             if (!avatar.contains(event.target) && !dropdown.contains(event.target)) {
                 dropdown.classList.remove('active');
             }
         });
 
-        // Logout function
+        // Logout function (fallback)
         function logout() {
-            // Use centralized logout if available
             if (typeof window.logout === 'function') {
                 window.logout();
             } else {
-                // Fallback logout
                 localStorage.removeItem('userLoggedIn');
                 localStorage.removeItem('userEmail');
                 localStorage.removeItem('userPoints');
                 localStorage.removeItem('userFirstName');
                 localStorage.removeItem('userLastName');
                 localStorage.removeItem('userCity');
-                
-                // Redirect to home page
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
                 window.location.href = 'index.html';
             }
         }
 
         // Load user data if logged in
         function loadUserData() {
-            // Use centralized points display system
             if (typeof initializePointsDisplay === 'function') {
                 initializePointsDisplay();
             }
         }
-
-
 
         // Forgot Password Functionality - Global Functions
         function initializeForgotPassword() {
@@ -767,21 +712,15 @@
 
         // Prevent logged-in users from accessing login page
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if user is already logged in
             if (typeof isUserLoggedIn === 'function' && isUserLoggedIn()) {
                 if (typeof preventLoggedInAccess === 'function') {
                     preventLoggedInAccess();
                 } else {
-                    // Fallback redirect
                     window.location.replace('profile.html');
                 }
                 return;
             }
-            
-            // Initialize forgot password functionality
             initializeForgotPassword();
-            
-            // Initialize points display
             if (typeof initializePointsDisplay === 'function') {
                 initializePointsDisplay();
             }
@@ -792,18 +731,12 @@
             if (modal) {
                 modal.classList.add('show');
                 document.body.style.overflow = 'hidden';
-                
-                // Focus on the email input for accessibility
                 setTimeout(() => {
                     const resetEmailInput = document.getElementById('resetEmail');
-                    if (resetEmailInput) {
-                        resetEmailInput.focus();
-                    }
+                    if (resetEmailInput) resetEmailInput.focus();
                 }, 100);
             }
         }
-        
-        // Make functions globally available
         window.showForgotPassword = showForgotPassword;
         window.closeForgotPassword = closeForgotPassword;
         window.resetForgotPasswordForm = resetForgotPasswordForm;
@@ -816,8 +749,6 @@
             if (modal) {
                 modal.classList.remove('show');
                 document.body.style.overflow = '';
-                
-                // Reset form and validation
                 resetForgotPasswordForm();
             }
         }
@@ -826,30 +757,18 @@
             const form = document.getElementById('forgotPasswordForm');
             const successDiv = document.getElementById('forgotPasswordSuccess');
             const contentDiv = document.querySelector('.forgot-password-content');
-            
-            if (form) {
-                form.reset();
-            }
-            
-            // Clear validation states
+            if (form) form.reset();
             const resetEmailInput = document.getElementById('resetEmail');
-            if (resetEmailInput) {
-                resetEmailInput.classList.remove('valid', 'invalid');
-            }
-            
-            // Hide validation icons and messages
+            if (resetEmailInput) resetEmailInput.classList.remove('valid', 'invalid');
             const validIcon = document.getElementById('validEmailIcon');
             const invalidIcon = document.getElementById('invalidEmailIcon');
             const validationMessage = document.getElementById('emailValidationMessage');
-            
             if (validIcon) validIcon.style.display = 'none';
             if (invalidIcon) invalidIcon.style.display = 'none';
             if (validationMessage) {
                 validationMessage.textContent = '';
                 validationMessage.className = 'validation-message';
             }
-            
-            // Show form content, hide success
             if (contentDiv) contentDiv.style.display = 'block';
             if (successDiv) successDiv.style.display = 'none';
         }
@@ -859,24 +778,13 @@
             const validIcon = document.getElementById('validEmailIcon');
             const invalidIcon = document.getElementById('invalidEmailIcon');
             const validationMessage = document.getElementById('emailValidationMessage');
-            
-            if (!resetEmailInput || !validIcon || !invalidIcon || !validationMessage) {
-                return false;
-            }
-            
-            // Email validation regex
+            if (!resetEmailInput || !validIcon || !invalidIcon || !validationMessage) return false;
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const isValid = emailRegex.test(email);
-            
-            // Update input styling
             resetEmailInput.classList.remove('valid', 'invalid');
             resetEmailInput.classList.add(isValid ? 'valid' : 'invalid');
-            
-            // Update validation icons
             validIcon.style.display = isValid ? 'block' : 'none';
             invalidIcon.style.display = isValid ? 'none' : 'block';
-            
-            // Update validation message
             if (email === '') {
                 validationMessage.textContent = '';
                 validationMessage.className = 'validation-message';
@@ -887,43 +795,28 @@
                 validationMessage.textContent = '✗ Please enter a valid email address';
                 validationMessage.className = 'validation-message invalid';
             }
-            
             return isValid;
         }
 
         async function handleForgotPasswordSubmit(event) {
             event.preventDefault();
-            
             const resetEmailInput = document.getElementById('resetEmail');
             const resetPasswordBtn = document.getElementById('resetPasswordBtn');
             const email = resetEmailInput.value.trim();
-            
-            // Validate email
             if (!validateResetEmail(email)) {
-                // Shake animation for invalid input
                 resetEmailInput.style.animation = 'shake 0.5s ease-in-out';
-                setTimeout(() => {
-                    resetEmailInput.style.animation = '';
-                }, 500);
+                setTimeout(() => { resetEmailInput.style.animation = ''; }, 500);
                 return;
             }
-            
-            // Show loading state
             resetPasswordBtn.classList.add('btn-loading');
             resetPasswordBtn.disabled = true;
-            
             try {
-                // Simulate API call delay
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                // Show success state
+                // TODO: Replace this with real backend endpoint when available
+                await new Promise(resolve => setTimeout(resolve, 1500));
                 showForgotPasswordSuccess();
-                
             } catch (error) {
                 console.error('Error in forgot password:', error);
-                // In a real app, you'd show an error message here
             } finally {
-                // Reset button state
                 resetPasswordBtn.classList.remove('btn-loading');
                 resetPasswordBtn.disabled = false;
             }
@@ -932,7 +825,6 @@
         function showForgotPasswordSuccess() {
             const contentDiv = document.querySelector('.forgot-password-content');
             const successDiv = document.getElementById('forgotPasswordSuccess');
-            
             if (contentDiv && successDiv) {
                 contentDiv.style.display = 'none';
                 successDiv.style.display = 'block';
@@ -965,13 +857,83 @@
         `;
         document.head.appendChild(style);
     </script>
-    
+
+    <!-- Your existing shared frontend helpers -->
     <script src="script.js"></script>
     <script>
-        // Initialize points display when script.js is loaded
         if (typeof initializePointsDisplay === 'function') {
             initializePointsDisplay();
         }
+    </script>
+
+    <!-- App config (points API_BASE to Django) -->
+    <script src="./config.js"></script>
+
+    <!-- Page-specific login logic wired to your Django backend -->
+    <script type="module">
+        import { login } from "./js/api.js";
+
+        const form = document.getElementById("loginForm");
+        const usernameEl = document.getElementById("username");
+        const passwordEl = document.getElementById("password");
+        const rememberEl = document.getElementById("rememberMe");
+        const messageBox = document.getElementById("message");
+        const loginBtn = document.getElementById("loginBtn");
+
+        function setMessage(text, isError = false) {
+            if (!messageBox) return;
+            messageBox.textContent = text || "";
+            messageBox.style.color = isError ? "crimson" : "#059669";
+        }
+
+        function setLoading(loading) {
+            if (!loginBtn) return;
+            if (loading) {
+                loginBtn.classList.add("btn-loading");
+                loginBtn.disabled = true;
+            } else {
+                loginBtn.classList.remove("btn-loading");
+                loginBtn.disabled = false;
+            }
+        }
+
+        form?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const username = usernameEl.value.trim();
+            const password = passwordEl.value;
+            if (!username || !password) {
+                setMessage("Please enter both username and password", true);
+                return;
+            }
+
+            setMessage("");
+            setLoading(true);
+            try {
+                await login({ username, password });
+
+                // Optional: persist a simple flag for legacy UI code
+                localStorage.setItem("userLoggedIn", "true");
+                localStorage.setItem("userEmail", username); // store username for now
+
+                // Remember me: keep tokens in localStorage (already handled by api.js).
+                // If you wanted session-only, you'd move tokens to sessionStorage instead.
+
+                // Update any points or UI widgets if your shared code exposes it
+                if (typeof initializePointsDisplay === "function") {
+                    initializePointsDisplay();
+                }
+
+                setMessage("Login successful! Redirecting...");
+                // Redirect to profile or home
+                window.location.href = "profile.html";
+            } catch (err) {
+                // err may be an object from DRF like {detail: "..."}
+                const detail = err?.detail || "Login failed. Check your credentials.";
+                setMessage(detail, true);
+            } finally {
+                setLoading(false);
+            }
+        });
     </script>
     
     <!-- Chatbot Integration -->

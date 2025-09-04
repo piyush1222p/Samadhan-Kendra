@@ -20,6 +20,34 @@
             transform: translateY(-2px) !important;
             box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
         }
+
+        /* Small helpers for notices */
+        .notice {
+            margin: 12px 0;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .notice.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+        .notice.error { background: #fef2f2; color: #7f1d1d; border: 1px solid #fecaca; }
+        .muted { color: #6b7280; font-size: 0.95rem; }
+        .issue-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: #fff;
+        }
+        .issue-card .meta { font-size: 0.85rem; color: #6b7280; }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            border-radius: 999px;
+            background: #eef2ff;
+            color: #3730a3;
+            border: 1px solid #c7d2fe;
+        }
     </style>
 </head>
 <body>
@@ -168,6 +196,10 @@
             <h2>Report a Civic Issue</h2>
             <p class="section-subtitle">Help improve your community with smart reporting. Use AI-powered features for faster resolution.</p>
             
+            <div id="reportNotice" class="notice muted">
+                Please login to submit an issue. You can still fill the form and we’ll save your input until you login.
+            </div>
+
             <form id="issueForm" class="issue-form">
                 <!-- Media Upload Section -->
                 <div class="media-upload-section">
@@ -181,6 +213,9 @@
                         <input type="file" id="mediaUpload" accept="image/*,video/*" multiple>
                     </div>
                     <div class="uploaded-media" id="uploadedMedia"></div>
+                    <div class="muted" style="margin-top:8px;">
+                        Note: Media upload is not sent to the backend yet in this version.
+                    </div>
                 </div>
 
                 <!-- Location Section -->
@@ -255,6 +290,16 @@
                                 <option value="medium">🟡 Medium - Needs attention</option>
                                 <option value="high">🟠 High - Affects daily life</option>
                                 <option value="urgent">🔴 Urgent - Safety hazard</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- NEW: Department populated from backend -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="department">Department</label>
+                            <select id="department" required>
+                                <option value="">Loading departments...</option>
                             </select>
                         </div>
                     </div>
@@ -427,7 +472,7 @@
     <section id="about" class="about-section">
         <div class="container">
             <h2>About Samadhan Kendra</h2>
-            <div class="about-content">
+        <div class="about-content">
                 <div class="about-text">
                     <p>Samadhan Kendra is India's premier AI-powered civic issue resolution platform, designed to bridge the gap between citizens and municipal authorities. Our mission is to create smarter, more responsive cities through technology-driven citizen engagement.</p>
                     
@@ -527,9 +572,7 @@
                 <div class="footer-section">
                     <h3>Samadhan Kendra</h3>
                     <p>Empowering Indian citizens through AI-driven civic engagement and smart city solutions.</p>
-                    <div class="social-links">
-                        
-                    </div>
+                    <div class="social-links"></div>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
@@ -564,7 +607,6 @@
                 <div class="footer-section">
                     <h4></h4>
                     <p></p>
-                    
                 </div>
             </div>
             <div class="footer-bottom">
@@ -613,6 +655,7 @@
         </div>
     </div>
 
+    <!-- Existing site script -->
     <script src="script.js"></script>
     
     <script>
@@ -626,7 +669,7 @@
         document.addEventListener('click', function(event) {
             const dropdown = document.getElementById('profileDropdown');
             const avatar = document.querySelector('.user-avatar');
-            
+            if (!avatar) return;
             if (!avatar.contains(event.target) && !dropdown.contains(event.target)) {
                 dropdown.classList.remove('active');
             }
@@ -634,11 +677,9 @@
 
         // Logout function
         function logout() {
-            // Use centralized logout if available
             if (typeof window.logout === 'function') {
                 window.logout();
             } else {
-                // Fallback logout
                 localStorage.removeItem('userLoggedIn');
                 localStorage.removeItem('userEmail');
                 localStorage.removeItem('userPoints');
@@ -648,28 +689,23 @@
                 localStorage.removeItem('userIssues');
                 localStorage.removeItem('userRank');
                 localStorage.removeItem('userPhone');
-                
-                // Redirect to home page
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
                 window.location.href = 'index.html';
             }
         }
 
-        // Load user data if logged in
-        function loadUserData() {
-            // Use centralized points display system
+        // Load user data when page loads (legacy points display)
+        document.addEventListener('DOMContentLoaded', function() {
             if (typeof initializePointsDisplay === 'function') {
                 initializePointsDisplay();
             } else {
-                // Fallback for pages without the centralized system
                 if (localStorage.getItem('userLoggedIn')) {
                     const userPoints = localStorage.getItem('userPoints') || '0';
                     const userPointsElement = document.getElementById('userPoints');
-                    
                     if (userPointsElement) {
                         userPointsElement.textContent = parseInt(userPoints).toLocaleString();
                     }
-                    
-                    // Update profile dropdown for logged in users
                     const profileDropdown = document.getElementById('profileDropdown');
                     if (profileDropdown) {
                         profileDropdown.innerHTML = `
@@ -681,14 +717,263 @@
                     }
                 }
             }
-        }
-
-        // Load user data when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            loadUserData();
         });
     </script>
-    
+
+    <!-- App config for API base Django -->
+    <script src="./config.js"></script>
+
+    <!-- Page wiring to backend -->
+    <script type="module">
+        import { getDepartments, getGrievances, createGrievance } from "./js/api.js";
+
+        const reportNotice = document.getElementById("reportNotice");
+        const issueForm = document.getElementById("issueForm");
+        const issuesList = document.getElementById("issuesList");
+        const getLocationBtn = document.getElementById("getLocationBtn");
+        const gpsLocationEl = document.getElementById("gpsLocation");
+        const addressEl = document.getElementById("address");
+        const cityEl = document.getElementById("city");
+        const landmarkEl = document.getElementById("landmark");
+        const titleEl = document.getElementById("title");
+        const descriptionEl = document.getElementById("description");
+        const priorityEl = document.getElementById("priority");
+        const departmentEl = document.getElementById("department");
+        const statusFilterEl = document.getElementById("statusFilter");
+        const typeFilterEl = document.getElementById("typeFilter");
+        const cityFilterEl = document.getElementById("cityFilter");
+        const searchFilterEl = document.getElementById("searchFilter");
+
+        const PRIORITY_MAP = { low: 1, medium: 2, high: 3, urgent: 4 };
+
+        let grievancesCache = [];
+
+        function isLoggedIn() {
+            // We persist tokens in localStorage in api.js; quick check:
+            return !!localStorage.getItem("accessToken");
+        }
+
+        function setNotice() {
+            if (!reportNotice) return;
+            if (isLoggedIn()) {
+                reportNotice.className = "notice success";
+                reportNotice.textContent = "You are logged in. You can submit issues directly.";
+            } else {
+                reportNotice.className = "notice error";
+                reportNotice.innerHTML = 'You are not logged in. Please <a href="login.html">login</a> to submit an issue.';
+            }
+        }
+
+        async function populateDepartments() {
+            try {
+                const depts = await getDepartments();
+                if (!Array.isArray(depts)) return;
+                departmentEl.innerHTML = `<option value="">Select department</option>` + 
+                    depts.map(d => `<option value="${d.id}">${d.name}</option>`).join("");
+            } catch (e) {
+                console.error("Failed to load departments", e);
+                departmentEl.innerHTML = `<option value="">Failed to load departments</option>`;
+            }
+        }
+
+        function renderIssues(list) {
+            if (!issuesList) return;
+            if (!list || list.length === 0) {
+                issuesList.innerHTML = `<div class="muted">No issues found.</div>`;
+                return;
+            }
+            issuesList.innerHTML = list.map(g => {
+                const dept = g.department_name ?? g.department ?? "";
+                const who = g.citizen_username ?? "";
+                const status = g.status ?? "reported";
+                const created = g.created_at ? new Date(g.created_at).toLocaleString() : "";
+                return `
+                    <div class="issue-card">
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                            <h4 style="margin:0;line-height:1.2">${escapeHtml(g.title || "")}</h4>
+                            <span class="badge">${escapeHtml(String(status).replaceAll("_"," ").toUpperCase())}</span>
+                        </div>
+                        <p style="margin:8px 0 6px 0;">${escapeHtml(g.description || "").slice(0,240)}${(g.description||"").length>240?"…":""}</p>
+                        <div class="meta">
+                            Dept: ${escapeHtml(String(dept))} • Reporter: ${escapeHtml(String(who))} • Created: ${escapeHtml(String(created))} • ID: ${escapeHtml(String(g.id))}
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function escapeHtml(str) {
+            return String(str)
+                .replaceAll("&","&amp;")
+                .replaceAll("<","&lt;")
+                .replaceAll(">","&gt;")
+                .replaceAll('"',"&quot;")
+                .replaceAll("'","&#039;");
+        }
+
+        async function loadIssues() {
+            try {
+                const data = await getGrievances();
+                grievancesCache = Array.isArray(data) ? data : [];
+                applyFilters();
+            } catch (e) {
+                console.error("Failed to load grievances", e);
+                renderIssues([]);
+            }
+        }
+
+        function applyFilters() {
+            let list = grievancesCache.slice();
+
+            // Status filter
+            const statusVal = statusFilterEl?.value || "all";
+            if (statusVal !== "all") {
+                list = list.filter(g => String(g.status || "").toLowerCase() === statusVal);
+            }
+
+            // Category filter: we don't have a category field in backend yet.
+            // We'll retain UI but skip filtering on type.
+
+            // City filter: try to find city in description/address if present
+            const cityVal = cityFilterEl?.value || "all";
+            if (cityVal !== "all") {
+                const needle = cityVal.toLowerCase();
+                list = list.filter(g => {
+                    const text = `${g.description || ""} ${g.address || ""}`.toLowerCase();
+                    return text.includes(needle);
+                });
+            }
+
+            // Search filter
+            const q = (searchFilterEl?.value || "").trim().toLowerCase();
+            if (q) {
+                list = list.filter(g => {
+                    const hay = `${g.title || ""} ${g.description || ""} ${g.address || ""}`.toLowerCase();
+                    return hay.includes(q);
+                });
+            }
+
+            renderIssues(list);
+        }
+
+        statusFilterEl?.addEventListener("change", applyFilters);
+        typeFilterEl?.addEventListener("change", applyFilters);
+        cityFilterEl?.addEventListener("change", applyFilters);
+        searchFilterEl?.addEventListener("input", applyFilters);
+
+        // Geolocation
+        getLocationBtn?.addEventListener("click", () => {
+            if (!navigator.geolocation) {
+                alert("Geolocation is not supported by your browser.");
+                return;
+            }
+            getLocationBtn.disabled = true;
+            getLocationBtn.textContent = "Locating...";
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const { latitude, longitude } = pos.coords;
+                    gpsLocationEl.value = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+                    getLocationBtn.disabled = false;
+                    getLocationBtn.innerHTML = `<i class="fas fa-crosshairs"></i> Get Current Location`;
+                },
+                (err) => {
+                    console.error(err);
+                    alert("Unable to retrieve your location.");
+                    getLocationBtn.disabled = false;
+                    getLocationBtn.innerHTML = `<i class="fas fa-crosshairs"></i> Get Current Location`;
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
+        });
+
+        // Submit report
+        issueForm?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            if (!isLoggedIn()) {
+                alert("Please login to submit an issue.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const title = titleEl.value.trim();
+            const description = descriptionEl.value.trim();
+            const priorityKey = priorityEl.value;
+            const priority = PRIORITY_MAP[priorityKey] ?? 2; // default medium
+            const departmentId = Number(departmentEl.value);
+
+            if (!title || !description || !priority || !departmentId) {
+                alert("Please complete title, description, priority, and department.");
+                return;
+            }
+
+            // Append location/context details into description so backend stores it
+            const extras = [];
+            if (gpsLocationEl.value) extras.push(`GPS: ${gpsLocationEl.value}`);
+            if (addressEl.value) extras.push(`Address: ${addressEl.value}`);
+            if (cityEl.value) extras.push(`City: ${cityEl.options[cityEl.selectedIndex]?.text}`);
+            if (landmarkEl.value) extras.push(`Landmark: ${landmarkEl.value}`);
+            if (extras.length) {
+                // Separate with blank line for readability
+                extras.unshift(""); // leading blank line
+            }
+            const finalDescription = [description, ...extras].join("\n");
+
+            const submitBtn = issueForm.querySelector('button[type="submit"]');
+            const originalHtml = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Submitting...`;
+
+            try {
+                const created = await createGrievance({
+                    title,
+                    description: finalDescription,
+                    priority,
+                    department: departmentId,
+                });
+
+                // Open success modal if present
+                const modal = document.getElementById("successModal");
+                const issueIdSpan = document.getElementById("issueId");
+                if (modal && issueIdSpan) {
+                    issueIdSpan.textContent = created?.id ?? "";
+                    modal.style.display = "block";
+                } else {
+                    alert("Issue created successfully!");
+                }
+
+                issueForm.reset();
+                await loadIssues();
+            } catch (err) {
+                console.error(err);
+                const detail = err?.detail || "Failed to create issue. Please try again.";
+                alert(detail);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalHtml;
+            }
+        });
+
+        // Modal controls (success)
+        window.closeModal = function closeModal() {
+            const modal = document.getElementById("successModal");
+            if (modal) modal.style.display = "none";
+        };
+        document.addEventListener("click", (e) => {
+            const modal = document.getElementById("successModal");
+            if (modal && e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Init
+        (async function boot() {
+            setNotice();
+            await populateDepartments();
+            await loadIssues();
+        })();
+    </script>
+
     <!-- Chatbot Integration -->
     <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer></script>

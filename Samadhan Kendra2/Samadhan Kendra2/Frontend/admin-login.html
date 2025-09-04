@@ -55,7 +55,7 @@
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
         .form-group label {
@@ -63,7 +63,7 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
             color: #374151;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
         }
 
         .form-group input {
@@ -72,7 +72,7 @@
             border: 2px solid #e5e7eb;
             border-radius: 8px;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             box-sizing: border-box;
         }
 
@@ -92,13 +92,14 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
+            transition: all 0.2s ease;
+            margin-top: 0.5rem;
+            position: relative;
         }
 
-        .admin-login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+        .admin-login-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.25);
         }
 
         .admin-login-btn:disabled {
@@ -109,14 +110,14 @@
 
         .admin-login-footer {
             margin-top: 2rem;
-            padding-top: 2rem;
+            padding-top: 1.5rem;
             border-top: 1px solid #e5e7eb;
         }
 
         .admin-login-footer p {
             color: #6b7280;
-            font-size: 0.875rem;
-            margin: 0;
+            font-size: 0.9rem;
+            margin: 0.35rem 0;
         }
 
         .admin-login-footer a {
@@ -129,51 +130,64 @@
             text-decoration: underline;
         }
 
+        .error-message, .success-message {
+            padding: 0.75rem 0.9rem;
+            border-radius: 8px;
+            margin-bottom: 0.9rem;
+            font-size: 0.9rem;
+            display: none;
+            text-align: left;
+        }
+
         .error-message {
             background: #fee2e2;
             color: #991b1b;
-            padding: 0.75rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
-            display: none;
+            border: 1px solid #fecaca;
         }
 
         .success-message {
             background: #d1fae5;
             color: #065f46;
-            padding: 0.75rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
-            display: none;
+            border: 1px solid #a7f3d0;
         }
 
         .loading-spinner {
             display: none;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border: 2px solid #ffffff;
             border-top: 2px solid transparent;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
         }
 
-        @media (max-width: 480px) {
-            .admin-login-card {
-                padding: 2rem;
-                margin: 1rem;
-            }
+        .helper-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: -0.4rem;
+            margin-bottom: 0.7rem;
+        }
 
-            .admin-login-header h1 {
-                font-size: 1.5rem;
-            }
+        .helper-row a {
+            color: #6b7280;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+        .helper-row a:hover { text-decoration: underline; }
+
+        @media (max-width: 480px) {
+            .admin-login-card { padding: 2rem; margin: 1rem; }
+            .admin-login-header h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -189,15 +203,18 @@
             <div class="error-message" id="errorMessage"></div>
             <div class="success-message" id="successMessage"></div>
 
-            <form class="admin-login-form" id="adminLoginForm">
+            <form class="admin-login-form" id="adminLoginForm" autocomplete="on">
                 <div class="form-group">
-                    <label for="adminEmail">Email Address</label>
-                    <input type="email" id="adminEmail" placeholder="admin@samadhankendra.com" required>
+                    <label for="adminUsername">Username or Email</label>
+                    <input type="text" id="adminUsername" placeholder="admin or admin@samadhankendra.com" required autocomplete="username">
                 </div>
 
                 <div class="form-group">
-                    <label for="adminPassword">Password</label>
-                    <input type="password" id="adminPassword" placeholder="Enter your password" required>
+                    <div class="helper-row">
+                        <label for="adminPassword" style="margin:0;">Password</label>
+                        <a href="login.html" title="Use user login page if you are not an admin">User login?</a>
+                    </div>
+                    <input type="password" id="adminPassword" placeholder="Enter your password" required autocomplete="current-password">
                 </div>
 
                 <button type="submit" class="admin-login-btn" id="loginBtn">
@@ -207,169 +224,87 @@
             </form>
 
             <div class="admin-login-footer">
-                <p>Need help? <a href="help-center.html">Contact Support</a></p>
+                <p>Need help? <a href="help-center.html">Help Center</a> or <a href="contact.html">Contact Support</a></p>
                 <p><a href="index.html">← Back to Main Site</a></p>
             </div>
         </div>
     </div>
 
-    <script>
-        // Admin Login Functionality
-        class AdminLogin {
-            constructor() {
-                this.form = document.getElementById('adminLoginForm');
-                this.emailInput = document.getElementById('adminEmail');
-                this.passwordInput = document.getElementById('adminPassword');
-                this.loginBtn = document.getElementById('loginBtn');
-                this.loginText = document.getElementById('loginText');
-                this.loadingSpinner = document.getElementById('loadingSpinner');
-                this.errorMessage = document.getElementById('errorMessage');
-                this.successMessage = document.getElementById('successMessage');
+    <!-- App config: points API_BASE to your Django backend -->
+    <script src="./config.js"></script>
 
-                this.setupEventListeners();
-                this.checkExistingSession();
+    <!-- Admin login wired to backend (JWT) -->
+    <script type="module">
+        import { login as apiLogin } from "./js/api.js";
+
+        const form = document.getElementById("adminLoginForm");
+        const usernameEl = document.getElementById("adminUsername");
+        const passwordEl = document.getElementById("adminPassword");
+        const loginBtn = document.getElementById("loginBtn");
+        const loginText = document.getElementById("loginText");
+        const spinner = document.getElementById("loadingSpinner");
+        const errorBox = document.getElementById("errorMessage");
+        const successBox = document.getElementById("successMessage");
+
+        // If already authenticated, go to admin panel
+        (function checkExistingSession() {
+            const access = localStorage.getItem("accessToken");
+            if (access) {
+                window.location.replace("admin.html");
             }
+        })();
 
-            setupEventListeners() {
-                this.form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.handleLogin();
-                });
-
-                // Auto-fill demo credentials for testing
-                this.emailInput.addEventListener('focus', () => {
-                    if (!this.emailInput.value) {
-                        this.emailInput.value = 'admin@samadhankendra.com';
-                    }
-                });
-
-                this.passwordInput.addEventListener('focus', () => {
-                    if (!this.passwordInput.value) {
-                        this.passwordInput.value = 'admin123';
-                    }
-                });
-            }
-
-            checkExistingSession() {
-                const adminToken = localStorage.getItem('adminToken');
-                if (adminToken) {
-                    // Redirect to admin panel if already logged in
-                    window.location.href = 'admin.html';
-                }
-            }
-
-            async handleLogin() {
-                const email = this.emailInput.value.trim();
-                const password = this.passwordInput.value;
-
-                if (!email || !password) {
-                    this.showError('Please fill in all fields');
-                    return;
-                }
-
-                this.setLoading(true);
-
-                try {
-                    // Simulate API call delay
-                    await new Promise(resolve => setTimeout(resolve, 1500));
-
-                    // Demo authentication (in real app, this would be an API call)
-                    if (this.authenticateUser(email, password)) {
-                        this.showSuccess('Login successful! Redirecting...');
-                        
-                        // Store admin token
-                        localStorage.setItem('adminToken', 'demo-admin-token-' + Date.now());
-                        localStorage.setItem('adminUser', JSON.stringify({
-                            email: email,
-                            name: 'Administrator',
-                            role: 'admin'
-                        }));
-
-                        // Redirect to admin panel
-                        setTimeout(() => {
-                            window.location.href = 'admin.html';
-                        }, 1000);
-                    } else {
-                        this.showError('Invalid email or password');
-                    }
-                } catch (error) {
-                    this.showError('Login failed. Please try again.');
-                } finally {
-                    this.setLoading(false);
-                }
-            }
-
-            authenticateUser(email, password) {
-                // Demo credentials (in real app, this would validate against backend)
-                const validCredentials = [
-                    { email: 'admin@samadhankendra.com', password: 'admin123' },
-                    { email: 'admin@samadhankendra.com', password: 'admin' },
-                    { email: 'admin', password: 'admin' },
-                    { email: 'admin@admin.com', password: 'admin' }
-                ];
-
-                return validCredentials.some(cred => 
-                    cred.email === email && cred.password === password
-                );
-            }
-
-            setLoading(loading) {
-                if (loading) {
-                    this.loginBtn.disabled = true;
-                    this.loginText.style.display = 'none';
-                    this.loadingSpinner.style.display = 'block';
-                } else {
-                    this.loginBtn.disabled = false;
-                    this.loginText.style.display = 'block';
-                    this.loadingSpinner.style.display = 'none';
-                }
-            }
-
-            showError(message) {
-                this.errorMessage.textContent = message;
-                this.errorMessage.style.display = 'block';
-                this.successMessage.style.display = 'none';
-                
-                setTimeout(() => {
-                    this.errorMessage.style.display = 'none';
-                }, 5000);
-            }
-
-            showSuccess(message) {
-                this.successMessage.textContent = message;
-                this.successMessage.style.display = 'block';
-                this.errorMessage.style.display = 'none';
-            }
-
-            clearMessages() {
-                this.errorMessage.style.display = 'none';
-                this.successMessage.style.display = 'none';
-            }
+        function setLoading(isLoading) {
+            loginBtn.disabled = isLoading;
+            spinner.style.display = isLoading ? "block" : "none";
+            loginText.style.visibility = isLoading ? "hidden" : "visible";
         }
 
-        // Initialize admin login when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            new AdminLogin();
-        });
+        function showError(msg) {
+            if (!errorBox) return;
+            errorBox.textContent = msg || "Login failed.";
+            errorBox.style.display = "block";
+            if (successBox) successBox.style.display = "none";
+        }
 
-        // Add some security features
-        document.addEventListener('keydown', function(e) {
-            // Prevent F12, Ctrl+Shift+I, Ctrl+U (view source)
-            if (e.key === 'F12' || 
-                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                (e.ctrlKey && e.key === 'u')) {
-                e.preventDefault();
-                return false;
+        function showSuccess(msg) {
+            if (!successBox) return;
+            successBox.textContent = msg || "Login successful.";
+            successBox.style.display = "block";
+            if (errorBox) errorBox.style.display = "none";
+        }
+
+        form?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const username = usernameEl.value.trim();
+            const password = passwordEl.value;
+
+            if (!username || !password) {
+                showError("Please enter both username and password.");
+                return;
+            }
+
+            setLoading(true);
+            try {
+                // Use the same JWT token endpoint as user login.
+                // Backend should allow staff/admin users and later admin.html will attempt admin-only actions.
+                await apiLogin({ username, password });
+
+                // Mark legacy flags for your existing UI code if needed
+                localStorage.setItem("userLoggedIn", "true");
+                localStorage.setItem("userEmail", username);
+
+                showSuccess("Login successful! Redirecting...");
+                setTimeout(() => window.location.href = "admin.html", 600);
+            } catch (err) {
+                const detail = err?.detail || "Invalid credentials or not authorized.";
+                showError(detail);
+            } finally {
+                setLoading(false);
             }
         });
-
-        // Prevent right-click context menu
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            return false;
-        });
     </script>
-    
+
     <!-- Chatbot Integration -->
     <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
     <script src="https://files.botpress.cloud/2025/08/31/14/20250831144221-5HKMW4DF.js" defer></script>
