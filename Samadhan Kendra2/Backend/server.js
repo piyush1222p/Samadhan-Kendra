@@ -8,25 +8,48 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+// Comma-separated list of exact origins to allow (e.g., "http://localhost:3000,http://127.0.0.1:3001")
 const ORIGINS = (process.env.CORS_ORIGINS || "")
   .split(",")
   .map((s) => s.trim())
   .filter(Boolean);
+
+// In dev, allow any localhost/127.0.0.1 port by default.
+// Set CORS_ALLOW_LOCALHOST_ANY_PORT=false in .env to disable this behavior.
+const ALLOW_LOCALHOST_ANY_PORT =
+  (process.env.CORS_ALLOW_LOCALHOST_ANY_PORT || "true").toLowerCase() !== "false";
+const LOCALHOST_REGEX = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i;
+
 const JWT_SECRET = process.env.JWT_SECRET || "dev_secret_change_me";
 
-// CORS: allow multiple origins, Authorization header, and common methods
+// CORS config
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow non-browser tools (no origin) and any origin in the list
-    if (!origin || ORIGINS.includes(origin)) return callback(null, true);
-    return callback(new Error(`CORS: Origin ${origin} not allowed`));
+    // Allow same-origin tools and non-browser clients (no Origin header)
+    if (!origin) return callback(null, true);
+
+    // Exact allowlist
+    if (ORIGINS.includes(origin)) return callback(null, true);
+
+    // Dev convenience: allow any localhost/127.0.0.1 port if enabled
+    if (ALLOW_LOCALHOST_ANY_PORT && LOCALHOST_REGEX.test(origin)) {
+      return callback(null, true);
+    }
+
+    const err = new Error(`CORS: Origin ${origin} not allowed`);
+    // Log once for visibility
+    console.warn(err.message);
+    return callback(err);
   },
-  credentials: false, // we use Bearer tokens, not cookies; so credentials not needed
+  credentials: false, // Using Bearer tokens, not cookies
   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type", "Authorization", "Accept"],
   optionsSuccessStatus: 204
 };
+
 app.use(cors(corsOptions));
+// Handle preflight for all routes
 app.options("*", cors(corsOptions));
 
 app.use(express.json());
@@ -37,11 +60,9 @@ let nextUserId = 1000;
 
 // Helpers
 function signTokens(user) {
-  const accessToken = jwt.sign(
-    { sub: user.id, email: user.email },
-    JWT_SECRET,
-    { expiresIn: "2h" }
-  );
+  const accessToken = jwt.sign({ sub: user.id, email: user.email }, JWT_SECRET, {
+    expiresIn: "2h"
+  });
   const refreshToken = jwt.sign(
     { sub: user.id, email: user.email, type: "refresh" },
     JWT_SECRET,
@@ -65,7 +86,12 @@ function auth(req, res, next) {
 
 // Health
 app.get("/health", (req, res) => {
-  res.json({ ok: true, time: new Date().toISOString(), origins: ORIGINS });
+  res.json({
+    ok: true,
+    time: new Date().toISOString(),
+    origins: ORIGINS,
+    allowLocalhostAnyPort: ALLOW_LOCALHOST_ANY_PORT
+  });
 });
 
 // Auth: register
@@ -95,8 +121,8 @@ app.post("/auth/register", async (req, res) => {
   res.json({
     user: {
       id: user.id,
-      firstName,
-      lastName,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       city: user.city,
       phone: user.phone,
@@ -162,6 +188,24 @@ app.post("/issues/:id/upvote", auth, (req, res) => {
   res.json({ ok: true, newBalance: u.points });
 });
 
+// 404 handler
+app.use((req, res) => {
+  return res.status(404).json({ error: "Not found" });
+});
+
+// Error handler (returns JSON; includes CORS errors)
+app.use((err, req, res, next) => {
+  const isCorsError = err && typeof err.message === "string" && err.message.startsWith("CORS:");
+  if (isCorsError) {
+    return res.status(403).json({ error: err.message });
+  }
+  console.error("Error:", err);
+  return res.status(err.status || 500).json({ error: err.message || "Server error" });
+});
+
 app.listen(PORT, () => {
-  console.log(`Backend listening on port ${PORT}. Allowed origins: ${ORIGINS.join(", ") || "(none set)"}`);
+  const allowInfo = ORIGINS.join(", ") || "(none set)";
+  console.log(
+    `Backend listening on port ${PORT}. Allowed origins: ${allowInfo}. Localhost any port: ${ALLOW_LOCALHOST_ANY_PORT}`
+  );
 });
